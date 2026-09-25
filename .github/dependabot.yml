@@ -1,0 +1,36 @@
+# Weekly dependency updates, grouped so there is one PR per ecosystem instead of one per package.
+# Every game is its own npm project, so each gets its own entry; add one when you add a game.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      dev-dependencies:
+        dependency-type: development
+        update-types: [minor, patch]
+    open-pull-requests-limit: 5
+    ignore:
+      # SvelteKit, svelte-check and typescript-eslint only support TypeScript up to 6.
+      - dependency-name: typescript
+        versions: ['>=7']
+
+  - package-ecosystem: npm
+    directory: /games/duck
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      all:
+        patterns: ['*']
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      actions:
+        patterns: ['*']
