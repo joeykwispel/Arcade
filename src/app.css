@@ -1,0 +1,15 @@
+/*
+ * Hub-only additions. Tokens, base styles, buttons, tags and cards come from the design kit
+ * (src/lib/jo/jo-kit.css, a copy of the portfolio's app.css); change those in the portfolio first.
+ */
+
+body {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  padding-top: var(--nav-h);
+}

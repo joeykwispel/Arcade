@@ -1,0 +1,18 @@
+[
+  {
+    "slug": "duck",
+    "title": { "en": "Rubber Duck Run", "nl": "Rubber Duck Run" },
+    "description": {
+      "en": "The offline dino game, for developers: jump the bugs and merge conflicts, duck under the meeting invites.",
+      "nl": "Het offline dinospel, voor developers: spring over bugs en merge conflicts, duik onder meeting-uitnodigingen."
+    },
+    "framework": "Vanilla JS + Canvas",
+    "tooling": "esbuild",
+    "thumbnail": "/thumbs/duck.svg",
+    "controls": {
+      "en": "Space or ↑ to jump (hold for higher), ↓ to duck. On a phone: tap to jump, swipe down to duck.",
+      "nl": "Spatie of ↑ om te springen (houd vast voor hoger), ↓ om te duiken. Op je telefoon: tik om te springen, veeg omlaag om te duiken."
+    },
+    "aspect": "3 / 1"
+  }
+]
