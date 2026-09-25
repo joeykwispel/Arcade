@@ -1,0 +1,59 @@
+# Deploys the hub and every game to GitHub Pages (https://play.joeyoosenbrug.nl) when a pull request is merged into master.
+# Merging a PR is a push to master, so this is the trigger that fires on merge.
+# One-time setup: repo Settings -> Pages -> Source: "GitHub Actions", Custom domain: play.joeyoosenbrug.nl,
+# plus a CNAME record for play.joeyoosenbrug.nl pointing at joeykwispel.github.io.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [master]
+  # manual re-deploy from the Actions tab
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            games/*/package-lock.json
+
+      - run: npm ci
+
+      - run: npm run check
+
+      - run: npm run test:unit
+
+      # the hub into dist/, then each game with its own tooling into dist/games/<slug>/
+      - run: npm run build
+
+      - run: npm run test:games
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

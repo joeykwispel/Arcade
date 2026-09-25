@@ -1,0 +1,293 @@
+/*
+ * jo-header.css: the header of joeyoosenbrug.nl, for the *.joeyoosenbrug.nl apps.
+ * A 1:1 copy of src/lib/components/Nav.svelte with a jo-nav prefix, so it cannot clash with
+ * Tailwind or an app's own classes. Needs the tokens from jo-kit.css.
+ * Markup: header.html (plain HTML) or JoHeader.tsx (React). Behaviour: jo-header.js.
+ */
+
+/* Resets have zero specificity (:where), so the component rules below always win. */
+:where(.jo-nav, .jo-nav *, .jo-nav *::before, .jo-nav *::after) {
+  box-sizing: border-box;
+}
+:where(.jo-nav) ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+:where(.jo-nav) button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+:where(.jo-nav) svg {
+  display: block;
+}
+
+.jo-nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: var(--nav-h);
+  z-index: 50;
+  font-family: var(--font);
+  line-height: 1.6;
+  color: var(--text);
+  transition:
+    background 0.3s,
+    border-color 0.3s,
+    backdrop-filter 0.3s;
+  border-bottom: 1px solid transparent;
+}
+.jo-nav.is-scrolled {
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border-color: var(--border);
+}
+.jo-nav__progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.jo-nav__bar {
+  width: min(1360px, 100% - 2rem);
+  margin-inline: auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: space-between;
+  white-space: nowrap;
+}
+.jo-nav__logo,
+.jo-nav__tools {
+  flex: none;
+}
+.jo-nav__logo {
+  font-family: var(--mono);
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: -0.04em;
+  text-decoration: none;
+  color: var(--text);
+  padding: 0.3rem 0.55rem;
+  border-radius: 9px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  transition:
+    border-color 0.25s,
+    box-shadow 0.25s;
+}
+.jo-nav__br {
+  color: var(--accent-text);
+  display: inline-block;
+  transition: transform 0.35s var(--spring);
+}
+.jo-nav__logo:hover {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
+  box-shadow: 0 0 0 4px var(--glow);
+}
+.jo-nav__logo:hover .jo-nav__br:first-child {
+  transform: translateX(-3px);
+}
+.jo-nav__logo:hover .jo-nav__br:last-child {
+  transform: translateX(3px);
+}
+
+.jo-nav__menu ul {
+  display: flex;
+  gap: 0.1rem;
+}
+.jo-nav__link {
+  position: relative;
+  display: block;
+  padding: 0.35rem 0.6rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-family: var(--mono);
+  color: var(--muted);
+  font-size: 0.8rem;
+  transition:
+    color 0.2s,
+    background 0.2s;
+}
+.jo-nav__idx {
+  color: var(--accent-text);
+  margin-right: 0.3rem;
+  opacity: 0.8;
+}
+.jo-nav__link::after {
+  content: '';
+  position: absolute;
+  left: 0.6rem;
+  right: 0.6rem;
+  bottom: 0.1rem;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s var(--ease);
+}
+.jo-nav__link:hover {
+  color: var(--text);
+}
+.jo-nav__link:hover::after,
+.jo-nav__link[aria-current]::after {
+  transform: scaleX(1);
+}
+.jo-nav__link[aria-current] {
+  color: var(--text);
+}
+
+/* Ctrl K button: only for apps that have a command menu */
+.jo-nav__search {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  height: 36px;
+  padding: 0 0.6rem;
+  border-radius: 9px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  transition:
+    border-color 0.2s,
+    color 0.2s,
+    box-shadow 0.2s;
+}
+.jo-nav__search:hover {
+  color: var(--text);
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
+  box-shadow: 0 0 0 4px var(--glow);
+}
+.jo-nav__search kbd {
+  font-family: inherit;
+  font-size: 0.68rem;
+  padding: 0.05rem 0.35rem;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+}
+
+.jo-nav__tools {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.jo-nav__lang {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 2px;
+  background: var(--surface);
+}
+.jo-nav__lang a {
+  text-decoration: none;
+  border: 0;
+  background: transparent;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--muted);
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+.jo-nav__lang a[aria-current='true'] {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+.jo-nav__icon {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  transition:
+    transform 0.2s,
+    background 0.2s;
+}
+.jo-nav__icon:hover {
+  background: var(--surface-2);
+}
+.jo-nav__icon:active {
+  transform: scale(0.92);
+}
+/* The theme button shows a sun in dark mode (go light) and a moon in light mode (go dark). */
+.jo-nav__moon,
+:root[data-theme='light'] .jo-nav__sun {
+  display: none;
+}
+:root[data-theme='light'] .jo-nav__moon {
+  display: block;
+}
+.jo-nav__burger {
+  display: none;
+}
+.jo-nav__burger .jo-nav__close,
+.jo-nav__burger[aria-expanded='true'] .jo-nav__open {
+  display: none;
+}
+.jo-nav__burger[aria-expanded='true'] .jo-nav__close {
+  display: block;
+}
+
+@media (max-width: 1480px) {
+  .jo-nav__idx {
+    display: none;
+  }
+}
+@media (max-width: 1320px) {
+  .jo-nav__search kbd {
+    display: none;
+  }
+}
+@media (max-width: 1120px) {
+  .jo-nav__idx {
+    display: inline;
+  }
+  .jo-nav__burger {
+    display: grid;
+  }
+  .jo-nav__menu {
+    position: fixed;
+    inset: var(--nav-h) 0.75rem auto 0.75rem;
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 0.6rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition:
+      opacity 0.25s,
+      transform 0.25s,
+      visibility 0.25s;
+  }
+  .jo-nav__menu.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+  .jo-nav__menu ul {
+    flex-direction: column;
+  }
+  .jo-nav__link {
+    padding: 0.7rem 1rem;
+    font-size: 0.9rem;
+  }
+  .jo-nav__link::after {
+    display: none;
+  }
+}
