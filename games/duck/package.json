@@ -1,0 +1,20 @@
+{
+  "name": "play-duck",
+  "version": "1.0.0",
+  "description": "Rubber Duck Run: the offline dino game for developers. Vanilla JavaScript + Canvas, no framework, bundled with esbuild.",
+  "author": "Joey Oosenbrug (https://github.com/joeykwispel)",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node build.mjs --serve",
+    "build": "node build.mjs",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@fontsource-variable/jetbrains-mono": "^5.3.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
+}

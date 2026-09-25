@@ -1,0 +1,151 @@
+/*
+ * The game's own styles. It shares nothing with the hub at build time; the colors are copied from the
+ * joeyoosenbrug.nl design tokens so it sits naturally inside the hub's frame, in both themes.
+ */
+
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #0a0e17;
+  --text: #e6e9f2;
+  --muted: #98a3b9;
+  --accent: #7dd3c0;
+  /* game colors, read by main.js */
+  --g-duck: #f7cf46;
+  --g-beak: #ff8a3d;
+  --g-wing: #e0ab1f;
+  --g-eye: #0a0e17;
+  --g-ink: #98a3b9;
+  --g-bug: #f7768e;
+  --g-bugStripe: #9d3a50;
+  --g-paper: #e6e9f2;
+  --g-badge: #ff5f57;
+  --g-muted: #98a3b9;
+  --g-cloud: rgba(152, 163, 185, 0.32);
+  --g-ground: #98a3b9;
+  --g-accent: #7dd3c0;
+  --g-accent2: #c3b1ff;
+  --g-conflictBg: rgba(247, 118, 142, 0.08);
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --bg: #f4f6fb;
+  --text: #141b2d;
+  --muted: #4b566d;
+  --accent: #0f766e;
+  --g-duck: #f2b705;
+  --g-beak: #e8661b;
+  --g-wing: #d19600;
+  --g-eye: #141b2d;
+  --g-ink: #4b566d;
+  --g-bug: #c0364d;
+  --g-bugStripe: #7a1f31;
+  --g-paper: #ffffff;
+  --g-badge: #e5484d;
+  --g-muted: #4b566d;
+  --g-cloud: rgba(75, 86, 109, 0.3);
+  --g-ground: #4b566d;
+  --g-accent: #0b6259;
+  --g-accent2: #5b3fc4;
+  --g-conflictBg: rgba(192, 54, 77, 0.06);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  /* transparent inside the hub, so its frosted frame shows through */
+  background: transparent;
+  color: var(--text);
+  font-family: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  -webkit-font-smoothing: antialiased;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Opened on its own page instead of in the hub */
+html.standalone,
+html.standalone body {
+  background: var(--bg);
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: pointer;
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.35rem;
+  padding: 1rem;
+  text-align: center;
+  pointer-events: none;
+}
+.overlay[hidden] {
+  display: none;
+}
+.overlay p {
+  margin: 0;
+  /* a halo in the page color, so the drifting code in the background never crosses the text */
+  text-shadow:
+    0 0 4px var(--bg),
+    0 0 10px var(--bg),
+    0 0 18px var(--bg);
+}
+.title {
+  font-size: clamp(0.95rem, 3.2vw, 1.35rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+.overlay[data-phase='over'] .title {
+  color: var(--g-bug);
+}
+.sub {
+  font-size: clamp(0.72rem, 2vw, 0.85rem);
+  color: var(--muted);
+}
+.hint {
+  font-size: clamp(0.72rem, 2vw, 0.85rem);
+  font-weight: 700;
+  color: var(--accent);
+}
+.hint:empty {
+  display: none;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

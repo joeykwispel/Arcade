@@ -1,0 +1,14 @@
+{
+  "// why": "Only for editors (type hints from JSDoc) and to stop tools from picking up the hub's tsconfig. The game has no TypeScript build step.",
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "strict": false,
+    "lib": ["es2022", "dom", "dom.iterable"]
+  },
+  "include": ["src", "test", "build.mjs"]
+}
