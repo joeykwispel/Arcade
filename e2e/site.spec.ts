@@ -117,6 +117,43 @@ test('Bug Bash follows the language of the hub and works on its own page', async
   expect(errors).toEqual([]);
 });
 
+test('Git Gud: a level is solved by typing git commands', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/play/git-gud/');
+  const frame = page.frameLocator('iframe');
+  await expect(frame.locator('.app')).toHaveAttribute('data-screen', 'menu');
+  await frame.getByRole('button', { name: /Hello, git/ }).click();
+  const input = frame.getByRole('textbox', { name: 'git command' });
+  await input.fill('git push --force');
+  await input.press('Enter');
+  await expect(frame.locator('.log .err').last()).toContainText('not a git command');
+  for (const line of ['git commit', 'git commit']) {
+    await input.fill(line);
+    await input.press('Enter');
+  }
+  await expect(frame.getByRole('dialog')).toContainText('★★★');
+  await frame.getByRole('button', { name: 'next level' }).click();
+  await expect(frame.locator('.bar h1')).toContainText('Branch out');
+  expect(errors).toEqual([]);
+});
+
+test('Git Gud speaks Dutch in the Dutch hub and keeps progress', async ({ page }) => {
+  await page.goto('/nl/play/git-gud/');
+  const frame = page.frameLocator('iframe');
+  await expect(frame.locator('html')).toHaveAttribute('lang', 'nl');
+  await expect(frame.getByText('Geschiedenis herschrijven')).toBeVisible();
+  await frame.getByRole('button', { name: /Hallo, git/ }).click();
+  const input = frame.getByRole('textbox', { name: 'git command' });
+  for (const line of ['git branch tmp', 'git branch -d tmp', 'git commit', 'git commit']) {
+    await input.fill(line);
+    await input.press('Enter');
+  }
+  // four moves where two will do: solved, but two stars
+  await expect(frame.getByRole('dialog')).toContainText('★★☆');
+  const saved = await page.frames()[1].evaluate(() => localStorage.getItem('play:git-gud:stars'));
+  expect(saved?.startsWith('2,')).toBe(true);
+});
+
 test('pages have a large share image that exists', async ({ page, request }) => {
   for (const [path, image] of [
     ['/', '/og/play.png'],

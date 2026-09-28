@@ -33,6 +33,20 @@ const scenes = {
       await page.waitForTimeout(180);
     }
   },
+  'git-gud': {
+    viewport: { width: 1200, height: 750 },
+    // a few levels done, so the rebase level is open; play half of it
+    storage: { 'play:git-gud:stars': '3,3,3,3,3,2,3,3,0' },
+    async play(page) {
+      await page.getByRole('button', { name: /A straight line/ }).click();
+      for (const line of ['git rebase main', 'git switch main']) {
+        await page.keyboard.type(line);
+        await page.keyboard.press('Enter');
+        await page.waitForTimeout(500);
+      }
+      await page.keyboard.type('git merge fea');
+    }
+  },
   'bug-bash': {
     viewport: { width: 1200, height: 750 },
     // two levels done, so level 3 (two paths merging) is the one that opens
@@ -75,7 +89,8 @@ for (const g of games) {
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(500);
   await scene.play(page);
-  shots[g.slug] = `data:image/png;base64,${(await page.locator('canvas').screenshot()).toString('base64')}`;
+  const view = page.locator('canvas, #root').first();
+  shots[g.slug] = `data:image/png;base64,${(await view.screenshot()).toString('base64')}`;
   await ctx.close();
 }
 

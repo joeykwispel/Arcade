@@ -1,0 +1,27 @@
+{
+  "name": "play-git-gud",
+  "version": "1.0.0",
+  "description": "Git Gud: a git puzzle game. Get the commit graph into shape with real git commands. React + TypeScript + SVG, built with Vite.",
+  "author": "Joey Oosenbrug (https://github.com/joeykwispel)",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.1",
+    "typescript": "^6.0.3",
+    "vite": "^8.3.1",
+    "vitest": "^5.0.2"
+  }
+}
