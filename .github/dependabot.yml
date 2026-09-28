@@ -16,6 +16,9 @@ updates:
       # SvelteKit, svelte-check and typescript-eslint only support TypeScript up to 6.
       - dependency-name: typescript
         versions: ['>=7']
+      # Node's types follow the Node version CI runs on (24); move both together, by hand.
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
 
   - package-ecosystem: npm
     directory: /games/duck
