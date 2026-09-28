@@ -63,6 +63,31 @@ const scenes = {
       await page.waitForTimeout(300);
     }
   },
+  'deploy-tycoon': {
+    viewport: { width: 1200, height: 750 },
+    // a company halfway to its IPO, with prod on fire
+    storage: {
+      'play:deploy-tycoon:save': JSON.stringify({
+        version: 1,
+        money: 4_870_000,
+        earned: 7_900_000,
+        allTime: 7_900_000,
+        clicks: 1843,
+        owned: { intern: 42, junior: 31, senior: 18, lead: 9, ci: 4, k8s: 1, agent: 0, datacenter: 0 },
+        upgrades: ['intern-0', 'intern-1', 'intern-2', 'junior-0', 'junior-1', 'senior-0', 'keyboard', 'vim', 'coffee', 'desks', 'sre'],
+        options: 0,
+        round: 'seriesA',
+        nextIncident: 400,
+        incident: 2,
+        played: 3100,
+        lastSeen: Date.now()
+      })
+    },
+    async play(page) {
+      for (let i = 0; i < 6; i++) await page.getByTestId('push').click();
+      await page.waitForTimeout(600);
+    }
+  },
   'bug-bash': {
     viewport: { width: 1200, height: 750 },
     // two levels done, so level 3 (two paths merging) is the one that opens

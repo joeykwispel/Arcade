@@ -76,5 +76,25 @@
     },
     "aspect": "16 / 9",
     "phoneAspect": "3 / 4"
+  },
+  {
+    "slug": "deploy-tycoon",
+    "title": {
+      "en": "Deploy Tycoon",
+      "nl": "Deploy Tycoon"
+    },
+    "description": {
+      "en": "An idle game from a laptop in a garage to an IPO: hire devs, buy Kubernetes, roll back incidents, and go public for stock options.",
+      "nl": "Een idle game van een laptop in een garage tot een beursgang: neem devs aan, koop Kubernetes, rol incidenten terug en ga naar de beurs voor aandelenopties."
+    },
+    "framework": "Svelte + TypeScript",
+    "tooling": "Vite",
+    "thumbnail": "/thumbs/deploy-tycoon.svg",
+    "controls": {
+      "en": "Click git push to earn, buy your team and infra, pick upgrades. Keeps earning while you're away (up to 8 hours). Progress is saved in your browser.",
+      "nl": "Klik op git push om te verdienen, koop je team en infra, kies upgrades. Verdient door terwijl je weg bent (tot 8 uur). Je voortgang wordt in je browser bewaard."
+    },
+    "aspect": "16 / 10",
+    "phoneAspect": "3 / 4"
   }
 ]

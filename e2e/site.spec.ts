@@ -181,6 +181,53 @@ test('Standup Survivor speaks Dutch on its own page', async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test('Deploy Tycoon: push, hire, and the company is still there after a reload', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/play/deploy-tycoon/');
+  const frame = page.frameLocator('iframe');
+  const push = frame.getByTestId('push');
+  for (let i = 0; i < 20; i++) await push.click();
+  await expect(frame.getByTestId('cash')).toHaveText('$20');
+  await frame.locator('button.gen', { hasText: 'Intern' }).click();
+  await expect(frame.locator('button.gen', { hasText: 'Intern' }).locator('.owned')).toHaveText('1');
+  await expect(frame.locator('.feed')).toContainText('1× Intern');
+  // income from the intern
+  await expect(frame.locator('.rate')).toContainText('$0.2/s');
+  await page.reload();
+  await expect(page.frameLocator('iframe').locator('button.gen', { hasText: 'Intern' }).locator('.owned')).toHaveText('1');
+  expect(errors).toEqual([]);
+});
+
+test('Deploy Tycoon speaks Dutch and pays out time away', async ({ page }) => {
+  await page.addInitScript(() => {
+    if (sessionStorage.getItem('seeded')) return;
+    sessionStorage.setItem('seeded', '1');
+    const save = {
+      version: 1,
+      money: 0,
+      earned: 5000,
+      allTime: 5000,
+      clicks: 10,
+      owned: { junior: 10 },
+      upgrades: [],
+      options: 0,
+      round: 'seed',
+      nextIncident: 999,
+      incident: -1,
+      played: 60,
+      lastSeen: Date.now() - 3600_000
+    };
+    localStorage.setItem('play:deploy-tycoon:save', JSON.stringify(save));
+  });
+  await page.goto('/games/deploy-tycoon/?lang=nl');
+  await expect(page.getByRole('dialog')).toContainText('Welkom terug');
+  // 10 juniors × $1/s × 3600 s × 50%
+  await expect(page.getByRole('dialog')).toContainText('$18.0K');
+  await page.getByRole('button', { name: 'lekker' }).click();
+  await expect(page.getByRole('dialog')).toHaveCount(0);
+  await expect(page.getByText('team & infra')).toBeVisible();
+});
+
 test('pages have a large share image that exists', async ({ page, request }) => {
   for (const [path, image] of [
     ['/', '/og/play.png'],

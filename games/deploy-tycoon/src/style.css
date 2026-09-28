@@ -1,0 +1,530 @@
+/* Deploy Tycoon: a dashboard in the joeyoosenbrug.nl tokens, dark and light. */
+
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --page: #0a0e17;
+  --bg: #0d1220;
+  --panel: #0a0e17;
+  --raised: #172033;
+  --border: #253049;
+  --text: #e6e9f2;
+  --muted: #98a3b9;
+  --faint: #8190ab;
+  --accent: #7dd3c0;
+  --accent-ink: #06201b;
+  --accent2: #c3b1ff;
+  --money: #9ece6a;
+  --danger: #f7768e;
+  --danger-ink: #2a0610;
+  --warn: #e0af68;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --page: #f4f6fb;
+  --bg: #ffffff;
+  --panel: #f4f6fb;
+  --raised: #e8ecf4;
+  --border: #d3d9e6;
+  --text: #141b2d;
+  --muted: #4b566d;
+  --faint: #5f6a80;
+  --accent: #0f766e;
+  --accent-ink: #ffffff;
+  --accent2: #5b3fc4;
+  --money: #2f6b1f;
+  --danger: #b4233f;
+  --danger-ink: #ffffff;
+  --warn: #8a5300;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+}
+body {
+  background: transparent;
+  color: var(--text);
+  font:
+    14px/1.45 'JetBrains Mono Variable',
+    'JetBrains Mono',
+    ui-monospace,
+    Menlo,
+    Consolas,
+    monospace;
+  -webkit-font-smoothing: antialiased;
+}
+html.standalone body {
+  background: var(--page);
+}
+button {
+  font: inherit;
+  color: inherit;
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+h1,
+h2,
+p {
+  margin: 0;
+}
+h2 {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--faint);
+}
+.muted {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.app {
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(230px, 1fr) minmax(0, 1.5fr) minmax(0, 1.2fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-areas: 'top top top' 'left middle right';
+  background: var(--bg);
+  position: relative;
+}
+
+/* ---------- header ---------- */
+
+.top {
+  grid-area: top;
+  display: flex;
+  align-items: center;
+  gap: 1rem 1.6rem;
+  flex-wrap: wrap;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+.brand .path {
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.brand h1 {
+  font-size: 1.15rem;
+  letter-spacing: -0.03em;
+}
+.cash {
+  margin-left: auto;
+  text-align: right;
+}
+.cash .label {
+  font-size: 0.7rem;
+  color: var(--faint);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.cash .amount {
+  font-size: clamp(1.3rem, 3.5vw, 1.9rem);
+  font-weight: 800;
+  color: var(--money);
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+.cash .rate {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.cash .rate.down {
+  color: var(--danger);
+}
+.options {
+  font-weight: 700;
+  color: var(--accent2);
+}
+.options span {
+  font-weight: 500;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+/* ---------- columns ---------- */
+
+.left,
+.middle,
+.right {
+  min-height: 0;
+  overflow: auto;
+  padding: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.left {
+  grid-area: left;
+  border-right: 1px solid var(--border);
+}
+.middle {
+  grid-area: middle;
+}
+.right {
+  grid-area: right;
+  border-left: 1px solid var(--border);
+  background: var(--panel);
+}
+
+.push-wrap {
+  display: grid;
+}
+.push {
+  position: relative;
+  display: grid;
+  gap: 0.2rem;
+  padding: 1.3rem 1rem;
+  border: 0;
+  border-radius: 14px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  cursor: pointer;
+  box-shadow: 0 6px 0 color-mix(in srgb, var(--accent) 55%, #000);
+  transition:
+    transform 0.06s,
+    box-shadow 0.06s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+.push:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 color-mix(in srgb, var(--accent) 55%, #000);
+}
+.push .cmd {
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+.push .sub {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.float {
+  position: absolute;
+  top: 0.6rem;
+  font-weight: 800;
+  color: var(--accent-ink);
+  pointer-events: none;
+  animation: rise 0.8s ease-out forwards;
+}
+@keyframes rise {
+  to {
+    transform: translateY(-2.2rem);
+    opacity: 0;
+  }
+}
+
+.incident {
+  border: 1px solid var(--danger);
+  border-radius: 10px;
+  padding: 0.7rem 0.8rem;
+  background: color-mix(in srgb, var(--danger) 12%, var(--bg));
+  display: grid;
+  gap: 0.35rem;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+.incident .what {
+  font-weight: 800;
+  color: var(--danger);
+}
+.incident .desc {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+@keyframes pulse {
+  50% {
+    border-color: color-mix(in srgb, var(--danger) 40%, var(--border));
+  }
+}
+
+.card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.7rem 0.8rem;
+  display: grid;
+  gap: 0.45rem;
+  background: var(--panel);
+}
+.card p {
+  font-size: 0.8rem;
+}
+.progress {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--raised);
+  overflow: hidden;
+}
+.progress i {
+  display: block;
+  height: 100%;
+  background: var(--accent2);
+}
+dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.15rem 0.8rem;
+  margin: 0;
+  font-size: 0.8rem;
+}
+dt {
+  color: var(--muted);
+}
+dd {
+  margin: 0;
+  text-align: right;
+  font-weight: 600;
+}
+.link {
+  justify-self: start;
+  border: 0;
+  background: none;
+  padding: 0;
+  color: var(--faint);
+  font-size: 0.75rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.btn {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--raised);
+  padding: 0.4rem 0.8rem;
+  font-weight: 700;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+.btn.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+.btn.danger {
+  background: var(--danger);
+  border-color: var(--danger);
+  color: var(--danger-ink);
+}
+
+/* ---------- generators ---------- */
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.mode {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.mode button {
+  border: 0;
+  background: transparent;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+}
+.mode button.on {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+.gens,
+.ups {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.45rem;
+}
+.gen {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: 'name owned' 'desc desc' 'meta price';
+  gap: 0.1rem 0.6rem;
+  text-align: left;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel);
+  cursor: pointer;
+}
+.gen:hover:not(:disabled),
+.up:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+.gen:disabled,
+.up:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+.gen:disabled .price,
+.up:disabled .price {
+  color: var(--muted);
+}
+.gen .name {
+  grid-area: name;
+  font-weight: 700;
+}
+.gen .owned {
+  grid-area: owned;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.gen .desc {
+  grid-area: desc;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+.gen .meta {
+  grid-area: meta;
+  font-size: 0.72rem;
+  color: var(--faint);
+}
+.gen .price,
+.up .price {
+  grid-area: price;
+  font-weight: 700;
+  color: var(--money);
+  text-align: right;
+}
+
+/* ---------- upgrades and feed ---------- */
+
+.up {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: 'name price' 'desc desc';
+  gap: 0.05rem 0.6rem;
+  text-align: left;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  cursor: pointer;
+}
+.up .name {
+  grid-area: name;
+  font-weight: 700;
+  font-size: 0.82rem;
+}
+.up .desc {
+  grid-area: desc;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+.feed {
+  display: grid;
+  gap: 0.15rem;
+  font-size: 0.75rem;
+  min-height: 6em;
+}
+.feed p {
+  color: var(--muted);
+}
+.feed .ok {
+  color: var(--money);
+}
+.feed .err {
+  color: var(--danger);
+}
+.feed .news {
+  color: var(--warn);
+}
+.feed .buy {
+  color: var(--accent);
+}
+
+/* ---------- dialogs ---------- */
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: color-mix(in srgb, var(--page) 70%, transparent);
+  z-index: 5;
+}
+.dialog {
+  max-width: 420px;
+  display: grid;
+  gap: 0.8rem;
+  padding: 1.2rem 1.4rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--panel);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+.dialog h2 {
+  font-size: 1.1rem;
+  text-transform: none;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+.dialog .row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* ---------- phones: one column ---------- */
+
+@media (max-width: 760px) {
+  .app {
+    display: block;
+    overflow: auto;
+  }
+  .top {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+  .left,
+  .middle,
+  .right {
+    overflow: visible;
+    border: 0;
+  }
+  .right {
+    background: transparent;
+  }
+  .push-wrap {
+    position: sticky;
+    top: 5.2rem;
+    z-index: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
