@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="{{lang}}">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark light" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'none'; style-src 'self'; font-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'"
+    />
+    <title>{{title}}</title>
+    <meta name="description" content="{{description}}" />
+    <link rel="icon" href="{{root}}favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="{{root}}style.css" />
+  </head>
+  <body>
+    <!-- targets for the theme in the URL fragment (#light, #dark), see style.css -->
+    <i id="light"></i><i id="dark"></i>
+    <!--
+      No JavaScript at all. Every button is a checkbox inside a <label>, and the stylesheet reads the checkboxes with
+      :has(): #sN checked means banner N is done, a .pen checkbox means a cookie was accepted. The timer is an animated
+      CSS custom property shown with a counter, and "run it again" is a plain reset button.
+    -->
+    <form class="game" autocomplete="off">
+      <!-- a disabled default button, so Enter in the text field doesn't try to submit anything -->
+      <button type="submit" disabled hidden></button>
+
+      <section class="screen intro" aria-labelledby="intro-title">
+        <p class="logo" aria-hidden="true">[x]</p>
+        <h1 id="intro-title">{{title}}</h1>
+        <p class="lead">{{tagline}}</p>
+        <p class="muted">{{rules}}</p>
+        <label class="btn primary big"><input type="checkbox" id="s0" class="sr" />{{start}}</label>
+        <p class="badge">{{nojs}}</p>
+      </section>
+
+      <header class="hud">
+        <p><span class="muted">{{time}}</span> <b class="clock"></b></p>
+        <p><span class="muted">{{accepted}}</span> <b class="count"></b></p>
+        <button type="reset" class="link">{{restart}}</button>
+      </header>
+
+      <!-- 1: the classic -->
+      <section class="level" id="l1" aria-labelledby="h1">
+        <p class="lvl">{{level}} 1/8</p>
+        <div class="banner bottom">
+          <h2 id="h1">{{l1_title}}</h2>
+          <p>{{l1_text}}</p>
+          <div class="actions">
+            <label class="btn primary accept"><input type="checkbox" id="p1" class="sr pen" />{{accept_all}}</label>
+            <label class="btn quiet"><input type="checkbox" id="s1" class="sr" />{{l1_reject}}</label>
+          </div>
+          <p class="shame">{{shame}}</p>
+        </div>
+      </section>
+
+      <!-- 2: everything is on by default -->
+      <section class="level" id="l2" aria-labelledby="h2">
+        <p class="lvl">{{level}} 2/8</p>
+        <div class="banner">
+          <h2 id="h2">{{l2_title}}</h2>
+          <p>{{l2_text}}</p>
+          <div class="actions">
+            <label class="btn primary accept"><input type="checkbox" id="p2" class="sr pen" />{{accept_all}}</label>
+            <label class="btn manage"><input type="checkbox" id="m2" class="sr" />{{l2_manage}}</label>
+          </div>
+          <fieldset class="prefs">
+            <legend>{{l2_prefs}}</legend>
+            <label class="switch"><input type="checkbox" checked disabled />{{l2_necessary}}</label>
+            <label class="switch"><input type="checkbox" class="opt" checked />{{l2_analytics}}</label>
+            <label class="switch"><input type="checkbox" class="opt" checked />{{l2_marketing}}</label>
+            <label class="switch"><input type="checkbox" class="opt" checked />{{l2_personal}}</label>
+            <label class="switch"><input type="checkbox" class="opt" checked />{{l2_social}}</label>
+            <p class="muted small">{{l2_hint}}</p>
+            <!-- the same button twice: with a switch still on, saving is accepting -->
+            <label class="btn save-on accept"><input type="checkbox" id="p2b" class="sr pen" />{{l2_save}}</label>
+            <label class="btn save-off"><input type="checkbox" id="s2" class="sr" />{{l2_save}}</label>
+          </fieldset>
+          <p class="shame">{{shame}}</p>
+        </div>
+      </section>
+
+      <!-- 3: forty vendors with a legitimate interest -->
+      <section class="level" id="l3" aria-labelledby="h3">
+        <p class="lvl">{{level}} 3/8</p>
+        <div class="banner">
+          <h2 id="h3">{{l3_title}}</h2>
+          <p>{{l3_text}}</p>
+          <div class="actions">
+            <label class="btn primary accept"><input type="checkbox" id="p3" class="sr pen" />{{l3_accept}}</label>
+          </div>
+          <div class="vendors">
+            {{vendors}}
+            <label class="btn object"><input type="checkbox" id="s3" class="sr" />{{l3_object}}</label>
+          </div>
+          <p class="shame">{{shame}}</p>
+        </div>
+      </section>
+
+      <!-- 4: double negatives -->
+      <section class="level" id="l4" aria-labelledby="h4">
+        <p class="lvl">{{level}} 4/8</p>
+        <div class="banner">
+          <h2 id="h4">{{l4_title}}</h2>
+          <p class="question">{{l4_text}}</p>
+          <div class="actions stack">
+            <label class="btn accept"><input type="checkbox" id="p4a" class="sr pen" />{{l4_a}}</label>
+            <label class="btn accept"><input type="checkbox" id="p4b" class="sr pen" />{{l4_b}}</label>
+            <label class="btn"><input type="checkbox" id="s4" class="sr" />{{l4_c}}</label>
+          </div>
+          <p class="shame">{{shame}}</p>
+        </div>
+      </section>
+
+      <!-- 5: the button that runs away (until it gets tired) -->
+      <section class="level" id="l5" aria-labelledby="h5">
+        <p class="lvl">{{level}} 5/8</p>
+        <div class="banner">
+          <h2 id="h5">{{l5_title}}</h2>
+          <p>{{l5_text}}</p>
+          <div class="actions">
+            <label class="btn primary accept"><input type="checkbox" id="p5" class="sr pen" />{{accept_all}}</label>
+            <span class="flee"
+              ><label class="btn"><input type="checkbox" id="s5" class="sr" />{{reject_all}}</label></span
+            >
+          </div>
+          <p class="muted small">{{l5_hint}}</p>
+          <p class="shame">{{shame}}</p>
+        </div>
+      </section>
+
+      <!-- 6: pay or okay, with the real way out in the small print -->
+      <section class="level" id="l6" aria-labelledby="h6">
+        <p class="lvl">{{level}} 6/8</p>
+        <div class="banner">
+          <h2 id="h6">{{l6_title}}</h2>
+          <p>{{l6_text}}</p>
+          <div class="actions">
+            <label class="btn primary accept"><input type="checkbox" id="p6" class="sr pen" />{{accept_all}}</label>
+            <label class="btn accept"><input type="checkbox" id="p6b" class="sr pen" />{{l6_pay}}</label>
+          </div>
+          <p class="fine">
+            {{l6_fine1}}
+            <label class="hidden-way"><input type="checkbox" id="s6" class="sr" />{{l6_link}}</label>{{l6_fine2}}
+          </p>
+          <p class="shame">{{shame}}</p>
+        </div>
+      </section>
+
+      <!-- 7: confirmshaming, and a question with the answers swapped -->
+      <section class="level" id="l7" aria-labelledby="h7">
+        <p class="lvl">{{level}} 7/8</p>
+        <div class="banner step-a">
+          <h2 id="h7">{{l7_title}}</h2>
+          <p>{{l7_text}}</p>
+          <div class="actions">
+            <label class="btn primary accept"><input type="checkbox" id="p7" class="sr pen" />{{accept_all}}</label>
+            <label class="btn"><input type="checkbox" id="m7" class="sr" />{{reject_all}}</label>
+          </div>
+        </div>
+        <div class="banner step-b" role="group" aria-labelledby="h7b">
+          <h3 id="h7b">{{l7_sure}}</h3>
+          <p>{{l7_sure_text}}</p>
+          <div class="actions">
+            <label class="btn primary accept"><input type="checkbox" id="p7b" class="sr pen" />{{l7_keep}}</label>
+            <label class="btn"><input type="checkbox" id="m7b" class="sr" />{{l7_yes}}</label>
+          </div>
+        </div>
+        <div class="banner step-c" role="group" aria-labelledby="h7c">
+          <h3 id="h7c">{{l7_confirm_title}}</h3>
+          <p>{{l7_confirm_text}}</p>
+          <div class="actions">
+            <label class="btn primary accept"><input type="checkbox" id="p7c" class="sr pen" />{{l7_confirm}}</label>
+            <label class="btn"><input type="checkbox" id="s7" class="sr" />{{l7_cancel}}</label>
+          </div>
+        </div>
+        <p class="shame">{{shame}}</p>
+      </section>
+
+      <!-- 8: the boss, a captcha -->
+      <section class="level" id="l8" aria-labelledby="h8">
+        <p class="lvl">{{level}} 8/8</p>
+        <div class="banner">
+          <h2 id="h8">{{l8_title}}</h2>
+          <p>{{l8_text}}</p>
+          <fieldset class="captcha">
+            <legend class="sr">{{l8_text}}</legend>
+            <label class="cell"><input type="checkbox" class="yes" /><span aria-hidden="true">🍪</span><span class="sr">{{l8_cookie}}</span></label>
+            <label class="cell"><input type="checkbox" class="no" /><span aria-hidden="true">🍩</span><span class="sr">{{l8_donut}}</span></label>
+            <label class="cell"><input type="checkbox" class="yes" /><span aria-hidden="true">🍪</span><span class="sr">{{l8_cookie}}</span></label>
+            <label class="cell"><input type="checkbox" class="no" /><span aria-hidden="true">🥯</span><span class="sr">{{l8_bagel}}</span></label>
+            <label class="cell"><input type="checkbox" class="no" /><span aria-hidden="true">🍘</span><span class="sr">{{l8_cracker}}</span></label>
+            <label class="cell"><input type="checkbox" class="yes" /><span aria-hidden="true">🍪</span><span class="sr">{{l8_cookie}}</span></label>
+            <label class="cell"><input type="checkbox" class="no" /><span aria-hidden="true">🧇</span><span class="sr">{{l8_waffle}}</span></label>
+            <label class="cell"><input type="checkbox" class="yes" /><span aria-hidden="true">🍪</span><span class="sr">{{l8_cookie}}</span></label>
+            <label class="cell"><input type="checkbox" class="no" /><span aria-hidden="true">🥨</span><span class="sr">{{l8_pretzel}}</span></label>
+          </fieldset>
+          <label class="type"
+            >{{l8_type}} <input type="text" class="word" required pattern="{{pattern}}" spellcheck="false" autocapitalize="characters"
+          /></label>
+          <div class="actions">
+            <label class="btn primary accept"><input type="checkbox" id="p8" class="sr pen" />{{accept_all}}</label>
+            <label class="btn submit"><input type="checkbox" id="s8" class="sr" />{{l8_submit}}</label>
+            <span class="btn locked">{{l8_locked}}</span>
+          </div>
+          <p class="shame">{{shame}}</p>
+        </div>
+      </section>
+
+      <section class="screen win" aria-labelledby="win-title">
+        <p class="logo" aria-hidden="true">[✓]</p>
+        <h2 id="win-title">{{win_title}}</h2>
+        <dl class="score">
+          <div>
+            <dt>{{win_time}}</dt>
+            <dd class="clock"></dd>
+          </div>
+          <div>
+            <dt>{{win_count}}</dt>
+            <dd class="count"></dd>
+          </div>
+        </dl>
+        <p class="clean">{{win_clean}}</p>
+        <p class="dirty">{{win_dirty}}</p>
+        <button type="reset" class="btn primary big">{{again}}</button>
+      </section>
+    </form>
+  </body>
+</html>

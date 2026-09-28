@@ -144,6 +144,18 @@ const scenes = {
       await page.waitForTimeout(400);
     }
   },
+  'cookie-consent': {
+    viewport: { width: 720, height: 450 },
+    selector: '.game',
+    // dark (a game without JavaScript takes its theme from the URL fragment), start, and fall for "Accept all" once
+    async play(page) {
+      await page.goto(`${page.url()}#dark`);
+      await page.locator('label:has(#s0)').click();
+      await page.waitForTimeout(1300);
+      await page.locator('label:has(#p1)').click();
+      await page.waitForTimeout(300);
+    }
+  },
   'bug-bash': {
     viewport: { width: 1200, height: 750 },
     // two levels done, so level 3 (two paths merging) is the one that opens

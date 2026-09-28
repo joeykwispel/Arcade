@@ -11,12 +11,20 @@
   const c = $derived(t(app.locale));
   const title = $derived(game.title[app.locale]);
   // The language goes along in the URL, so the game has it on its first frame; theme changes follow over postMessage.
-  const src = $derived(`${gameSrc(game)}?lang=${app.locale}`);
+  const src = $derived(`${gameSrc(game, app.locale)}?lang=${app.locale}`);
 
   let frame: HTMLIFrameElement;
 
   const theme = () => (document.documentElement.dataset.theme === 'light' ? 'light' : 'dark');
-  const send = () => frame?.contentWindow?.postMessage(settingsMessage(app.locale, theme()), location.origin);
+  function send() {
+    const win = frame?.contentWindow;
+    if (!win) return;
+    if (!game.noScript) return win.postMessage(settingsMessage(app.locale, theme()), location.origin);
+    // A game without JavaScript reads the theme from its URL fragment with :target. replace() keeps the theme
+    // switches out of the browser history.
+    const url = win.location.href.split('#')[0];
+    if (url !== 'about:blank') win.location.replace(`${url}#${theme()}`);
+  }
 
   function onload() {
     send();
