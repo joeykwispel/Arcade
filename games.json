@@ -197,5 +197,26 @@
     "aspect": "16 / 10",
     "phoneAspect": "3 / 4",
     "noScript": true
+  },
+  {
+    "slug": "code-review-tinder",
+    "title": {
+      "en": "Code Review Tinder",
+      "nl": "Code Review Tinder"
+    },
+    "description": {
+      "en": "Diffs slide in: swipe right to approve, left to request changes. The bugs you let through come back as incidents.",
+      "nl": "Diffs schuiven binnen: rechts om goed te keuren, links voor changes. De bugs die je doorlaat komen terug als incident."
+    },
+    "framework": "Dart + Flutter",
+    "tooling": "flutter build web",
+    "thumbnail": "/thumbs/code-review-tinder.svg",
+    "controls": {
+      "en": "Swipe the card or press → to approve, ← to request changes; or use the buttons. Too slow and it gets merged anyway. Space starts, P pauses.",
+      "nl": "Veeg de kaart of druk → om goed te keuren, ← voor changes; of gebruik de knoppen. Te traag en hij wordt toch gemerged. Spatie start, P pauzeert."
+    },
+    "aspect": "16 / 10",
+    "phoneAspect": "3 / 4",
+    "outDir": "build/web"
   }
 ]

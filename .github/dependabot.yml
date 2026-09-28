@@ -124,6 +124,16 @@ updates:
       all:
         patterns: ['*']
 
+  # Dart packages for Code Review Tinder
+  - package-ecosystem: pub
+    directory: /games/code-review-tinder
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      all:
+        patterns: ['*']
+
   # Kotlin and the Gradle wrapper for Standup Survivor
   - package-ecosystem: gradle
     directory: /games/standup-survivor

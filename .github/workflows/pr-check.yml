@@ -50,6 +50,13 @@ jobs:
           version: 6.0.10
           actions-cache-folder: emsdk-cache
 
+      # Code Review Tinder is Dart + Flutter
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.47.5
+          channel: stable
+          cache: true
+
       # Dev-Ware is Gleam, compiled to JavaScript: no Erlang needed
       - uses: erlef/setup-beam@v1
         with:

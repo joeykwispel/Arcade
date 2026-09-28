@@ -156,6 +156,20 @@ const scenes = {
       await page.waitForTimeout(300);
     }
   },
+  'code-review-tinder': {
+    viewport: { width: 900, height: 560 },
+    selector: 'body',
+    // start, and drag the first card halfway to the right, so it tilts and shows LGTM
+    async play(page) {
+      await page.waitForFunction(() => document.body.dataset.phase === 'title');
+      await page.keyboard.press('Space');
+      await page.waitForTimeout(300);
+      await page.mouse.move(450, 260);
+      await page.mouse.down();
+      for (let x = 450; x <= 560; x += 10) await page.mouse.move(x, 262);
+      await page.waitForTimeout(200);
+    }
+  },
   'bug-bash': {
     viewport: { width: 1200, height: 750 },
     // two levels done, so level 3 (two paths merging) is the one that opens

@@ -1,0 +1,27 @@
+name: code_review_tinder
+description: 'Code Review Tinder: swipe right to approve a diff, left to request changes.'
+publish_to: 'none'
+version: 1.0.0
+
+environment:
+  sdk: ^3.13.4
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  web: ^1.1.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  fonts:
+    # bundled, so Flutter never fetches a font from a CDN (the page's CSP wouldn't allow it anyway)
+    - family: JetBrainsMono
+      fonts:
+        - asset: fonts/JetBrainsMono.ttf
