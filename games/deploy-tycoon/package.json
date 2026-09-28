@@ -1,25 +1,23 @@
 {
   "name": "play-deploy-tycoon",
   "version": "1.0.0",
-  "description": "Deploy Tycoon: an idle game from a laptop in a garage to an IPO. Svelte 5 + TypeScript, built with Vite.",
+  "description": "Deploy Tycoon: an idle game from a laptop in a garage to an IPO. Written in Elm; Vite builds the page.",
   "author": "Joey Oosenbrug (https://github.com/joeykwispel)",
   "license": "MIT",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "svelte-check --tsconfig ./tsconfig.json && vite build",
-    "test": "vitest run"
+    "dev": "node build.mjs --dev",
+    "build": "node build.mjs",
+    "test": "elm-test"
   },
   "dependencies": {
     "@fontsource-variable/jetbrains-mono": "^5.3.0"
   },
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^7.3.1",
-    "svelte": "^5.57.1",
-    "svelte-check": "^4.1.0",
-    "typescript": "^6.0.3",
-    "vite": "^8.3.1",
-    "vitest": "^5.0.2"
+    "elm": "^0.19.2-0",
+    "elm-test": "^0.19.2-1",
+    "esbuild": "^0.28.2",
+    "vite": "^8.3.1"
   }
 }

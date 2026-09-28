@@ -130,7 +130,7 @@ for (const g of games) {
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(500);
   await scene.play(page);
-  const view = page.locator('canvas, #root').first();
+  const view = page.locator('canvas, #root, .app').first();
   shots[g.slug] = `data:image/png;base64,${(await view.screenshot()).toString('base64')}`;
   await ctx.close();
 }

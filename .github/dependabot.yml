@@ -68,10 +68,13 @@ updates:
     groups:
       all:
         patterns: ['*']
-    ignore:
-      # same as the hub: stay on TypeScript 6 for now
-      - dependency-name: typescript
-        versions: ['>=7']
+
+  # Elm packages for Deploy Tycoon
+  - package-ecosystem: elm
+    directory: /games/deploy-tycoon
+    schedule:
+      interval: weekly
+      day: monday
 
   # Kotlin and the Gradle wrapper for Standup Survivor
   - package-ecosystem: gradle

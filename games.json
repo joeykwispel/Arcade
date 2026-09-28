@@ -87,8 +87,8 @@
       "en": "An idle game from a laptop in a garage to an IPO: hire devs, buy Kubernetes, roll back incidents, and go public for stock options.",
       "nl": "Een idle game van een laptop in een garage tot een beursgang: neem devs aan, koop Kubernetes, rol incidenten terug en ga naar de beurs voor aandelenopties."
     },
-    "framework": "Svelte + TypeScript",
-    "tooling": "Vite",
+    "framework": "Elm",
+    "tooling": "elm make + Vite",
     "thumbnail": "/thumbs/deploy-tycoon.svg",
     "controls": {
       "en": "Click git push to earn, buy your team and infra, pick upgrades. Keeps earning while you're away (up to 8 hours). Progress is saved in your browser.",

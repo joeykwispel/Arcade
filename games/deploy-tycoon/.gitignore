@@ -1,0 +1,3 @@
+# Elm's package cache and the compiled app (made by build.mjs)
+elm-stuff
+public/elm.js

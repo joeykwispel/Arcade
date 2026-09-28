@@ -11,3 +11,6 @@ build
 .gradle
 .kotlin
 kotlin-js-store
+# Elm: package cache and the compiled app
+elm-stuff
+games/*/public/elm.js
