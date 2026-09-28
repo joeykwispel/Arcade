@@ -5,10 +5,13 @@
   color-scheme: dark;
   --page: #0a0e17;
   --c-bg: #070a12;
-  --c-code: #6f7c96;
-  --c-keyword: #9d86e0;
-  --c-str: #6f9e4f;
-  --c-comment: #3c4760;
+  /* the wall code is dim on purpose: the obstacles should stand out, not the moving walls */
+  --c-code: #4f5a72;
+  --c-keyword: #6f5fa8;
+  --c-str: #4f7040;
+  --c-comment: #2c3548;
+  --c-panel: #111827;
+  --c-wall-tint: #8a8f99;
   --c-accent: #7dd3c0;
   --c-accent2: #c3b1ff;
   --c-danger: #f7768e;
@@ -25,10 +28,12 @@
   color-scheme: light;
   --page: #f4f6fb;
   --c-bg: #f7f8fc;
-  --c-code: #8b95ab;
-  --c-keyword: #9b7fe8;
-  --c-str: #6e9e56;
-  --c-comment: #c3cad8;
+  --c-code: #aeb6c7;
+  --c-keyword: #bba9f0;
+  --c-str: #9dc28b;
+  --c-comment: #d9dee8;
+  --c-panel: #ffffff;
+  --c-wall-tint: #ffffff;
   --c-accent: #0f766e;
   --c-accent2: #6d4fd6;
   --c-danger: #c0364d;
@@ -76,8 +81,19 @@ canvas {
   height: 100%;
 }
 
+/* A dark vignette: the edges of your view are where motion makes people queasy, so they stay quiet */
+.stage::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 30%, color-mix(in srgb, var(--c-bg) 96%, transparent) 95%);
+}
+
 .hud {
   position: absolute;
+  z-index: 2;
   inset: 0 0 auto;
   display: flex;
   justify-content: space-between;
@@ -105,6 +121,7 @@ canvas {
 
 .overlay {
   position: absolute;
+  z-index: 3;
   inset: 0;
   display: grid;
   place-content: center;

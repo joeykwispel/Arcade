@@ -39,6 +39,8 @@ let readColors = (): Scene.colors => {
     info: v("info"),
     success: v("success"),
     ink: v("ink"),
+    panel: v("panel"),
+    wallTint: v("wall-tint"),
   }
 }
 

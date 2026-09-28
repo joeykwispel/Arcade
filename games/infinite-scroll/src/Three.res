@@ -96,3 +96,11 @@ type rendererOptions = {canvas: Browser.element, antialias: bool, powerPreferenc
 @send external setSize: (renderer, float, float, bool) => unit = "setSize"
 @send external setClearColor: (renderer, string) => unit = "setClearColor"
 @send external render: (renderer, object3d, object3d) => unit = "render"
+
+// ---------- custom geometry (for arcs that text can follow) ----------
+
+type bufferAttribute
+@module("three") @new external bufferGeometry: unit => geometry = "BufferGeometry"
+@module("three") @new external bufferAttribute: (Float32Array.t, int) => bufferAttribute = "BufferAttribute"
+@send external setAttribute: (geometry, string, bufferAttribute) => unit = "setAttribute"
+@send external setIndex: (geometry, array<int>) => unit = "setIndex"
