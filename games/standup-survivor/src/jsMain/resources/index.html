@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="theme-color" content="#0a0e17" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'"
+    />
+    <title>Standup Survivor</title>
+    <meta name="description" content="Survive the workday: Slack pings, meeting invites and quick questions come from everywhere. Written in Kotlin." />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="stage" id="stage" data-phase="loading">
+      <canvas id="game" aria-hidden="true"></canvas>
+      <p class="sr-only">
+        Standup Survivor, an arcade game drawn on a canvas. Walk with WASD or the arrow keys; your tools attack on their own. Survive from 09:00 until 17:00. On
+        level up, pick an upgrade with 1, 2 or 3. Space starts, P pauses.
+      </p>
+      <p class="sr-only" id="live" aria-live="polite"></p>
+    </main>
+    <script src="./standup.js"></script>
+  </body>
+</html>

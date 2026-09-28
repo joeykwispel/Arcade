@@ -47,6 +47,22 @@ const scenes = {
       await page.keyboard.type('git merge fea');
     }
   },
+  'standup-survivor': {
+    viewport: { width: 1200, height: 675 },
+    // clock in, walk in circles for a while, pick upgrades as they come
+    async play(page) {
+      await page.keyboard.press('Space');
+      const keys = ['KeyD', 'KeyS', 'KeyA', 'KeyW'];
+      for (let i = 0; i < 26; i++) {
+        await page.keyboard.down(keys[i % 4]);
+        await page.waitForTimeout(700);
+        await page.keyboard.up(keys[i % 4]);
+        await page.keyboard.press('Digit1');
+      }
+      await page.keyboard.down('KeyD');
+      await page.waitForTimeout(300);
+    }
+  },
   'bug-bash': {
     viewport: { width: 1200, height: 750 },
     // two levels done, so level 3 (two paths merging) is the one that opens

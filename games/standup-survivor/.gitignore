@@ -1,0 +1,5 @@
+# Gradle and Kotlin/JS build output
+.gradle
+.kotlin
+build
+kotlin-js-store

@@ -154,6 +154,33 @@ test('Git Gud speaks Dutch in the Dutch hub and keeps progress', async ({ page }
   expect(saved?.startsWith('2,')).toBe(true);
 });
 
+test('Standup Survivor (Kotlin/JS) starts, runs and pauses', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/play/standup-survivor/');
+  const frame = page.frameLocator('iframe');
+  const stage = frame.locator('#stage');
+  await expect(stage).toHaveAttribute('data-phase', 'ready');
+  await frame.locator('canvas#game').click();
+  await expect(stage).toHaveAttribute('data-phase', 'playing');
+  await expect(frame.locator('#live')).toContainText('09:00');
+  await page.keyboard.down('KeyD');
+  await page.waitForTimeout(1500);
+  await page.keyboard.up('KeyD');
+  await page.keyboard.press('KeyP');
+  await expect(stage).toHaveAttribute('data-phase', 'paused');
+  expect(errors).toEqual([]);
+});
+
+test('Standup Survivor speaks Dutch on its own page', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/games/standup-survivor/?lang=nl');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'nl');
+  await expect(page.locator('html')).toHaveClass(/standalone/);
+  await page.keyboard.press('Space');
+  await expect(page.locator('#live')).toContainText('Ingeklokt');
+  expect(errors).toEqual([]);
+});
+
 test('pages have a large share image that exists', async ({ page, request }) => {
   for (const [path, image] of [
     ['/', '/og/play.png'],

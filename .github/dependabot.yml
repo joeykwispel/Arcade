@@ -51,6 +51,25 @@ updates:
       - dependency-name: typescript
         versions: ['>=7']
 
+  - package-ecosystem: npm
+    directory: /games/standup-survivor
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      all:
+        patterns: ['*']
+
+  # Kotlin and the Gradle wrapper for Standup Survivor
+  - package-ecosystem: gradle
+    directory: /games/standup-survivor
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      all:
+        patterns: ['*']
+
   - package-ecosystem: github-actions
     directory: /
     schedule:
