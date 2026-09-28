@@ -377,18 +377,40 @@ test('Cookie Consent Speedrun has a Dutch page, which the Dutch site loads', asy
   expect(errors).toEqual([]);
 });
 
+test('Code Review Tinder runs its Flutter build and reviews a PR', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/play/code-review-tinder/');
+  const body = page.frameLocator('iframe').locator('body');
+  // Flutter draws on a canvas; the game reports its state as data attributes on <body>
+  await expect(body).toHaveAttribute('data-phase', 'title', { timeout: 20_000 });
+  await page.locator('iframe').focus();
+  await page.keyboard.press('Space');
+  await expect(body).toHaveAttribute('data-phase', 'playing');
+  await page.keyboard.press('ArrowRight');
+  await expect(body).toHaveAttribute('data-reviewed', '1');
+  expect(errors).toEqual([]);
+});
+
+test('Code Review Tinder speaks Dutch on its own page', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/games/code-review-tinder/?lang=nl');
+  await expect(page.locator('body')).toHaveAttribute('data-phase', 'title', { timeout: 20_000 });
+  await expect(page.locator('html')).toHaveAttribute('lang', 'nl');
+  expect(errors).toEqual([]);
+});
+
 test('the home page shows the planned games as coming soon, without links', async ({ page }) => {
   await page.goto('/');
   const soon = page.locator('#upcoming');
   await expect(soon.getByRole('heading', { level: 2 })).toContainText('Coming soon');
-  await expect(soon.locator('article')).toHaveCount(3);
+  await expect(soon.locator('article')).toHaveCount(2);
   await expect(soon.locator('article', { hasText: 'rm -rf dungeon' })).toContainText('Python (Pyodide)');
   await expect(soon.locator('a')).toHaveCount(0);
   // the generic "next game" card is still there
   await expect(page.locator('#games .next')).toBeVisible();
   await page.goto('/nl/');
   await expect(page.locator('#upcoming').getByRole('heading', { level: 2 })).toContainText('Binnenkort');
-  await expect(page.locator('#upcoming article', { hasText: 'Code Review Tinder' })).toContainText('keuren');
+  await expect(page.locator('#upcoming article', { hasText: 'Localhost Golf' })).toContainText('minigolf');
 });
 
 test('unknown games get the 404 page', async ({ page }) => {

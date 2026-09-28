@@ -1,22 +1,5 @@
 [
   {
-    "slug": "code-review-tinder",
-    "icon": "+/−",
-    "title": {
-      "en": "Code Review Tinder",
-      "nl": "Code Review Tinder"
-    },
-    "genre": {
-      "en": "swipe · reflexes",
-      "nl": "swipen · reflexen"
-    },
-    "description": {
-      "en": "Diffs slide in: swipe right to approve, left to request changes. The bugs you let through come back to haunt you.",
-      "nl": "Diffs schuiven binnen: rechts om goed te keuren, links voor changes. De bugs die je doorlaat komen later terug."
-    },
-    "framework": "Dart + Flutter"
-  },
-  {
     "slug": "rm-rf-dungeon",
     "icon": "$ rm",
     "title": {

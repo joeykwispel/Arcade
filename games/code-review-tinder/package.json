@@ -1,0 +1,11 @@
+{
+  "name": "play-code-review-tinder",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Code Review Tinder: swipe right to approve a diff, left to request changes. Dart + Flutter.",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node build.mjs --test"
+  }
+}

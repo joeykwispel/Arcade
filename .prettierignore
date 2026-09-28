@@ -21,3 +21,5 @@ games/*/public/elm.js
 games/*/vendor
 games/*/web/build
 games/*/build-test
+# Flutter: tool cache
+.dart_tool
