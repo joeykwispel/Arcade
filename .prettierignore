@@ -7,3 +7,7 @@ static
 test-results
 playwright-report
 target
+build
+.gradle
+.kotlin
+kotlin-js-store

@@ -1,0 +1,94 @@
+/* The page around the canvas, and the colors the Kotlin code draws with (--c-<name>, see Draw.kt). */
+
+@font-face {
+  font-family: 'JetBrains Mono Variable';
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url(./jetbrains-mono.woff2) format('woff2-variations');
+}
+
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --page: #0a0e17;
+  --c-bg: #0a0e17;
+  --c-floor: #0d1220;
+  --c-grid: #1b2436;
+  --c-desk: #151d2e;
+  --c-text: #e6e9f2;
+  --c-muted: #98a3b9;
+  --c-accent: #7dd3c0;
+  --c-accent2: #c3b1ff;
+  --c-danger: #f7768e;
+  --c-warn: #e0af68;
+  --c-success: #9ece6a;
+  --c-info: #7aa2f7;
+  --c-duck: #f7cf46;
+  --c-beak: #ff8a3d;
+  --c-panel: #111827;
+  --c-shade: #000000;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --page: #f4f6fb;
+  --c-bg: #ffffff;
+  --c-floor: #f4f6fb;
+  --c-grid: #dde3ee;
+  --c-desk: #e6ebf3;
+  --c-text: #141b2d;
+  --c-muted: #4b566d;
+  --c-accent: #0f766e;
+  --c-accent2: #5b3fc4;
+  --c-danger: #c0364d;
+  --c-warn: #a16207;
+  --c-success: #2f7a1f;
+  --c-info: #1d4ed8;
+  --c-duck: #f2b705;
+  --c-beak: #e8661b;
+  --c-panel: #ffffff;
+  --c-shade: #141b2d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html.standalone,
+html.standalone body {
+  background: var(--page);
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

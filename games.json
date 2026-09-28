@@ -56,5 +56,25 @@
     },
     "aspect": "16 / 10",
     "phoneAspect": "3 / 4"
+  },
+  {
+    "slug": "standup-survivor",
+    "title": {
+      "en": "Standup Survivor",
+      "nl": "Standup Survivor"
+    },
+    "description": {
+      "en": "Survive the workday from 09:00 to 17:00: Slack pings, meeting invites, quick questions and a reorg come at you from all sides.",
+      "nl": "Overleef de werkdag van 09:00 tot 17:00: Slack-pings, meeting-uitnodigingen, snelle vraagjes en een reorganisatie komen van alle kanten."
+    },
+    "framework": "Kotlin/JS",
+    "tooling": "Gradle",
+    "thumbnail": "/thumbs/standup-survivor.svg",
+    "controls": {
+      "en": "WASD or arrows to walk, your tools attack by themselves. Pick upgrades with 1, 2, 3. On a phone: drag to walk, tap a card. P pauses.",
+      "nl": "WASD of pijltjes om te lopen, je tools vallen zelf aan. Kies upgrades met 1, 2, 3. Op je telefoon: sleep om te lopen, tik op een kaart. P pauzeert."
+    },
+    "aspect": "16 / 9",
+    "phoneAspect": "3 / 4"
   }
 ]

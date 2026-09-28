@@ -44,6 +44,12 @@ jobs:
       # Bug Bash is Rust compiled to WebAssembly; the runner has rustup, it only needs the target
       - run: rustup target add wasm32-unknown-unknown
 
+      # Standup Survivor is Kotlin; Gradle comes with its wrapper, it needs a JDK
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 21
+
       - run: npm ci
 
       - run: npm run build
