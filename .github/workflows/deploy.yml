@@ -42,6 +42,29 @@ jobs:
           version: 6.0.10
           actions-cache-folder: emsdk-cache
 
+      # Localhost Golf is Godot: the editor (for a headless export) and its single-threaded web template.
+      # The export templates come as one 1.3 GB archive; only the web template is kept, and cached.
+      - uses: actions/cache@v6
+        with:
+          path: ~/godot-templates
+          key: godot-web-template-4.7.2
+      - name: Install Godot 4.7.2
+        run: |
+          base=https://github.com/godotengine/godot/releases/download/4.7.2-stable
+          cd /tmp
+          curl -sSLO "$base/SHA512-SUMS.txt"
+          curl -sSLO "$base/Godot_v4.7.2-stable_linux.x86_64.zip"
+          grep " Godot_v4.7.2-stable_linux.x86_64.zip$" SHA512-SUMS.txt | sha512sum -c
+          unzip -q Godot_v4.7.2-stable_linux.x86_64.zip -d ~/godot
+          if [ ! -f ~/godot-templates/web_nothreads_release.zip ]; then
+            curl -sSLO "$base/Godot_v4.7.2-stable_export_templates.tpz"
+            grep " Godot_v4.7.2-stable_export_templates.tpz$" SHA512-SUMS.txt | sha512sum -c
+            unzip -q -j Godot_v4.7.2-stable_export_templates.tpz templates/web_nothreads_release.zip -d ~/godot-templates
+            rm Godot_v4.7.2-stable_export_templates.tpz
+          fi
+          echo "GODOT=$HOME/godot/Godot_v4.7.2-stable_linux.x86_64" >> "$GITHUB_ENV"
+          echo "GODOT_TEMPLATES=$HOME/godot-templates" >> "$GITHUB_ENV"
+
       # Code Review Tinder is Dart + Flutter
       - uses: subosito/flutter-action@v2
         with:

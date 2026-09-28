@@ -238,5 +238,25 @@
     },
     "aspect": "16 / 10",
     "phoneAspect": "3 / 4"
+  },
+  {
+    "slug": "localhost-golf",
+    "title": {
+      "en": "Localhost Golf",
+      "nl": "Localhost Golf"
+    },
+    "description": {
+      "en": "Mini golf through six web pages: the ball bounces off divs and buttons, textareas are sand, iframes are water, and the hole is the 404.",
+      "nl": "Minigolf door zes webpagina’s: de bal stuitert tegen divs en knoppen, textareas zijn zand, iframes water, en de hole is de 404."
+    },
+    "framework": "Godot (GDScript)",
+    "tooling": "Godot web export",
+    "thumbnail": "/thumbs/localhost-golf.svg",
+    "controls": {
+      "en": "Drag back from anywhere and let go to shoot; the further you pull, the harder. Keyboard: ← → to aim, hold Space and let go at the right power.",
+      "nl": "Sleep ergens naar achteren en laat los om te slaan; hoe verder je trekt, hoe harder. Toetsenbord: ← → om te richten, houd spatie vast en laat los bij de juiste kracht."
+    },
+    "aspect": "16 / 10",
+    "phoneAspect": "16 / 10"
   }
 ]

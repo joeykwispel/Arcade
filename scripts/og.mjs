@@ -187,6 +187,19 @@ const scenes = {
       await page.waitForTimeout(300);
     }
   },
+  'localhost-golf': {
+    viewport: { width: 960, height: 600 },
+    selector: 'canvas',
+    // tee off on the contact page's first shot: start, then pull back and hold the aim line on screen
+    async play(page) {
+      await page.locator('body[data-phase="title"]').waitFor({ timeout: 30_000 });
+      await page.mouse.click(480, 300);
+      await page.mouse.move(500, 300);
+      await page.mouse.down();
+      for (let i = 1; i <= 8; i++) await page.mouse.move(500 - i * 14, 300 + i * 9);
+      await page.waitForTimeout(300);
+    }
+  },
   'bug-bash': {
     viewport: { width: 1200, height: 750 },
     // two levels done, so level 3 (two paths merging) is the one that opens

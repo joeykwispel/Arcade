@@ -1,4 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
+import { readFileSync } from 'node:fs';
+
+const games: { slug: string }[] = JSON.parse(readFileSync(new URL('../games.json', import.meta.url), 'utf8'));
 
 /** Collects CSP violations and uncaught errors, in the hub and in the game frame, so a test fails if either breaks. */
 function watchErrors(page: Page) {
@@ -427,18 +430,37 @@ test('rm -rf dungeon speaks Dutch on its own page', async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
-test('the home page shows the planned games as coming soon, without links', async ({ page }) => {
+test('Localhost Golf runs its Godot export and takes a shot', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/play/localhost-golf/');
+  const frame = page.frameLocator('iframe');
+  const body = frame.locator('body');
+  // Godot draws on a canvas; the game reports its state as data attributes on <body>
+  await expect(body).toHaveAttribute('data-phase', 'title', { timeout: 30_000 });
+  await page.locator('iframe').focus();
+  await page.keyboard.press('Space');
+  await expect(body).toHaveAttribute('data-phase', 'aim');
+  // hold Space for power, let go to shoot
+  await page.keyboard.down('Space');
+  await page.waitForTimeout(400);
+  await page.keyboard.up('Space');
+  await expect(body).toHaveAttribute('data-strokes', '1');
+  expect(errors).toEqual([]);
+});
+
+test('Localhost Golf speaks Dutch on its own page', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/games/localhost-golf/?lang=nl');
+  await expect(page.locator('body')).toHaveAttribute('data-phase', 'title', { timeout: 30_000 });
+  await expect(page.locator('html')).toHaveAttribute('lang', 'nl');
+  expect(errors).toEqual([]);
+});
+
+test('with every planned game built, there is no coming-soon section, and the next-game card stays', async ({ page }) => {
   await page.goto('/');
-  const soon = page.locator('#upcoming');
-  await expect(soon.getByRole('heading', { level: 2 })).toContainText('Coming soon');
-  await expect(soon.locator('article')).toHaveCount(1);
-  await expect(soon.locator('article', { hasText: 'Localhost Golf' })).toContainText('Godot (GDScript)');
-  await expect(soon.locator('a')).toHaveCount(0);
-  // the generic "next game" card is still there
+  await expect(page.locator('#games .grid > li')).toHaveCount(games.length + 1);
+  await expect(page.locator('#upcoming')).toHaveCount(0);
   await expect(page.locator('#games .next')).toBeVisible();
-  await page.goto('/nl/');
-  await expect(page.locator('#upcoming').getByRole('heading', { level: 2 })).toContainText('Binnenkort');
-  await expect(page.locator('#upcoming article', { hasText: 'Localhost Golf' })).toContainText('minigolf');
 });
 
 test('unknown games get the 404 page', async ({ page }) => {

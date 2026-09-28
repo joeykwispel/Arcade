@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0a0e17" />
+    <!-- Godot's engine is WebAssembly ('wasm-unsafe-eval'); its settings are JSON, and boot.js starts it: no inline script. -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'"
+    />
+    <title>Localhost Golf</title>
+    <meta name="description" content="Mini golf through web pages: the ball bounces off divs and buttons, and the hole is the 404. Made with Godot." />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="shell.css" />
+  </head>
+  <body data-phase="loading">
+    <canvas id="canvas">Localhost Golf needs a browser with WebAssembly and WebGL 2.</canvas>
+    <p id="status" role="status">loading Godot…</p>
+    <script type="application/json" id="godot-config">
+      $GODOT_CONFIG
+    </script>
+    <script src="$GODOT_URL"></script>
+    <script src="boot.js"></script>
+  </body>
+</html>
