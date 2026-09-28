@@ -1,22 +1,5 @@
 [
   {
-    "slug": "dependency-hell",
-    "icon": "npm i",
-    "title": {
-      "en": "Dependency Hell",
-      "nl": "Dependency Hell"
-    },
-    "genre": {
-      "en": "physics · stacking",
-      "nl": "physics · stapelen"
-    },
-    "description": {
-      "en": "Stack npm packages into a wobbly tower. Every now and then someone unpublishes left-pad from the bottom.",
-      "nl": "Stapel npm-packages tot een wiebelige toren. Af en toe haalt iemand left-pad onderuit."
-    },
-    "framework": "C++ + Box2D (WebAssembly)"
-  },
-  {
     "slug": "dev-ware",
     "icon": "5s",
     "title": {

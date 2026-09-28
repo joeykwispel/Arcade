@@ -297,18 +297,42 @@ test('Semicolon Snake speaks Dutch on its own page', async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test('Dependency Hell loads its C++/WebAssembly physics and stacks a package', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/play/dependency-hell/');
+  const frame = page.frameLocator('iframe');
+  const stage = frame.locator('#stage');
+  await expect(stage).toHaveAttribute('data-phase', 'ready');
+  await frame.locator('#overlay').click();
+  await expect(stage).toHaveAttribute('data-phase', 'running');
+  await frame.getByRole('button', { name: 'drop' }).click();
+  // the package falls onto node_modules and the tower gets taller
+  await expect(frame.locator('#size')).toHaveText('node_modules 37 MB', { timeout: 15_000 });
+  await expect(frame.locator('#height')).not.toHaveText('height 0.0 m');
+  expect(errors).toEqual([]);
+});
+
+test('Dependency Hell speaks Dutch on its own page', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/games/dependency-hell/?lang=nl');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'nl');
+  await expect(page.locator('#hint')).toContainText('npm install');
+  await expect(page.getByRole('button', { name: 'laat vallen' })).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
 test('the home page shows the planned games as coming soon, without links', async ({ page }) => {
   await page.goto('/');
   const soon = page.locator('#upcoming');
   await expect(soon.getByRole('heading', { level: 2 })).toContainText('Coming soon');
-  await expect(soon.locator('article')).toHaveCount(6);
+  await expect(soon.locator('article')).toHaveCount(5);
   await expect(soon.locator('article', { hasText: 'rm -rf dungeon' })).toContainText('Python (Pyodide)');
   await expect(soon.locator('a')).toHaveCount(0);
   // the generic "next game" card is still there
   await expect(page.locator('#games .next')).toBeVisible();
   await page.goto('/nl/');
   await expect(page.locator('#upcoming').getByRole('heading', { level: 2 })).toContainText('Binnenkort');
-  await expect(page.locator('#upcoming article', { hasText: 'Dependency Hell' })).toContainText('wiebelige toren');
+  await expect(page.locator('#upcoming article', { hasText: 'Dev-Ware' })).toContainText('Microgames');
 });
 
 test('unknown games get the 404 page', async ({ page }) => {

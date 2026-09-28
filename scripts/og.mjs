@@ -113,6 +113,21 @@ const scenes = {
       await page.waitForTimeout(250);
     }
   },
+  'dependency-hell': {
+    viewport: { width: 1200, height: 750 },
+    // a small, wobbly tower: drop a few packages around the middle
+    async play(page) {
+      await page.keyboard.press('Space');
+      for (let i = 0; i < 6; i++) {
+        const key = i % 2 ? 'ArrowLeft' : 'ArrowRight';
+        await page.keyboard.down(key);
+        await page.waitForTimeout(70);
+        await page.keyboard.up(key);
+        await page.keyboard.press('Space');
+        await page.waitForTimeout(1200);
+      }
+    }
+  },
   'bug-bash': {
     viewport: { width: 1200, height: 750 },
     // two levels done, so level 3 (two paths merging) is the one that opens

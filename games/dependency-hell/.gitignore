@@ -1,0 +1,4 @@
+# Box2D source and objects (fetched and compiled by build.mjs), Emscripten output, test build
+vendor
+web/build
+build-test

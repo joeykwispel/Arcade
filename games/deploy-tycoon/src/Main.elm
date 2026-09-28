@@ -185,7 +185,12 @@ update msg m =
                     Engine.buy g n m.s
             in
             if got > 0 then
-                ( log "buy" (fill [ ( "n", String.fromInt got ), ( "name", Tuple.first (t.gen g.id) ) ] t.bought) { m | s = s }, Cmd.none )
+                -- purchases are saved right away, so closing the tab straight after one doesn't lose it
+                let
+                    next =
+                        log "buy" (fill [ ( "n", String.fromInt got ), ( "name", Tuple.first (t.gen g.id) ) ] t.bought) { m | s = s }
+                in
+                ( next, persist next )
 
             else
                 ( m, Cmd.none )
@@ -193,7 +198,11 @@ update msg m =
         BuyUpgrade u ->
             case Engine.buyUpgrade u.id m.s of
                 Just s ->
-                    ( log "buy" ("+ " ++ Tuple.first (upgradeText t u)) { m | s = s }, Cmd.none )
+                    let
+                        next =
+                            log "buy" ("+ " ++ Tuple.first (upgradeText t u)) { m | s = s }
+                    in
+                    ( next, persist next )
 
                 Nothing ->
                     ( m, Cmd.none )
@@ -201,7 +210,11 @@ update msg m =
         Rollback ->
             case Engine.rollback m.s of
                 Just s ->
-                    ( log "ok" t.resolved { m | s = s, say = t.resolved }, Cmd.none )
+                    let
+                        next =
+                            log "ok" t.resolved { m | s = s, say = t.resolved }
+                    in
+                    ( next, persist next )
 
                 Nothing ->
                     ( m, Cmd.none )

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="theme-color" content="#0a0e17" />
+    <!-- 'wasm-unsafe-eval' lets the page compile the game's WebAssembly; plain eval stays blocked. -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'"
+    />
+    <title>Dependency Hell</title>
+    <meta name="description" content="Stack npm packages into a wobbly tower with real physics. Written in C++ with Box2D, compiled to WebAssembly." />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <main class="stage" id="stage" data-phase="loading">
+      <header class="hud">
+        <p><b id="height"></b> <span id="best"></span></p>
+        <p class="mid"><span id="size"></span> · <span id="next"></span></p>
+        <p class="right" id="conflicts"></p>
+        <p class="message" id="message" aria-hidden="true"></p>
+      </header>
+      <div class="board">
+        <canvas id="game" aria-hidden="true"></canvas>
+        <div class="overlay" id="overlay">
+          <p class="title" id="title"></p>
+          <p class="sub" id="sub"></p>
+          <p class="hint" id="hint"></p>
+          <p class="small" id="small"></p>
+        </div>
+      </div>
+      <div class="buttons">
+        <button type="button" id="rotate">rotate</button>
+        <button type="button" id="drop" class="primary">drop</button>
+      </div>
+      <p class="sr-only">
+        Dependency Hell, a physics stacking game drawn on a canvas. Move the crane with the arrow keys, drop the package with Space or the down arrow, rotate it
+        with the up arrow. Stack packages on node_modules as high as you can; three packages over the edge ends the game.
+      </p>
+      <p class="fallback" id="fallback" hidden>This game needs WebAssembly, which this browser doesn't allow.</p>
+      <p class="sr-only" id="live" aria-live="polite"></p>
+    </main>
+    <script type="module" src="./web/main.js"></script>
+  </body>
+</html>

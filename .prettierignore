@@ -17,3 +17,7 @@ games/*/lib
 # Elm: package cache and the compiled app
 elm-stuff
 games/*/public/elm.js
+# Dependency Hell: fetched Box2D sources and build output
+games/*/vendor
+games/*/web/build
+games/*/build-test
