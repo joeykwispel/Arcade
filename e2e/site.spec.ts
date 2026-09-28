@@ -55,6 +55,7 @@ test('the game starts, and a crash shows the game over screen', async ({ page })
 });
 
 test('the game follows the language and the theme of the hub', async ({ page }) => {
+  const errors = watchErrors(page);
   await page.goto('/nl/play/duck/');
   const frame = page.frameLocator('iframe');
   await expect(frame.locator('#sub')).toContainText('spatie');
@@ -62,6 +63,7 @@ test('the game follows the language and the theme of the hub', async ({ page }) 
   await expect(frame.locator('html')).toHaveAttribute('data-theme', 'dark');
   await page.locator('.jo-nav__theme').click();
   await expect(frame.locator('html')).toHaveAttribute('data-theme', 'light');
+  expect(errors).toEqual([]);
 });
 
 test('language switch keeps the page and is remembered', async ({ page, isMobile }) => {
