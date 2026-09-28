@@ -1,0 +1,23 @@
+[package]
+name = "bug-bash"
+version = "1.0.0"
+edition = "2024"
+description = "Bug Bash: a tower defense for developers. Rust compiled to WebAssembly, no crates, no wasm-bindgen."
+authors = ["Joey Oosenbrug"]
+license = "MIT"
+publish = false
+
+[lib]
+# cdylib is the .wasm for the page; rlib lets tests/ use the game as a normal library.
+crate-type = ["cdylib", "rlib"]
+
+[profile.release]
+opt-level = "s"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
+
+# The balance tests play whole levels; they are slow without optimizations.
+[profile.test]
+opt-level = 2

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="theme-color" content="#0a0e17" />
+    <!-- 'wasm-unsafe-eval' lets the page compile the game's WebAssembly; plain eval stays blocked. -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'"
+    />
+    <title>Bug Bash</title>
+    <meta
+      name="description"
+      content="A tower defense for developers: install linters, unit tests and rubber ducks to squash bugs before they reach production."
+    />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./assets/main.css" />
+  </head>
+  <body>
+    <main class="stage" id="stage" data-screen="loading">
+      <canvas id="game" aria-hidden="true"></canvas>
+      <p class="sr-only">
+        Bug Bash, a tower defense game drawn on a canvas. On the level select, choose a level with the arrow keys and press Enter. While playing: keys 1 to 6
+        choose a tool, the arrow keys move a cursor over the map, Enter installs the tool or selects the one under the cursor, U upgrades, S sells, Space starts
+        the next sprint, F toggles double speed and Escape pauses.
+      </p>
+      <p class="fallback" id="fallback" hidden>This game needs WebAssembly, which this browser doesn't allow.</p>
+      <p class="sr-only" id="live" aria-live="polite"></p>
+    </main>
+    <script type="module" src="./assets/main.js"></script>
+  </body>
+</html>

@@ -26,6 +26,15 @@ updates:
       all:
         patterns: ['*']
 
+  - package-ecosystem: npm
+    directory: /games/bug-bash
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      all:
+        patterns: ['*']
+
   - package-ecosystem: github-actions
     directory: /
     schedule:

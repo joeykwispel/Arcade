@@ -41,6 +41,9 @@ jobs:
             package-lock.json
             games/*/package-lock.json
 
+      # Bug Bash is Rust compiled to WebAssembly; the runner has rustup, it only needs the target
+      - run: rustup target add wasm32-unknown-unknown
+
       - run: npm ci
 
       - run: npm run build

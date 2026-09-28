@@ -25,10 +25,17 @@
   }
 
   onMount(() => {
+    // Listen here instead of with an onload attribute: server-rendered, Svelte turns that into an inline
+    // `onload="this.__e=event"` handler, which the site's CSP blocks. The frame may have loaded before hydration.
+    frame.addEventListener('load', onload);
+    if (frame.contentDocument?.readyState === 'complete' && frame.contentWindow?.location.href !== 'about:blank') onload();
     // The header's theme button only changes data-theme on <html>; pass every change on to the game.
     const mo = new MutationObserver(send);
     mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-    return () => mo.disconnect();
+    return () => {
+      frame.removeEventListener('load', onload);
+      mo.disconnect();
+    };
   });
 </script>
 
@@ -51,7 +58,7 @@
     <div class="chrome mono" aria-hidden="true">
       <span class="dots"><i></i><i></i><i></i></span><span class="file">~/games/<b>{game.slug}</b>/index.html</span>
     </div>
-    <iframe bind:this={frame} {src} title={fill(c.play.frame, { title, framework: game.framework })} {onload}></iframe>
+    <iframe bind:this={frame} {src} title={fill(c.play.frame, { title, framework: game.framework })}></iframe>
   </div>
 
   <div class="below">
