@@ -36,6 +36,12 @@ jobs:
       # Bug Bash is Rust compiled to WebAssembly; the runner has rustup, it only needs the target
       - run: rustup target add wasm32-unknown-unknown
 
+      # Dependency Hell is C++ compiled to WebAssembly with Emscripten
+      - uses: mymindstorm/setup-emsdk@v16
+        with:
+          version: 6.0.10
+          actions-cache-folder: emsdk-cache
+
       # Standup Survivor is Kotlin; Gradle comes with its wrapper, it needs a JDK
       - uses: actions/setup-java@v6
         with:

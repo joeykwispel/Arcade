@@ -6,17 +6,18 @@ A hub of small browser games at [arcade.joeyoosenbrug.nl](https://arcade.joeyoos
 
 The hub looks like the rest of [joeyoosenbrug.nl](https://joeyoosenbrug.nl): it uses the portfolio's [design kit](https://github.com/joeykwispel/Portfolio/tree/main/docs/design-kit) (tokens, header, cards), English at `/` and Dutch at `/nl/`.
 
-| Game             | Stack               | Build tool      | Folder                    |
-| ---------------- | ------------------- | --------------- | ------------------------- |
-| Rubber Duck Run  | Vanilla JS + Canvas | esbuild         | `games/duck/`             |
-| Bug Bash         | Rust + WebAssembly  | cargo + esbuild | `games/bug-bash/`         |
-| Git Gud          | React + TypeScript  | Vite            | `games/git-gud/`          |
-| Standup Survivor | Kotlin/JS           | Gradle          | `games/standup-survivor/` |
-| Infinite Scroll  | ReScript + Three.js | ReScript + Vite | `games/infinite-scroll/`  |
-| Deploy Tycoon    | Elm                 | elm make + Vite | `games/deploy-tycoon/`    |
-| Semicolon Snake  | Lua (Fengari)       | Vite            | `games/semicolon-snake/`  |
+| Game             | Stack               | Build tool        | Folder                    |
+| ---------------- | ------------------- | ----------------- | ------------------------- |
+| Rubber Duck Run  | Vanilla JS + Canvas | esbuild           | `games/duck/`             |
+| Bug Bash         | Rust + WebAssembly  | cargo + esbuild   | `games/bug-bash/`         |
+| Git Gud          | React + TypeScript  | Vite              | `games/git-gud/`          |
+| Standup Survivor | Kotlin/JS           | Gradle            | `games/standup-survivor/` |
+| Infinite Scroll  | ReScript + Three.js | ReScript + Vite   | `games/infinite-scroll/`  |
+| Deploy Tycoon    | Elm                 | elm make + Vite   | `games/deploy-tycoon/`    |
+| Semicolon Snake  | Lua (Fengari)       | Vite              | `games/semicolon-snake/`  |
+| Dependency Hell  | C++ + Box2D         | Emscripten + Vite | `games/dependency-hell/`  |
 
-Building Bug Bash needs Rust with the WebAssembly target: install [rustup](https://rustup.rs), then `rustup target add wasm32-unknown-unknown`. Standup Survivor needs a JDK 21 (`JAVA_HOME`); Gradle itself comes with the wrapper. Bug Bash has no crates and no wasm-bindgen: the Rust code exports plain functions and leaves a draw list in memory, and `web/main.js` replays it on a canvas.
+Building Bug Bash needs Rust with the WebAssembly target: install [rustup](https://rustup.rs), then `rustup target add wasm32-unknown-unknown`. Standup Survivor needs a JDK 21 (`JAVA_HOME`); Gradle itself comes with the wrapper. Dependency Hell needs [Emscripten](https://emscripten.org) (`emcc` on the PATH, e.g. via emsdk); its build fetches Box2D itself. Bug Bash has no crates and no wasm-bindgen: the Rust code exports plain functions and leaves a draw list in memory, and `web/main.js` replays it on a canvas.
 
 ## How it fits together
 

@@ -136,5 +136,25 @@
     },
     "aspect": "16 / 10",
     "phoneAspect": "3 / 4"
+  },
+  {
+    "slug": "dependency-hell",
+    "title": {
+      "en": "Dependency Hell",
+      "nl": "Dependency Hell"
+    },
+    "description": {
+      "en": "Stack npm packages into a wobbly tower. Every now and then someone unpublishes left-pad from the bottom.",
+      "nl": "Stapel npm-packages tot een wiebelige toren. Af en toe haalt iemand left-pad onderuit."
+    },
+    "framework": "C++ + Box2D",
+    "tooling": "Emscripten + Vite",
+    "thumbnail": "/thumbs/dependency-hell.svg",
+    "controls": {
+      "en": "← → move the crane, Space or ↓ drops, ↑ or R rotates, P pauses. On a phone: drag to move, the buttons to drop and rotate.",
+      "nl": "← → beweegt de kraan, spatie of ↓ laat vallen, ↑ of R draait, P pauzeert. Op je telefoon: sleep om te bewegen, de knoppen om te laten vallen en te draaien."
+    },
+    "aspect": "16 / 10",
+    "phoneAspect": "3 / 4"
   }
 ]
