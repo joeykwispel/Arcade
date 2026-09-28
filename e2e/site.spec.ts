@@ -272,6 +272,20 @@ test('pages have a large share image that exists', async ({ page, request }) => 
   }
 });
 
+test('the home page shows the planned games as coming soon, without links', async ({ page }) => {
+  await page.goto('/');
+  const soon = page.locator('#upcoming');
+  await expect(soon.getByRole('heading', { level: 2 })).toContainText('Coming soon');
+  await expect(soon.locator('article')).toHaveCount(7);
+  await expect(soon.locator('article', { hasText: 'rm -rf dungeon' })).toContainText('Python (Pyodide)');
+  await expect(soon.locator('a')).toHaveCount(0);
+  // the generic "next game" card is still there
+  await expect(page.locator('#games .next')).toBeVisible();
+  await page.goto('/nl/');
+  await expect(page.locator('#upcoming').getByRole('heading', { level: 2 })).toContainText('Binnenkort');
+  await expect(page.locator('#upcoming article', { hasText: 'Dependency Hell' })).toContainText('wiebelige toren');
+});
+
 test('unknown games get the 404 page', async ({ page }) => {
   const res = await page.goto('/play/nope/');
   expect(res?.status()).toBe(404);

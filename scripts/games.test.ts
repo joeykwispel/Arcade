@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import games from '../games.json';
+import upcoming from '../upcoming.json';
 
 /** games.json is the only place the hub learns about games, so check every entry against the repo. */
 describe('games.json', () => {
@@ -35,4 +36,27 @@ describe('games.json', () => {
       });
     });
   }
+});
+
+/** upcoming.json: the "coming soon" cards. */
+describe('upcoming.json', () => {
+  it('has unique slugs that are not games yet', () => {
+    const slugs = upcoming.map((g) => g.slug);
+    expect(new Set(slugs).size).toBe(slugs.length);
+    for (const s of slugs) {
+      expect(s).toMatch(/^[a-z0-9]+(-[a-z0-9]+)*$/);
+      expect(games.some((g) => g.slug === s)).toBe(false);
+    }
+  });
+
+  it('has everything a card needs, in both languages', () => {
+    for (const g of upcoming) {
+      for (const field of [g.title, g.genre, g.description]) {
+        expect(field.en.trim()).not.toBe('');
+        expect(field.nl.trim()).not.toBe('');
+      }
+      expect(g.icon.trim()).not.toBe('');
+      expect(g.framework.trim()).not.toBe('');
+    }
+  });
 });
