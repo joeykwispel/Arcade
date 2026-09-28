@@ -78,6 +78,26 @@
     "phoneAspect": "3 / 4"
   },
   {
+    "slug": "infinite-scroll",
+    "title": {
+      "en": "Infinite Scroll",
+      "nl": "Infinite Scroll"
+    },
+    "description": {
+      "en": "Fly a cursor through an endless 3D tunnel of code. Dodge the NullPointerExceptions, thread the 404 rings, and see how far you scroll.",
+      "nl": "Vlieg als cursor door een eindeloze 3D-tunnel van code. Ontwijk de NullPointerExceptions, vlieg door de 404-ringen en kijk hoe ver je scrolt."
+    },
+    "framework": "ReScript + Three.js",
+    "tooling": "ReScript + Vite",
+    "thumbnail": "/thumbs/infinite-scroll.svg",
+    "controls": {
+      "en": "← → or A / D to steer around the tunnel. On a phone: hold the left or right side. Space starts, P pauses.",
+      "nl": "← → of A / D om door de tunnel te sturen. Op je telefoon: houd de linker- of rechterkant vast. Spatie start, P pauzeert."
+    },
+    "aspect": "16 / 9",
+    "phoneAspect": "3 / 4"
+  },
+  {
     "slug": "deploy-tycoon",
     "title": {
       "en": "Deploy Tycoon",

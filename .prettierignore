@@ -11,6 +11,9 @@ build
 .gradle
 .kotlin
 kotlin-js-store
+# ReScript output
+*.res.mjs
+games/*/lib
 # Elm: package cache and the compiled app
 elm-stuff
 games/*/public/elm.js

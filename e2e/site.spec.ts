@@ -181,6 +181,35 @@ test('Standup Survivor speaks Dutch on its own page', async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test('Infinite Scroll renders the 3D tunnel, runs and pauses', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/play/infinite-scroll/');
+  const frame = page.frameLocator('iframe');
+  const stage = frame.locator('#stage');
+  await expect(stage).toHaveAttribute('data-phase', 'ready');
+  await expect(frame.locator('#fallback')).toBeHidden();
+  await expect(frame.locator('#title')).toHaveText('Infinite Scroll');
+  await frame.locator('canvas#game').click();
+  await expect(stage).toHaveAttribute('data-phase', 'running');
+  await page.waitForTimeout(1200);
+  await expect(frame.locator('#score')).not.toHaveText('0');
+  await page.keyboard.press('KeyP');
+  await expect(stage).toHaveAttribute('data-phase', 'paused');
+  expect(errors).toEqual([]);
+});
+
+test('Infinite Scroll ends with an exception, keeps the best score, and speaks Dutch', async ({ page }) => {
+  await page.goto('/games/infinite-scroll/?lang=nl');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'nl');
+  await expect(page.locator('#hint')).toContainText('spatie');
+  await page.keyboard.press('Space');
+  // never steering, something hits you soon enough
+  await expect(page.locator('#stage')).toHaveAttribute('data-phase', 'over', { timeout: 30_000 });
+  await expect(page.locator('#hint')).toContainText('npm run scroll');
+  const best = await page.evaluate(() => Number(localStorage.getItem('play:infinite-scroll:best')));
+  expect(best).toBeGreaterThan(0);
+});
+
 test('Deploy Tycoon: push, hire, and the company is still there after a reload', async ({ page }) => {
   const errors = watchErrors(page);
   await page.goto('/play/deploy-tycoon/');
