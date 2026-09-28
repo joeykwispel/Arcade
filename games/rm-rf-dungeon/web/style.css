@@ -1,0 +1,238 @@
+/* rm -rf dungeon: a terminal, in the joeyoosenbrug.nl tokens, dark and light. */
+
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --page: #0a0e17;
+  --bg: #0d1220;
+  --panel: #111827;
+  --raised: #182033;
+  --border: #253049;
+  --text: #e6e9f2;
+  --muted: #98a3b9;
+  --accent: #7dd3c0;
+  --accent2: #c3b1ff;
+  --danger: #f7768e;
+  --warn: #e0af68;
+  --ok: #9ece6a;
+}
+:root[data-theme='light'] {
+  color-scheme: light;
+  --page: #f4f6fb;
+  --bg: #ffffff;
+  --panel: #f4f6fb;
+  --raised: #e8ecf4;
+  --border: #d3d9e6;
+  --text: #141b2d;
+  --muted: #4b566d;
+  --accent: #0f766e;
+  --accent2: #5b3fc4;
+  --danger: #b4233f;
+  --warn: #8a5300;
+  --ok: #2f6b1f;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font:
+    14px/1.5 'JetBrains Mono Variable',
+    'JetBrains Mono',
+    ui-monospace,
+    Menlo,
+    Consolas,
+    monospace;
+  overflow: hidden;
+}
+html.standalone body {
+  background: var(--page);
+}
+p {
+  margin: 0;
+}
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.stage {
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  background: var(--bg);
+}
+
+.hud {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.3rem 1rem;
+  padding: 0.5rem 0.9rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.hud b {
+  color: var(--text);
+}
+.hp {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+progress {
+  appearance: none;
+  width: 6rem;
+  height: 8px;
+  border: 0;
+  border-radius: 4px;
+  background: var(--raised);
+  overflow: hidden;
+}
+progress::-webkit-progress-bar {
+  background: var(--raised);
+}
+progress::-webkit-progress-value {
+  background: var(--ok);
+}
+progress::-moz-progress-bar {
+  background: var(--ok);
+}
+.low progress::-webkit-progress-value {
+  background: var(--danger);
+}
+.low progress::-moz-progress-bar {
+  background: var(--danger);
+}
+
+/* ---------- the terminal ---------- */
+
+.out {
+  overflow-y: auto;
+  padding: 0.7rem 0.9rem;
+  overscroll-behavior: contain;
+  word-break: break-word;
+}
+.out p {
+  min-height: 1.5em;
+  white-space: pre-wrap;
+}
+.out .echo {
+  margin-top: 0.5rem;
+  color: var(--text);
+}
+.ps1 {
+  color: var(--accent);
+}
+.dim {
+  color: var(--muted);
+}
+.ok {
+  color: var(--ok);
+}
+.err {
+  color: var(--danger);
+}
+.boss {
+  color: var(--danger);
+  font-weight: 800;
+}
+/* names you can tap */
+.out button {
+  padding: 0 0.15rem;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.out button:hover {
+  background: var(--raised);
+}
+.out button.dir {
+  color: var(--accent);
+  font-weight: 700;
+}
+.out button.monster {
+  color: var(--danger);
+}
+.out button.boss {
+  color: var(--danger);
+}
+.out button.item {
+  color: var(--warn);
+}
+
+.quick {
+  display: flex;
+  gap: 0.4rem;
+  padding: 0.4rem 0.9rem;
+  overflow-x: auto;
+  border-top: 1px solid var(--border);
+}
+.quick button {
+  flex: none;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--raised);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.quick button:hover {
+  border-color: var(--accent);
+}
+
+.prompt {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.9rem 0.7rem;
+  background: var(--panel);
+  border-top: 1px solid var(--border);
+}
+.prompt label {
+  flex: none;
+  max-width: 55%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.prompt input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.3rem 0.4rem;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: var(--bg);
+  caret-color: var(--accent);
+  /* 16px: iOS doesn't zoom in on focus */
+  font-size: 16px;
+}
+.prompt input::placeholder {
+  color: var(--muted);
+}
+.stage[data-phase='dead'] .prompt,
+.stage[data-phase='won'] .prompt {
+  border-top-color: var(--danger);
+}
+.path {
+  color: var(--accent);
+}

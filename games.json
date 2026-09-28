@@ -218,5 +218,25 @@
     "aspect": "16 / 10",
     "phoneAspect": "3 / 4",
     "outDir": "build/web"
+  },
+  {
+    "slug": "rm-rf-dungeon",
+    "title": {
+      "en": "rm -rf dungeon",
+      "nl": "rm -rf dungeon"
+    },
+    "description": {
+      "en": "A roguelike where the dungeon is a filesystem: cd into rooms, cat the loot, rm the processes, and save sudo for root_daemon.",
+      "nl": "Een roguelike waarin de kerker een filesystem is: cd de kamers in, cat de buit, rm de processen en bewaar sudo voor root_daemon."
+    },
+    "framework": "Python (Pyodide)",
+    "tooling": "Pyodide + Vite",
+    "thumbnail": "/thumbs/rm-rf-dungeon.svg",
+    "controls": {
+      "en": "Type commands (help lists them), or tap a name: a room to cd into it, a process to rm it, loot to cat it. Tab completes, ↑ ↓ go through history.",
+      "nl": "Typ opdrachten (help toont ze), of tik op een naam: een kamer om erin te cd-en, een proces om het te rm-en, buit om het te cat-en. Tab vult aan, ↑ ↓ bladeren door je geschiedenis."
+    },
+    "aspect": "16 / 10",
+    "phoneAspect": "3 / 4"
   }
 ]

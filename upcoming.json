@@ -1,22 +1,5 @@
 [
   {
-    "slug": "rm-rf-dungeon",
-    "icon": "$ rm",
-    "title": {
-      "en": "rm -rf dungeon",
-      "nl": "rm -rf dungeon"
-    },
-    "genre": {
-      "en": "roguelike · terminal",
-      "nl": "roguelike · terminal"
-    },
-    "description": {
-      "en": "A roguelike where the dungeon is a filesystem: cd into rooms, cat the loot, rm the monsters, and save sudo for the boss.",
-      "nl": "Een roguelike waarin de kerker een filesystem is: cd de kamers in, cat de buit, rm de monsters en bewaar sudo voor de baas."
-    },
-    "framework": "Python (Pyodide)"
-  },
-  {
     "slug": "localhost-golf",
     "icon": "<div>",
     "title": {

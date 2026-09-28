@@ -1,0 +1,20 @@
+{
+  "name": "play-rm-rf-dungeon",
+  "version": "1.0.0",
+  "description": "rm -rf dungeon: a roguelike where the dungeon is a filesystem. Written in Python, run in the browser with Pyodide; Vite builds the page.",
+  "author": "Joey Oosenbrug (https://github.com/joeykwispel)",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "test": "python3 -m unittest discover -s py -p \"test_*.py\" || python -m unittest discover -s py -p \"test_*.py\""
+  },
+  "dependencies": {
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "pyodide": "^314.0.7"
+  },
+  "devDependencies": {
+    "vite": "^8.3.1"
+  }
+}

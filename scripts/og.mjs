@@ -170,6 +170,23 @@ const scenes = {
       await page.waitForTimeout(200);
     }
   },
+  'rm-rf-dungeon': {
+    viewport: { width: 900, height: 560 },
+    selector: '#stage',
+    // wait for Python, then look around a room and fight whatever is in it
+    async play(page) {
+      await page.locator('#stage[data-ready="true"]').waitFor({ timeout: 30_000 });
+      await page.locator('#out button.dir').first().click();
+      for (let i = 0; i < 2; i++) {
+        const target = page.locator('#out button.monster').last();
+        if (await target.count()) await target.click();
+      }
+      await page.locator('#cmd').fill('whoami');
+      await page.locator('#cmd').press('Enter');
+      await page.locator('#cmd').fill('cat ');
+      await page.waitForTimeout(300);
+    }
+  },
   'bug-bash': {
     viewport: { width: 1200, height: 750 },
     // two levels done, so level 3 (two paths merging) is the one that opens
