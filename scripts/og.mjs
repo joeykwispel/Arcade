@@ -124,7 +124,7 @@ function gameCard(g) {
   const flat = g.slug === 'duck';
   return `
     <div style="position:absolute; left:64px; top:64px; width:440px; display:flex; flex-direction:column; gap:22px;">
-      <div style="display:flex; align-items:center; gap:18px;">${logo}<span class="kicker">play.joeyoosenbrug.nl</span></div>
+      <div style="display:flex; align-items:center; gap:18px;">${logo}<span class="kicker">arcade.joeyoosenbrug.nl</span></div>
       <h1 style="font-family:Mono,monospace; font-size:${g.title.en.length > 10 ? 58 : 70}px; font-weight:800; letter-spacing:-0.05em; line-height:1;">${g.title.en}</h1>
       <p style="font-size:24px; line-height:1.4; color:#98a3b9;">${g.description.en}</p>
       <div style="display:flex; gap:12px; flex-wrap:wrap;"><span class="pill">${g.framework}</span>${g.tooling ? `<span class="pill alt">${g.tooling}</span>` : ''}</div>
@@ -137,13 +137,13 @@ function siteCard(width, short = false) {
   const pills = `<div style="display:flex; gap:12px; flex-wrap:wrap;">${games.map((g, i) => `<span class="pill${i % 2 ? ' alt' : ''}">${g.framework}</span>`).join('')}</div>`;
   const text = short
     ? `<div style="position:absolute; left:56px; top:48px; width:620px; display:flex; flex-direction:column; gap:18px;">
-         <div style="display:flex; align-items:center; gap:18px;">${logo}<span class="kicker">play.joeyoosenbrug.nl</span></div>
+         <div style="display:flex; align-items:center; gap:18px;">${logo}<span class="kicker">arcade.joeyoosenbrug.nl</span></div>
          <h1 style="font-size:62px; font-weight:800; letter-spacing:-0.045em; line-height:1.02;">Small games, <span class="grad">different stacks.</span></h1>
          <p style="font-size:21px; line-height:1.4; color:#98a3b9; max-width:560px;">Browser games, each built with a different stack. Same kind of project, different tools.</p>
          ${pills}
        </div>`
     : `<div style="position:absolute; left:64px; top:64px; width:520px; display:flex; flex-direction:column; gap:24px;">
-         <div style="display:flex; align-items:center; gap:18px;">${logo}<span class="kicker">play.joeyoosenbrug.nl</span></div>
+         <div style="display:flex; align-items:center; gap:18px;">${logo}<span class="kicker">arcade.joeyoosenbrug.nl</span></div>
          <h1 style="font-size:68px; font-weight:800; letter-spacing:-0.045em; line-height:1.02;">Small games,<br><span class="grad">different stacks.</span></h1>
          <p style="font-size:24px; line-height:1.4; color:#98a3b9;">Browser games, each built with a different stack. Same kind of project, different tools.</p>
          ${pills}

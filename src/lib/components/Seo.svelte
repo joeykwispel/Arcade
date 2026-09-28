@@ -15,7 +15,7 @@
     imageAlt = 'Play: small games, different stacks'
   }: { title: string; description: string; path?: string; image?: string; imageAlt?: string } = $props();
 
-  const siteUrl = 'https://play.joeyoosenbrug.nl';
+  const siteUrl = 'https://arcade.joeyoosenbrug.nl';
   const url = $derived(siteUrl + localize(path, app.locale));
 </script>
 

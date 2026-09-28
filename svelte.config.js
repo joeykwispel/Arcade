@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import adapter from '@sveltejs/adapter-static';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
-/** Set BASE_PATH=/repo-name when deploying to a GitHub Pages project site instead of play.joeyoosenbrug.nl. */
+/** Set BASE_PATH=/repo-name when deploying to a GitHub Pages project site instead of arcade.joeyoosenbrug.nl. */
 const base = process.env.BASE_PATH ?? '';
 
 /**

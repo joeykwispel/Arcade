@@ -1,14 +1,14 @@
 {
   "name": "play",
   "version": "1.0.0",
-  "description": "Play: a hub of small browser games at play.joeyoosenbrug.nl, each game built with a different frontend stack.",
+  "description": "Play: a hub of small browser games at arcade.joeyoosenbrug.nl, each game built with a different frontend stack.",
   "author": "Joey Oosenbrug (https://github.com/joeykwispel)",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/joeykwispel/arcade.git"
   },
-  "homepage": "https://play.joeyoosenbrug.nl",
+  "homepage": "https://arcade.joeyoosenbrug.nl",
   "private": true,
   "type": "module",
   "engines": {
