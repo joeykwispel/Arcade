@@ -399,12 +399,40 @@ test('Code Review Tinder speaks Dutch on its own page', async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test('rm -rf dungeon boots Python in the browser and runs commands', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/play/rm-rf-dungeon/');
+  const frame = page.frameLocator('iframe');
+  await expect(frame.locator('#stage')).toHaveAttribute('data-ready', 'true', { timeout: 30_000 });
+  await expect(frame.locator('#out')).toContainText('Python 3.');
+  const cmd = frame.locator('#cmd');
+  await cmd.fill('help');
+  await cmd.press('Enter');
+  await expect(frame.locator('#out')).toContainText('sudo rm');
+  // tapping a room cds into it
+  await frame.locator('#out button.dir').first().click();
+  await expect(frame.locator('#cwd')).toHaveText(/^\/floor1\/.+/);
+  await cmd.fill('vim');
+  await cmd.press('Enter');
+  await expect(frame.locator('#out')).toContainText('vim: command not found');
+  expect(errors).toEqual([]);
+});
+
+test('rm -rf dungeon speaks Dutch on its own page', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/games/rm-rf-dungeon/?lang=nl');
+  await expect(page.locator('#stage')).toHaveAttribute('data-ready', 'true', { timeout: 30_000 });
+  await expect(page.locator('html')).toHaveAttribute('lang', 'nl');
+  await expect(page.locator('#out')).toContainText('kerker');
+  expect(errors).toEqual([]);
+});
+
 test('the home page shows the planned games as coming soon, without links', async ({ page }) => {
   await page.goto('/');
   const soon = page.locator('#upcoming');
   await expect(soon.getByRole('heading', { level: 2 })).toContainText('Coming soon');
-  await expect(soon.locator('article')).toHaveCount(2);
-  await expect(soon.locator('article', { hasText: 'rm -rf dungeon' })).toContainText('Python (Pyodide)');
+  await expect(soon.locator('article')).toHaveCount(1);
+  await expect(soon.locator('article', { hasText: 'Localhost Golf' })).toContainText('Godot (GDScript)');
   await expect(soon.locator('a')).toHaveCount(0);
   // the generic "next game" card is still there
   await expect(page.locator('#games .next')).toBeVisible();

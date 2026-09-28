@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0a0e17" />
+    <!-- Pyodide runs CPython as WebAssembly, which needs 'wasm-unsafe-eval'; everything is served from here. -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'"
+    />
+    <title>rm -rf dungeon</title>
+    <meta name="description" content="A roguelike where the dungeon is a filesystem. Written in Python, running in your browser with Pyodide." />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <main id="stage" class="stage" data-phase="loading">
+      <header class="hud">
+        <p class="hp"><span data-t="hp">hp</span> <progress id="hpbar" max="20" value="20"></progress> <b id="hp">20/20</b></p>
+        <p>sudo <b id="sudo">0</b></p>
+        <p><span data-t="floor">floor</span> <b id="floor">1/5</b></p>
+        <p><span data-t="score">score</span> <b id="score">0</b></p>
+        <p><span data-t="best">best</span> <b id="best">0</b></p>
+      </header>
+      <div id="out" class="out" role="log" aria-live="polite"></div>
+      <nav class="quick" aria-label="commands">
+        <button type="button" data-cmd="ls">ls</button>
+        <button type="button" data-cmd="cd ..">cd ..</button>
+        <button type="button" data-cmd="whoami">whoami</button>
+        <button type="button" data-cmd="tree">tree</button>
+        <button type="button" data-cmd="help">help</button>
+      </nav>
+      <form id="prompt" class="prompt" autocomplete="off">
+        <label for="cmd"><span id="cwd" class="ps1">/floor1</span><span class="ps1"> $</span></label>
+        <input id="cmd" type="text" disabled autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send" />
+      </form>
+    </main>
+    <script type="module" src="./web/main.js"></script>
+  </body>
+</html>
