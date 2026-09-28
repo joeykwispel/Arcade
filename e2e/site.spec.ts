@@ -321,18 +321,40 @@ test('Dependency Hell speaks Dutch on its own page', async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test('Dev-Ware runs its Gleam + Lustre microgames one after another', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/play/dev-ware/');
+  const frame = page.frameLocator('iframe');
+  const stage = frame.locator('.stage');
+  await expect(stage).toHaveAttribute('data-phase', 'title');
+  await frame.locator('.overlay').click();
+  // the order is shouted first, then the microgame itself, then it's won or lost
+  await expect(stage).toHaveAttribute('data-phase', 'playing', { timeout: 5_000 });
+  await expect(stage).toHaveAttribute('data-kind', /.+/);
+  await expect(stage).toHaveAttribute('data-phase', 'result', { timeout: 10_000 });
+  expect(errors).toEqual([]);
+});
+
+test('Dev-Ware speaks Dutch on its own page', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/games/dev-ware/?lang=nl');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'nl');
+  await expect(page.locator('.hint')).toContainText('spatie');
+  expect(errors).toEqual([]);
+});
+
 test('the home page shows the planned games as coming soon, without links', async ({ page }) => {
   await page.goto('/');
   const soon = page.locator('#upcoming');
   await expect(soon.getByRole('heading', { level: 2 })).toContainText('Coming soon');
-  await expect(soon.locator('article')).toHaveCount(5);
+  await expect(soon.locator('article')).toHaveCount(4);
   await expect(soon.locator('article', { hasText: 'rm -rf dungeon' })).toContainText('Python (Pyodide)');
   await expect(soon.locator('a')).toHaveCount(0);
   // the generic "next game" card is still there
   await expect(page.locator('#games .next')).toBeVisible();
   await page.goto('/nl/');
   await expect(page.locator('#upcoming').getByRole('heading', { level: 2 })).toContainText('Binnenkort');
-  await expect(page.locator('#upcoming article', { hasText: 'Dev-Ware' })).toContainText('Microgames');
+  await expect(page.locator('#upcoming article', { hasText: 'Cookie Consent Speedrun' })).toContainText('gemenere banners');
 });
 
 test('unknown games get the 404 page', async ({ page }) => {

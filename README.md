@@ -16,8 +16,9 @@ The hub looks like the rest of [joeyoosenbrug.nl](https://joeyoosenbrug.nl): it 
 | Deploy Tycoon    | Elm                 | elm make + Vite   | `games/deploy-tycoon/`    |
 | Semicolon Snake  | Lua (Fengari)       | Vite              | `games/semicolon-snake/`  |
 | Dependency Hell  | C++ + Box2D         | Emscripten + Vite | `games/dependency-hell/`  |
+| Dev-Ware         | Gleam + Lustre      | gleam + Vite      | `games/dev-ware/`         |
 
-Building Bug Bash needs Rust with the WebAssembly target: install [rustup](https://rustup.rs), then `rustup target add wasm32-unknown-unknown`. Standup Survivor needs a JDK 21 (`JAVA_HOME`); Gradle itself comes with the wrapper. Dependency Hell needs [Emscripten](https://emscripten.org) (`emcc` on the PATH, e.g. via emsdk); its build fetches Box2D itself. Bug Bash has no crates and no wasm-bindgen: the Rust code exports plain functions and leaves a draw list in memory, and `web/main.js` replays it on a canvas.
+Building Bug Bash needs Rust with the WebAssembly target: install [rustup](https://rustup.rs), then `rustup target add wasm32-unknown-unknown`. Standup Survivor needs a JDK 21 (`JAVA_HOME`); Gradle itself comes with the wrapper. Dependency Hell needs [Emscripten](https://emscripten.org) (`emcc` on the PATH, e.g. via emsdk); its build fetches Box2D itself. Dev-Ware needs [Gleam](https://gleam.run) (`gleam` on the PATH; it fetches Lustre itself); on Windows, turn on Developer Mode so Gleam can create symbolic links. Bug Bash has no crates and no wasm-bindgen: the Rust code exports plain functions and leaves a draw list in memory, and `web/main.js` replays it on a canvas.
 
 ## How it fits together
 

@@ -42,6 +42,12 @@ jobs:
           version: 6.0.10
           actions-cache-folder: emsdk-cache
 
+      # Dev-Ware is Gleam, compiled to JavaScript: no Erlang needed
+      - uses: erlef/setup-beam@v1
+        with:
+          gleam-version: 1.18.1
+          otp-version: false
+
       # Standup Survivor is Kotlin; Gradle comes with its wrapper, it needs a JDK
       - uses: actions/setup-java@v6
         with:
