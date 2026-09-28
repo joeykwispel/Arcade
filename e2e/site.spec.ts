@@ -272,11 +272,36 @@ test('pages have a large share image that exists', async ({ page, request }) => 
   }
 });
 
+test('Semicolon Snake runs Lua in the browser: the HUD, and a crash into the wall or a syntax error', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/play/semicolon-snake/');
+  const frame = page.frameLocator('iframe');
+  const stage = frame.locator('#stage');
+  await expect(stage).toHaveAttribute('data-phase', 'ready');
+  await expect(frame.locator('#expects')).toContainText('local, print, return');
+  await frame.locator('canvas#game').click();
+  await expect(stage).toHaveAttribute('data-phase', 'running');
+  // heading right without turning, the snake reaches the wall (or eats a token that doesn't fit) within seconds
+  await expect(stage).toHaveAttribute('data-phase', 'over', { timeout: 15_000 });
+  await expect(frame.locator('#title')).toHaveText(/Segmentation fault|SyntaxError/);
+  expect(errors).toEqual([]);
+});
+
+test('Semicolon Snake speaks Dutch on its own page', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/games/semicolon-snake/?lang=nl');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'nl');
+  await expect(page.locator('html')).toHaveClass(/standalone/);
+  await expect(page.locator('#hint')).toContainText('spatie');
+  await expect(page.locator('#expects')).toContainText('verwacht');
+  expect(errors).toEqual([]);
+});
+
 test('the home page shows the planned games as coming soon, without links', async ({ page }) => {
   await page.goto('/');
   const soon = page.locator('#upcoming');
   await expect(soon.getByRole('heading', { level: 2 })).toContainText('Coming soon');
-  await expect(soon.locator('article')).toHaveCount(7);
+  await expect(soon.locator('article')).toHaveCount(6);
   await expect(soon.locator('article', { hasText: 'rm -rf dungeon' })).toContainText('Python (Pyodide)');
   await expect(soon.locator('a')).toHaveCount(0);
   // the generic "next game" card is still there

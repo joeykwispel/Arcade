@@ -1,0 +1,242 @@
+/* Semicolon Snake: an editor around the board, in the joeyoosenbrug.nl tokens, dark and light.
+   The --c-* colors are read by game.lua for the canvas. */
+
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --page: #0a0e17;
+  --c-bg: #0d1220;
+  --c-panel: #0a0e17;
+  --c-grid: #253049;
+  --c-text: #e6e9f2;
+  --c-muted: #98a3b9;
+  --c-faint: #8190ab;
+  --c-accent: #7dd3c0;
+  --c-keyword: #c3b1ff;
+  --c-name: #7aa2f7;
+  --c-number: #ff9e64;
+  --c-string: #9ece6a;
+  --c-punct: #e6e9f2;
+  --c-danger: #f7768e;
+  --c-ink: #0a0e17;
+  --border: #253049;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --page: #f4f6fb;
+  --c-bg: #ffffff;
+  --c-panel: #f4f6fb;
+  --c-grid: #c9d1e0;
+  --c-text: #141b2d;
+  --c-muted: #4b566d;
+  --c-faint: #5f6a80;
+  --c-accent: #0f766e;
+  --c-keyword: #5b3fc4;
+  --c-name: #1d4ed8;
+  --c-number: #9a4a0b;
+  --c-string: #2f6b1f;
+  --c-punct: #141b2d;
+  --c-danger: #b4233f;
+  --c-ink: #ffffff;
+  --border: #d3d9e6;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+  color: var(--c-text);
+  font-family: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+html.standalone,
+html.standalone body {
+  background: var(--page);
+}
+p {
+  margin: 0;
+}
+
+.stage {
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 230px;
+  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-areas: 'hud hud' 'board side';
+  background: var(--c-bg);
+  touch-action: none;
+}
+
+.hud {
+  grid-area: hud;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: 'line stats' 'expects stats';
+  gap: 0.15rem 1rem;
+  align-items: center;
+  padding: 0.55rem 0.9rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--c-panel);
+}
+.line {
+  grid-area: line;
+  font-size: clamp(0.9rem, 2.2vw, 1.15rem);
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.caret {
+  animation: blink 1s steps(1) infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+.expects {
+  grid-area: expects;
+  font-size: 0.78rem;
+  color: var(--c-muted);
+}
+.stats {
+  grid-area: stats;
+  font-size: 0.8rem;
+  color: var(--c-muted);
+  text-align: right;
+}
+
+.board {
+  grid-area: board;
+  position: relative;
+  min-height: 0;
+  padding: 0.5rem;
+}
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.side {
+  grid-area: side;
+  border-left: 1px solid var(--border);
+  background: var(--c-panel);
+  padding: 0.6rem 0.8rem;
+  overflow: hidden;
+}
+.file {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--c-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.4rem;
+}
+.program {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.78rem;
+  display: grid;
+  gap: 0.2rem;
+}
+.program li {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.45rem;
+  padding: 1rem;
+  text-align: center;
+  pointer-events: none;
+  background: color-mix(in srgb, var(--c-bg) 72%, transparent);
+}
+.overlay[hidden] {
+  display: none;
+}
+.title {
+  font-size: clamp(1.3rem, 4.5vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+.overlay[data-phase='over'] .title {
+  color: var(--c-danger);
+  font-size: clamp(1rem, 3vw, 1.5rem);
+}
+.sub {
+  color: var(--c-muted);
+  max-width: 46ch;
+}
+.hint {
+  color: var(--c-accent);
+  font-weight: 700;
+}
+.small {
+  color: var(--c-muted);
+  font-size: 0.8rem;
+  max-width: 50ch;
+}
+.small:empty,
+.sub:empty {
+  display: none;
+}
+
+.fallback {
+  grid-area: board;
+  place-self: center;
+  color: var(--c-muted);
+}
+.fallback[hidden] {
+  display: none;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* phones: the program goes under the board, three lines of it */
+@media (max-width: 640px) {
+  .stage {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    grid-template-areas: 'hud' 'board' 'side';
+  }
+  .hud {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'line' 'expects' 'stats';
+  }
+  .stats {
+    text-align: left;
+  }
+  .side {
+    border-left: 0;
+    border-top: 1px solid var(--border);
+    max-height: 6.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+  }
+}

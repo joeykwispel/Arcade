@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="theme-color" content="#0a0e17" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'"
+    />
+    <title>Semicolon Snake</title>
+    <meta name="description" content="Snake where your body is a line of code: eat the tokens in an order that still compiles. Written in Lua." />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <main class="stage" id="stage" data-phase="loading">
+      <header class="hud">
+        <p class="line mono" id="line" aria-label="current line"></p>
+        <p class="expects" id="expects"></p>
+        <p class="stats"><span id="score"></span> · <span id="best"></span> · <span id="count"></span></p>
+      </header>
+      <div class="board">
+        <canvas id="game" aria-hidden="true"></canvas>
+        <div class="overlay" id="overlay">
+          <p class="title" id="title"></p>
+          <p class="sub" id="sub"></p>
+          <p class="hint" id="hint"></p>
+          <p class="small" id="controls"></p>
+        </div>
+      </div>
+      <aside class="side">
+        <p class="file" id="program-title">program.lua</p>
+        <ol class="program" id="program"></ol>
+      </aside>
+      <p class="sr-only">
+        Semicolon Snake, a snake game drawn on a canvas. Steer with the arrow keys or WASD. Tokens lie on the board; eat them in an order that forms valid code,
+        shown above the board with what it expects next. A semicolon runs the statement. Space starts, P pauses.
+      </p>
+      <p class="fallback" id="fallback" hidden>This game couldn't start its Lua engine in this browser.</p>
+      <p class="sr-only" id="live" aria-live="polite"></p>
+    </main>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

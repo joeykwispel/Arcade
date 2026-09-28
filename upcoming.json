@@ -1,20 +1,15 @@
 [
   {
-    "slug": "semicolon-snake",
-    "icon": "…;",
-    "title": { "en": "Semicolon Snake", "nl": "Semicolon Snake" },
-    "genre": { "en": "arcade · snake", "nl": "arcade · snake" },
-    "description": {
-      "en": "Snake where your body is a line of code. Eat the tokens in an order that still compiles; one syntax error and you're done.",
-      "nl": "Snake waarin je lijf een regel code is. Eet de tokens in een volgorde die nog compileert; één syntax error en je bent klaar."
-    },
-    "framework": "Lua (Fengari)"
-  },
-  {
     "slug": "dependency-hell",
     "icon": "npm i",
-    "title": { "en": "Dependency Hell", "nl": "Dependency Hell" },
-    "genre": { "en": "physics · stacking", "nl": "physics · stapelen" },
+    "title": {
+      "en": "Dependency Hell",
+      "nl": "Dependency Hell"
+    },
+    "genre": {
+      "en": "physics · stacking",
+      "nl": "physics · stapelen"
+    },
     "description": {
       "en": "Stack npm packages into a wobbly tower. Every now and then someone unpublishes left-pad from the bottom.",
       "nl": "Stapel npm-packages tot een wiebelige toren. Af en toe haalt iemand left-pad onderuit."
@@ -24,8 +19,14 @@
   {
     "slug": "dev-ware",
     "icon": "5s",
-    "title": { "en": "Dev-Ware", "nl": "Dev-Ware" },
-    "genre": { "en": "microgames · speed", "nl": "microgames · snelheid" },
+    "title": {
+      "en": "Dev-Ware",
+      "nl": "Dev-Ware"
+    },
+    "genre": {
+      "en": "microgames · speed",
+      "nl": "microgames · snelheid"
+    },
     "description": {
       "en": "Five-second microgames that keep getting faster: close the modal, find the typo, pick the right bracket.",
       "nl": "Microgames van vijf seconden die steeds sneller gaan: sluit de modal, vind de typo, kies het juiste haakje."
@@ -35,8 +36,14 @@
   {
     "slug": "cookie-consent",
     "icon": "[x]",
-    "title": { "en": "Cookie Consent Speedrun", "nl": "Cookie Consent Speedrun" },
-    "genre": { "en": "parody · speedrun", "nl": "parodie · speedrun" },
+    "title": {
+      "en": "Cookie Consent Speedrun",
+      "nl": "Cookie Consent Speedrun"
+    },
+    "genre": {
+      "en": "parody · speedrun",
+      "nl": "parodie · speedrun"
+    },
     "description": {
       "en": "Reject all cookies on ever more evil banners: hidden buttons, forty toggles, a close button that runs away.",
       "nl": "Weiger alle cookies op steeds gemenere banners: verstopte knoppen, veertig toggles, een sluitknop die wegrent."
@@ -46,8 +53,14 @@
   {
     "slug": "code-review-tinder",
     "icon": "+/−",
-    "title": { "en": "Code Review Tinder", "nl": "Code Review Tinder" },
-    "genre": { "en": "swipe · reflexes", "nl": "swipen · reflexen" },
+    "title": {
+      "en": "Code Review Tinder",
+      "nl": "Code Review Tinder"
+    },
+    "genre": {
+      "en": "swipe · reflexes",
+      "nl": "swipen · reflexen"
+    },
     "description": {
       "en": "Diffs slide in: swipe right to approve, left to request changes. The bugs you let through come back to haunt you.",
       "nl": "Diffs schuiven binnen: rechts om goed te keuren, links voor changes. De bugs die je doorlaat komen later terug."
@@ -57,8 +70,14 @@
   {
     "slug": "rm-rf-dungeon",
     "icon": "$ rm",
-    "title": { "en": "rm -rf dungeon", "nl": "rm -rf dungeon" },
-    "genre": { "en": "roguelike · terminal", "nl": "roguelike · terminal" },
+    "title": {
+      "en": "rm -rf dungeon",
+      "nl": "rm -rf dungeon"
+    },
+    "genre": {
+      "en": "roguelike · terminal",
+      "nl": "roguelike · terminal"
+    },
     "description": {
       "en": "A roguelike where the dungeon is a filesystem: cd into rooms, cat the loot, rm the monsters, and save sudo for the boss.",
       "nl": "Een roguelike waarin de kerker een filesystem is: cd de kamers in, cat de buit, rm de monsters en bewaar sudo voor de baas."
@@ -68,8 +87,14 @@
   {
     "slug": "localhost-golf",
     "icon": "<div>",
-    "title": { "en": "Localhost Golf", "nl": "Localhost Golf" },
-    "genre": { "en": "3D · mini golf", "nl": "3D · minigolf" },
+    "title": {
+      "en": "Localhost Golf",
+      "nl": "Localhost Golf"
+    },
+    "genre": {
+      "en": "3D · mini golf",
+      "nl": "3D · minigolf"
+    },
     "description": {
       "en": "Mini golf through a web page: the ball bounces off divs and buttons, and the hole is the 404 page.",
       "nl": "Minigolf door een webpagina: de bal stuitert tegen divs en knoppen, en de hole is de 404-pagina."

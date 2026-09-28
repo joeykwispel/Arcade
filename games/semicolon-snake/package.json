@@ -1,0 +1,22 @@
+{
+  "name": "play-semicolon-snake",
+  "version": "1.0.0",
+  "description": "Semicolon Snake: snake where your body is a line of code. Written in Lua, run in the browser by Fengari; Vite builds the page.",
+  "author": "Joey Oosenbrug (https://github.com/joeykwispel)",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "test": "node tests/run.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "fengari-web": "^0.1.4"
+  },
+  "devDependencies": {
+    "fengari": "^0.1.5",
+    "vite": "^8.3.1"
+  }
+}
