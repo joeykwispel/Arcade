@@ -2,7 +2,7 @@
 
 ![Play: small games, different stacks](docs/banner.png)
 
-A hub of small browser games at [play.joeyoosenbrug.nl](https://play.joeyoosenbrug.nl), each built with a different frontend stack. It is a personal playground: the same kind of small project in different frameworks, to feel how they compare.
+A hub of small browser games at [arcade.joeyoosenbrug.nl](https://arcade.joeyoosenbrug.nl), each built with a different frontend stack. It is a personal playground: the same kind of small project in different frameworks, to feel how they compare.
 
 The hub looks like the rest of [joeyoosenbrug.nl](https://joeyoosenbrug.nl): it uses the portfolio's [design kit](https://github.com/joeykwispel/Portfolio/tree/main/docs/design-kit) (tokens, header, cards), English at `/` and Dutch at `/nl/`.
 
@@ -58,4 +58,4 @@ Inside a game folder, `npm run dev` / `npm run build` / `npm test` work on that 
 
 ## Deploy
 
-Merging a pull request into `master` runs `.github/workflows/deploy.yml`, which builds everything and publishes `dist/` to GitHub Pages. One-time setup: Settings → Pages → Source: GitHub Actions, custom domain `play.joeyoosenbrug.nl` (the `CNAME` file is in `static/`), and a DNS CNAME record for `play` pointing at `joeykwispel.github.io`.
+Merging a pull request into `master` runs `.github/workflows/deploy.yml`, which builds everything and publishes `dist/` to GitHub Pages. One-time setup: Settings → Pages → Source: GitHub Actions, custom domain `arcade.joeyoosenbrug.nl` (the `CNAME` file is in `static/`), and a DNS CNAME record for `arcade` pointing at `joeykwispel.github.io`.

@@ -125,7 +125,7 @@ test('pages have a large share image that exists', async ({ page, request }) => 
     await page.goto(path);
     await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', 'summary_large_image');
     const url = await page.locator('meta[property="og:image"]').getAttribute('content');
-    expect(url).toBe(`https://play.joeyoosenbrug.nl${image}`);
+    expect(url).toBe(`https://arcade.joeyoosenbrug.nl${image}`);
     const res = await request.get(image);
     expect(res.status()).toBe(200);
     expect(res.headers()['content-type']).toBe('image/png');

@@ -1,7 +1,7 @@
-# Deploys the hub and every game to GitHub Pages (https://play.joeyoosenbrug.nl) when a pull request is merged into master.
+# Deploys the hub and every game to GitHub Pages (https://arcade.joeyoosenbrug.nl) when a pull request is merged into master.
 # Merging a PR is a push to master, so this is the trigger that fires on merge.
-# One-time setup: repo Settings -> Pages -> Source: "GitHub Actions", Custom domain: play.joeyoosenbrug.nl,
-# plus a CNAME record for play.joeyoosenbrug.nl pointing at joeykwispel.github.io.
+# One-time setup: repo Settings -> Pages -> Source: "GitHub Actions", Custom domain: arcade.joeyoosenbrug.nl,
+# plus a CNAME record for arcade.joeyoosenbrug.nl pointing at joeykwispel.github.io.
 name: Deploy to GitHub Pages
 
 on:

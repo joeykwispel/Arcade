@@ -19,7 +19,7 @@ export default {
     how: 'How it works'
   },
   hero: {
-    kicker: 'play.joeyoosenbrug.nl',
+    kicker: 'arcade.joeyoosenbrug.nl',
     title: 'Small games,',
     titleAccent: 'different stacks.',
     intro:
