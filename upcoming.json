@@ -1,22 +1,5 @@
 [
   {
-    "slug": "dev-ware",
-    "icon": "5s",
-    "title": {
-      "en": "Dev-Ware",
-      "nl": "Dev-Ware"
-    },
-    "genre": {
-      "en": "microgames · speed",
-      "nl": "microgames · snelheid"
-    },
-    "description": {
-      "en": "Five-second microgames that keep getting faster: close the modal, find the typo, pick the right bracket.",
-      "nl": "Microgames van vijf seconden die steeds sneller gaan: sluit de modal, vind de typo, kies het juiste haakje."
-    },
-    "framework": "Gleam + Lustre"
-  },
-  {
     "slug": "cookie-consent",
     "icon": "[x]",
     "title": {

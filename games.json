@@ -156,5 +156,25 @@
     },
     "aspect": "16 / 10",
     "phoneAspect": "3 / 4"
+  },
+  {
+    "slug": "dev-ware",
+    "title": {
+      "en": "Dev-Ware",
+      "nl": "Dev-Ware"
+    },
+    "description": {
+      "en": "Five-second microgames that keep getting faster: close the cookie modal, find the typo, kill the process, and whatever you do, don’t deploy on Friday.",
+      "nl": "Microgames van vijf seconden die steeds sneller gaan: sluit de cookie-modal, vind de typo, kill het proces, en wat je ook doet, deploy niet op vrijdag."
+    },
+    "framework": "Gleam + Lustre",
+    "tooling": "gleam + Vite",
+    "thumbnail": "/thumbs/dev-ware.svg",
+    "controls": {
+      "en": "Read the order, then click or tap the right thing, or type the command when it asks. Space or a tap starts, P pauses. Four failed builds and you’re out.",
+      "nl": "Lees de opdracht, klik of tik dan op het juiste ding, of typ het commando als dat gevraagd wordt. Spatie of een tik start, P pauzeert. Vier gefaalde builds en je ligt eruit."
+    },
+    "aspect": "16 / 10",
+    "phoneAspect": "3 / 4"
   }
 ]

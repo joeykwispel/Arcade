@@ -128,6 +128,22 @@ const scenes = {
       }
     }
   },
+  'dev-ware': {
+    // small, so the microgame fills the picture
+    viewport: { width: 720, height: 450 },
+    selector: '.stage',
+    // the microgames come in random order: start again until one of the busier ones is on screen
+    async play(page) {
+      for (let i = 0; i < 12; i++) {
+        await page.keyboard.press('Space');
+        await page.locator('.stage[data-phase="playing"]').waitFor();
+        const kind = await page.locator('.stage').getAttribute('data-kind');
+        if (kind === 'modal' || kind === 'kill') break;
+        await page.reload();
+      }
+      await page.waitForTimeout(400);
+    }
+  },
   'bug-bash': {
     viewport: { width: 1200, height: 750 },
     // two levels done, so level 3 (two paths merging) is the one that opens
