@@ -1,0 +1,14 @@
+{
+  "name": "play-cookie-consent",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cookie Consent Speedrun: reject ever more evil cookie banners. HTML and CSS only, no JavaScript.",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node build.mjs && node --test"
+  },
+  "dependencies": {
+    "@fontsource-variable/jetbrains-mono": "^5.3.0"
+  }
+}

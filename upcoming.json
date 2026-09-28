@@ -1,22 +1,5 @@
 [
   {
-    "slug": "cookie-consent",
-    "icon": "[x]",
-    "title": {
-      "en": "Cookie Consent Speedrun",
-      "nl": "Cookie Consent Speedrun"
-    },
-    "genre": {
-      "en": "parody · speedrun",
-      "nl": "parodie · speedrun"
-    },
-    "description": {
-      "en": "Reject all cookies on ever more evil banners: hidden buttons, forty toggles, a close button that runs away.",
-      "nl": "Weiger alle cookies op steeds gemenere banners: verstopte knoppen, veertig toggles, een sluitknop die wegrent."
-    },
-    "framework": "HTML + CSS only, no JavaScript"
-  },
-  {
     "slug": "code-review-tinder",
     "icon": "+/−",
     "title": {

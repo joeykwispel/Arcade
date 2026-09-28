@@ -1,0 +1,676 @@
+/*
+ * Cookie Consent Speedrun: the whole game is this stylesheet. There is no JavaScript.
+ *
+ *   #s0 … #s8   checkboxes: "banner N is done" (s0 is the start button). :has() shows the banner you're on.
+ *   .pen        checkboxes: an accepted cookie. Each adds 10 seconds to the clock and hides its own button.
+ *   --s, --d    the clock: animated @property integers (seconds, tenths), shown with CSS counters.
+ *   reset       the "run it again" button is <button type="reset">: it unchecks everything, which starts over.
+ */
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('fonts/jetbrains-mono.woff2') format('woff2');
+  font-weight: 100 800;
+  font-display: swap;
+}
+
+/* dark by default, and when the arcade asks for it (#dark beats the system setting below on specificity) */
+:root,
+:root:has(#dark:target) {
+  color-scheme: dark;
+  --bg: #0d1220;
+  --panel: #111827;
+  --raised: #182033;
+  --border: #253049;
+  --text: #e6e9f2;
+  --muted: #98a3b9;
+  --accent: #7dd3c0;
+  --on-accent: #06201b;
+  --accent2: #c3b1ff;
+  --danger: #f7768e;
+  --warn: #e0af68;
+  --ok: #9ece6a;
+  --shadow: rgba(0, 0, 0, 0.45);
+}
+/* On its own, the page follows the system setting. */
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
+    --bg: #ffffff;
+    --panel: #f4f6fb;
+    --raised: #e8ecf4;
+    --border: #d3d9e6;
+    --text: #141b2d;
+    --muted: #4b566d;
+    --accent: #0f766e;
+    --on-accent: #ffffff;
+    --accent2: #5b3fc4;
+    --danger: #b4233f;
+    --warn: #8a5300;
+    --ok: #2f6b1f;
+    --shadow: rgba(20, 27, 45, 0.18);
+  }
+}
+
+/* In the arcade, the site passes its own theme switch in the URL fragment: #light or #dark, read with :target. */
+:root:has(#light:target) {
+  color-scheme: light;
+  --bg: #ffffff;
+  --panel: #f4f6fb;
+  --raised: #e8ecf4;
+  --border: #d3d9e6;
+  --text: #141b2d;
+  --muted: #4b566d;
+  --accent: #0f766e;
+  --on-accent: #ffffff;
+  --accent2: #5b3fc4;
+  --danger: #b4233f;
+  --warn: #8a5300;
+  --ok: #2f6b1f;
+  --shadow: rgba(20, 27, 45, 0.18);
+}
+
+/* no box, so jumping to #light or #dark never scrolls the page (or the arcade around it) */
+#light,
+#dark {
+  display: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font:
+    15px/1.45 'JetBrains Mono',
+    ui-monospace,
+    Menlo,
+    Consolas,
+    monospace;
+  -webkit-tap-highlight-color: transparent;
+}
+h1,
+h2,
+h3,
+p,
+dl,
+dd,
+fieldset {
+  margin: 0;
+}
+fieldset {
+  border: 0;
+  padding: 0;
+  min-width: 0;
+}
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  opacity: 0;
+}
+/* the hidden checkbox stays inside its own label, instead of stretching the page from wherever it is */
+label {
+  position: relative;
+}
+.muted {
+  color: var(--muted);
+}
+.small {
+  font-size: 0.8rem;
+}
+
+/* ---------- the game: one screen at a time ---------- */
+
+.game {
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+.screen,
+.level,
+.hud {
+  display: none;
+}
+.game:not(:has(#s0:checked)) .intro,
+.game:has(#s8:checked) .win {
+  display: grid;
+}
+.game:has(#s0:checked) .hud {
+  display: flex;
+}
+.game:has(#s0:checked):not(:has(#s1:checked)) #l1,
+.game:has(#s1:checked):not(:has(#s2:checked)) #l2,
+.game:has(#s2:checked):not(:has(#s3:checked)) #l3,
+.game:has(#s3:checked):not(:has(#s4:checked)) #l4,
+.game:has(#s4:checked):not(:has(#s5:checked)) #l5,
+.game:has(#s5:checked):not(:has(#s6:checked)) #l6,
+.game:has(#s6:checked):not(:has(#s7:checked)) #l7,
+.game:has(#s7:checked):not(:has(#s8:checked)) #l8 {
+  display: grid;
+}
+.intro,
+.screen,
+.level {
+  grid-row: 2;
+}
+
+/* ---------- the clock ---------- */
+
+@property --s {
+  syntax: '<integer>';
+  inherits: false;
+  initial-value: 0;
+}
+@property --d {
+  syntax: '<integer>';
+  inherits: false;
+  initial-value: 0;
+}
+@keyframes seconds {
+  to {
+    --s: 3600;
+  }
+}
+@keyframes tenths {
+  to {
+    --d: 10;
+  }
+}
+
+/* Each accepted cookie: +1 on the count, +10 s on the clock. */
+.game:has(#p1:checked) {
+  --p1: 1;
+}
+.game:has(#p2:checked) {
+  --p2: 1;
+}
+.game:has(#p2b:checked) {
+  --p2b: 1;
+}
+.game:has(#p3:checked) {
+  --p3: 1;
+}
+.game:has(#p4a:checked) {
+  --p4a: 1;
+}
+.game:has(#p4b:checked) {
+  --p4b: 1;
+}
+.game:has(#p5:checked) {
+  --p5: 1;
+}
+.game:has(#p6:checked) {
+  --p6: 1;
+}
+.game:has(#p6b:checked) {
+  --p6b: 1;
+}
+.game:has(#p7:checked) {
+  --p7: 1;
+}
+.game:has(#p7b:checked) {
+  --p7b: 1;
+}
+.game:has(#p7c:checked) {
+  --p7c: 1;
+}
+.game:has(#p8:checked) {
+  --p8: 1;
+}
+.game {
+  --cookies: calc(
+    var(--p1, 0) + var(--p2, 0) + var(--p2b, 0) + var(--p3, 0) + var(--p4a, 0) + var(--p4b, 0) + var(--p5, 0) + var(--p6, 0) + var(--p6b, 0) + var(--p7, 0) +
+      var(--p7b, 0) + var(--p7c, 0) + var(--p8, 0)
+  );
+}
+
+/* The clock starts when the HUD appears (the start button), and stops on the last banner. */
+.hud {
+  animation:
+    seconds 3600s steps(3600, end) forwards,
+    tenths 1s steps(10, end) infinite;
+  /* the counters live on the HUD, so the win screen after it can show them too */
+  counter-reset: sec calc(var(--s) + 10 * var(--cookies)) tenth var(--d) cookies var(--cookies);
+}
+.game:has(#s8:checked) .hud {
+  animation-play-state: paused;
+}
+.clock::after {
+  content: counter(sec) '.' counter(tenth) ' s';
+}
+.count::after {
+  content: '🍪 ' counter(cookies);
+}
+
+/* ---------- HUD ---------- */
+
+.hud {
+  grid-row: 1;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  flex-wrap: wrap;
+  padding: 0.5rem 0.9rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+  font-size: 0.85rem;
+}
+.hud b {
+  font-variant-numeric: tabular-nums;
+}
+.link {
+  font: inherit;
+  color: var(--accent);
+  background: none;
+  border: 0;
+  padding: 0.2rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* ---------- buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--raised);
+  color: var(--text);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+.btn:hover {
+  border-color: var(--accent);
+}
+.btn.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+.btn.big {
+  padding: 0.8rem 1.6rem;
+  font-size: 1.1rem;
+}
+/* the focus ring goes on the label, since the checkbox inside it is hidden */
+.btn:has(:focus-visible),
+.btn:focus-visible,
+.hidden-way:has(:focus-visible),
+.link:focus-visible,
+.switch:has(:focus-visible),
+.cell:has(:focus-visible) {
+  outline: 3px solid var(--accent2);
+  outline-offset: 2px;
+}
+/* an accepted cookie's button goes away: there is no un-accepting */
+.accept:has(:checked) {
+  display: none;
+}
+
+/* ---------- screens ---------- */
+
+.screen {
+  place-content: center;
+  justify-items: center;
+  gap: 0.9rem;
+  padding: 1.5rem 1rem;
+  text-align: center;
+}
+.logo {
+  font-size: clamp(2.4rem, 8vw, 3.6rem);
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: -0.05em;
+}
+.intro h1,
+.win h2 {
+  font-size: clamp(1.6rem, 5vw, 2.6rem);
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+}
+.lead {
+  max-width: 46ch;
+}
+.badge {
+  font-size: 0.8rem;
+  color: var(--muted);
+  border: 1px dashed var(--border);
+  border-radius: 999px;
+  padding: 0.2rem 0.8rem;
+}
+.score {
+  display: flex;
+  gap: 2rem;
+}
+.score dt {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+.score dd {
+  font-size: 1.8rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+.clean {
+  color: var(--ok);
+}
+.game:has(.pen:checked) .clean,
+.game:not(:has(.pen:checked)) .dirty {
+  display: none;
+}
+
+/* ---------- a banner ---------- */
+
+.level {
+  position: relative;
+  place-content: center;
+  justify-items: center;
+  gap: 0.6rem;
+  padding: 1rem;
+  min-height: 0;
+  /* a fake page behind the banner */
+  background: repeating-linear-gradient(to bottom, transparent 0 22px, var(--panel) 22px 30px);
+}
+.lvl {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+.banner {
+  width: min(560px, 100%);
+  display: grid;
+  gap: 0.8rem;
+  padding: 1.2rem 1.3rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--panel);
+  box-shadow: 0 18px 50px var(--shadow);
+}
+.banner h2 {
+  font-size: 1.25rem;
+}
+.banner h3 {
+  font-size: 1.1rem;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+.actions.stack {
+  display: grid;
+}
+.shame {
+  display: none;
+  padding: 0.5rem 0.7rem;
+  border-radius: 8px;
+  border: 1px solid var(--warn);
+  color: var(--warn);
+  font-size: 0.85rem;
+}
+.level:has(.pen:checked) .shame {
+  display: block;
+}
+
+/* 1: "reject all" as small as it can get away with */
+.btn.quiet {
+  background: none;
+  border-color: transparent;
+  font-weight: 400;
+  font-size: 0.8rem;
+  color: var(--muted);
+  padding: 0.3rem 0.4rem;
+}
+
+/* 2: preferences, all switched on */
+.prefs {
+  display: none;
+  gap: 0.45rem;
+}
+.level:has(#m2:checked) .prefs {
+  display: grid;
+}
+.level:has(#m2:checked) .manage {
+  display: none;
+}
+.switch {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+}
+.switch input {
+  appearance: none;
+  -webkit-appearance: none;
+  order: 2;
+  flex: none;
+  width: 2.4rem;
+  height: 1.3rem;
+  margin: 0;
+  border-radius: 999px;
+  background: var(--raised);
+  border: 1px solid var(--border);
+  position: relative;
+  cursor: pointer;
+}
+.switch input::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: calc(1.3rem - 6px);
+  height: calc(1.3rem - 6px);
+  border-radius: 50%;
+  background: var(--muted);
+  transition: translate 0.15s;
+}
+.switch input:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.switch input:checked::after {
+  translate: 1.1rem 0;
+  background: var(--on-accent);
+}
+.switch input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.prefs:has(.opt:checked) .save-off,
+.prefs:not(:has(.opt:checked)) .save-on {
+  display: none;
+}
+
+/* 3: forty vendors, and the way out at the very bottom */
+.vendors {
+  display: grid;
+  gap: 0.3rem;
+  max-height: 9.5rem;
+  overflow-y: auto;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  font-size: 0.8rem;
+}
+.vendors .switch span {
+  color: var(--muted);
+}
+.object {
+  margin-top: 0.4rem;
+  justify-self: start;
+}
+
+/* 4: say what you mean */
+.question {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+/* 5: it runs from the pointer, until the animation has worn it out */
+@property --energy {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+@keyframes tire {
+  from {
+    --energy: 1;
+  }
+  to {
+    --energy: 0;
+  }
+}
+#l5 {
+  animation: tire 6s ease-in forwards;
+}
+.flee {
+  display: inline-block;
+}
+.flee .btn {
+  transition: translate 0.12s ease-out;
+}
+.flee:hover .btn {
+  translate: calc(var(--energy) * -7rem) calc(var(--energy) * -9rem);
+}
+
+/* 6: the real button, dressed up as small print */
+.fine {
+  font-size: 0.72rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.hidden-way {
+  cursor: text;
+}
+.hidden-way:hover {
+  cursor: pointer;
+}
+
+/* 7: three steps */
+#l7 .step-b,
+#l7 .step-c,
+#l7:has(#m7:checked) .step-a,
+#l7:has(#m7b:checked) .step-b {
+  display: none;
+}
+#l7:has(#m7:checked) .step-b,
+#l7:has(#m7b:checked) .step-c {
+  display: grid;
+}
+/* the answers swap places and colours on the last question */
+#l7 .step-c .actions {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+/* 8: the captcha */
+.captcha {
+  display: grid;
+  grid-template-columns: repeat(3, 3.4rem);
+  gap: 0.35rem;
+  justify-content: center;
+}
+.cell {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 3.4rem;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+.cell input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.cell:has(:checked) {
+  border-color: var(--accent);
+  background: var(--raised);
+}
+.cell:has(:checked)::after {
+  content: '✓';
+  position: absolute;
+  top: 0.1rem;
+  right: 0.3rem;
+  font-size: 0.8rem;
+  color: var(--accent);
+}
+.type {
+  display: grid;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+}
+.word {
+  font: inherit;
+  font-size: 1rem;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  text-transform: uppercase;
+}
+.word:focus-visible {
+  outline: 3px solid var(--accent2);
+  outline-offset: 1px;
+}
+.locked {
+  cursor: not-allowed;
+  color: var(--muted);
+  font-weight: 400;
+  font-size: 0.85rem;
+  border-style: dashed;
+}
+.locked:hover {
+  border-color: var(--border);
+}
+/* done = every cookie selected, nothing else, and the word typed */
+#l8:has(.yes:not(:checked)) .submit,
+#l8:has(.no:checked) .submit,
+#l8:has(.word:invalid) .submit,
+#l8:not(:has(.yes:not(:checked))):not(:has(.no:checked)):has(.word:valid) .locked {
+  display: none;
+}
+
+/* ---------- small screens ---------- */
+
+@media (max-width: 480px) {
+  .banner {
+    padding: 1rem;
+  }
+  .flee:hover .btn {
+    translate: calc(var(--energy) * -3rem) calc(var(--energy) * -8rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .switch input::after,
+  .flee .btn {
+    transition: none;
+  }
+}

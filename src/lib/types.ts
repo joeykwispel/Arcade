@@ -22,6 +22,12 @@ export interface Game {
   aspect?: string;
   /** Aspect ratio on phones (up to 640px wide). Defaults to "4 / 3"; a game with a lot of UI can ask for a taller frame. */
   phoneAspect?: string;
+  /**
+   * The game has no JavaScript, so it can't read ?lang or listen for messages. Instead it has one page per language
+   * (index.html for English, nl/index.html for Dutch), and the hub puts the theme in the URL fragment (#light or
+   * #dark), which the game's CSS reads with :target.
+   */
+  noScript?: boolean;
   /** Where the game's build ends up, relative to its folder. Defaults to "dist". */
   outDir?: string;
 }

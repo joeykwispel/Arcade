@@ -176,5 +176,26 @@
     },
     "aspect": "16 / 10",
     "phoneAspect": "3 / 4"
+  },
+  {
+    "slug": "cookie-consent",
+    "title": {
+      "en": "Cookie Consent Speedrun",
+      "nl": "Cookie Consent Speedrun"
+    },
+    "description": {
+      "en": "Reject all cookies on eight ever more evil banners, against the clock. Written without a single line of JavaScript.",
+      "nl": "Weiger alle cookies op acht steeds gemenere banners, tegen de klok. Geschreven zonder één regel JavaScript."
+    },
+    "framework": "HTML + CSS only",
+    "tooling": "no JavaScript",
+    "thumbnail": "/thumbs/cookie-consent.svg",
+    "controls": {
+      "en": "Click or tap your way out of every banner, or use Tab and Space. Every cookie you accept adds 10 seconds. The clock stops when the last banner is gone.",
+      "nl": "Klik of tik je een weg uit elke banner, of gebruik Tab en spatie. Elke cookie die je accepteert telt 10 seconden op. De klok stopt als de laatste banner weg is."
+    },
+    "aspect": "16 / 10",
+    "phoneAspect": "3 / 4",
+    "noScript": true
   }
 ]

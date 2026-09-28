@@ -343,18 +343,52 @@ test('Dev-Ware speaks Dutch on its own page', async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test('Cookie Consent Speedrun is played without JavaScript: reject a banner, and accepting costs time', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/play/cookie-consent/');
+  const frame = page.frameLocator('iframe');
+  await frame.getByText('Start the timer').click();
+  await expect(frame.locator('#l1')).toBeVisible();
+  await frame.locator('#l1').getByText('Accept all').click();
+  await expect(frame.locator('#l1 .shame')).toBeVisible();
+  await expect(frame.locator('#l1').getByText('Accept all')).toBeHidden();
+  await frame.locator('#l1').getByText('reject all').click();
+  await expect(frame.locator('#l2')).toBeVisible();
+  // the page really has no scripts
+  expect(await frame.locator('script').count()).toBe(0);
+  expect(errors).toEqual([]);
+});
+
+test('Cookie Consent Speedrun follows the site theme through the URL fragment', async ({ page }) => {
+  await page.goto('/play/cookie-consent/');
+  const body = page.frameLocator('iframe').locator('body');
+  await page.evaluate(() => (document.documentElement.dataset.theme = 'light'));
+  await expect(body).toHaveCSS('background-color', 'rgb(255, 255, 255)');
+  await page.evaluate(() => (document.documentElement.dataset.theme = 'dark'));
+  await expect(body).toHaveCSS('background-color', 'rgb(13, 18, 32)');
+});
+
+test('Cookie Consent Speedrun has a Dutch page, which the Dutch site loads', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/nl/play/cookie-consent/');
+  const frame = page.frameLocator('iframe');
+  await expect(frame.locator('html')).toHaveAttribute('lang', 'nl');
+  await expect(frame.getByText('Start de timer')).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
 test('the home page shows the planned games as coming soon, without links', async ({ page }) => {
   await page.goto('/');
   const soon = page.locator('#upcoming');
   await expect(soon.getByRole('heading', { level: 2 })).toContainText('Coming soon');
-  await expect(soon.locator('article')).toHaveCount(4);
+  await expect(soon.locator('article')).toHaveCount(3);
   await expect(soon.locator('article', { hasText: 'rm -rf dungeon' })).toContainText('Python (Pyodide)');
   await expect(soon.locator('a')).toHaveCount(0);
   // the generic "next game" card is still there
   await expect(page.locator('#games .next')).toBeVisible();
   await page.goto('/nl/');
   await expect(page.locator('#upcoming').getByRole('heading', { level: 2 })).toContainText('Binnenkort');
-  await expect(page.locator('#upcoming article', { hasText: 'Cookie Consent Speedrun' })).toContainText('gemenere banners');
+  await expect(page.locator('#upcoming article', { hasText: 'Code Review Tinder' })).toContainText('keuren');
 });
 
 test('unknown games get the 404 page', async ({ page }) => {
