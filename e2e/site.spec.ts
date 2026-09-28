@@ -117,6 +117,21 @@ test('Bug Bash follows the language of the hub and works on its own page', async
   expect(errors).toEqual([]);
 });
 
+test('pages have a large share image that exists', async ({ page, request }) => {
+  for (const [path, image] of [
+    ['/', '/og/play.png'],
+    ['/nl/play/bug-bash/', '/og/bug-bash.png']
+  ]) {
+    await page.goto(path);
+    await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', 'summary_large_image');
+    const url = await page.locator('meta[property="og:image"]').getAttribute('content');
+    expect(url).toBe(`https://play.joeyoosenbrug.nl${image}`);
+    const res = await request.get(image);
+    expect(res.status()).toBe(200);
+    expect(res.headers()['content-type']).toBe('image/png');
+  }
+});
+
 test('unknown games get the 404 page', async ({ page }) => {
   const res = await page.goto('/play/nope/');
   expect(res?.status()).toBe(404);

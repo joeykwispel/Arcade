@@ -25,6 +25,10 @@ describe('games.json', () => {
         expect(existsSync(`static${g.thumbnail}`)).toBe(true);
       });
 
+      it('has a share image (npm run og)', () => {
+        expect(existsSync(`static/og/${g.slug}.png`)).toBe(true);
+      });
+
       it('is its own app with a build script', () => {
         const pkg = JSON.parse(readFileSync(`games/${g.slug}/package.json`, 'utf8'));
         expect(pkg.scripts?.build).toBeTruthy();
