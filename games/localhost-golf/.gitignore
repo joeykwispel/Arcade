@@ -1,0 +1,5 @@
+# Godot: import cache, and the export preset build.mjs writes
+.godot/
+export_presets.cfg
+dist/
+*.tmp

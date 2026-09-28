@@ -1,0 +1,13 @@
+{
+  "name": "play-localhost-golf",
+  "version": "1.0.0",
+  "description": "Localhost Golf: mini golf through web pages. Made with Godot and GDScript.",
+  "author": "Joey Oosenbrug (https://github.com/joeykwispel)",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node build.mjs --test"
+  }
+}
