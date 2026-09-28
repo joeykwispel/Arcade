@@ -63,6 +63,17 @@ const scenes = {
       await page.waitForTimeout(300);
     }
   },
+  'infinite-scroll': {
+    viewport: { width: 1200, height: 675 },
+    // start and take the picture just before the first exception arrives (about 2 seconds in)
+    async play(page) {
+      await page.keyboard.press('Space');
+      await page.keyboard.down('ArrowLeft');
+      await page.waitForTimeout(250);
+      await page.keyboard.up('ArrowLeft');
+      await page.waitForTimeout(1300);
+    }
+  },
   'bug-bash': {
     viewport: { width: 1200, height: 750 },
     // two levels done, so level 3 (two paths merging) is the one that opens

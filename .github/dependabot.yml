@@ -60,6 +60,19 @@ updates:
       all:
         patterns: ['*']
 
+  - package-ecosystem: npm
+    directory: /games/infinite-scroll
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      all:
+        patterns: ['*']
+    ignore:
+      # same as the hub: stay on TypeScript 6 for now
+      - dependency-name: typescript
+        versions: ['>=7']
+
   # Kotlin and the Gradle wrapper for Standup Survivor
   - package-ecosystem: gradle
     directory: /games/standup-survivor
