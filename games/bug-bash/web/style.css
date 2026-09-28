@@ -1,0 +1,120 @@
+/*
+ * The page around the canvas, and the theme colors the Rust code draws with (--c-<name>, see src/draw.rs).
+ * Colors follow the joeyoosenbrug.nl design tokens, as an editor theme, in dark and light.
+ */
+
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --page: #0a0e17;
+  --c-bg: #0d1220;
+  --c-panel: #0a0e17;
+  --c-raised: #172033;
+  --c-border: #253049;
+  --c-text: #e6e9f2;
+  --c-muted: #98a3b9;
+  --c-faint: #56627d;
+  --c-accent: #7dd3c0;
+  --c-accent2: #c3b1ff;
+  --c-keyword: #bb9af7;
+  --c-str: #9ece6a;
+  --c-num: #ff9e64;
+  --c-func: #7aa2f7;
+  --c-path: #1a2b3f;
+  --c-danger: #f7768e;
+  --c-warn: #e0af68;
+  --c-success: #9ece6a;
+  --c-info: #7aa2f7;
+  --c-duck: #f7cf46;
+  --c-beak: #ff8a3d;
+  --c-status: #7dd3c0;
+  --c-on-status: #0a0e17;
+  --c-shade: #000000;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --page: #f4f6fb;
+  --c-bg: #ffffff;
+  --c-panel: #f4f6fb;
+  --c-raised: #e8ecf4;
+  --c-border: #d3d9e6;
+  --c-text: #141b2d;
+  --c-muted: #4b566d;
+  --c-faint: #8a94a9;
+  --c-accent: #0f766e;
+  --c-accent2: #5b3fc4;
+  --c-keyword: #7c3aed;
+  --c-str: #3f7d20;
+  --c-num: #b45309;
+  --c-func: #1d4ed8;
+  --c-path: #dfeafb;
+  --c-danger: #c0364d;
+  --c-warn: #a16207;
+  --c-success: #2f7a1f;
+  --c-info: #1d4ed8;
+  --c-duck: #f2b705;
+  --c-beak: #e8661b;
+  --c-status: #0f766e;
+  --c-on-status: #ffffff;
+  --c-shade: #141b2d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  /* transparent inside the hub, so its frosted frame shows around the letterbox */
+  background: transparent;
+  color: var(--c-text);
+  font-family: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Opened on its own page instead of in the hub */
+html.standalone,
+html.standalone body {
+  background: var(--page);
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  padding: 1rem;
+  text-align: center;
+  color: var(--c-muted);
+}
+.fallback[hidden] {
+  display: none;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

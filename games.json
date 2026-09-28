@@ -14,5 +14,21 @@
       "nl": "Spatie of ↑ om te springen (houd vast voor hoger), ↓ om te duiken. Op je telefoon: tik om te springen, veeg omlaag om te duiken."
     },
     "aspect": "3 / 1"
+  },
+  {
+    "slug": "bug-bash",
+    "title": { "en": "Bug Bash", "nl": "Bug Bash" },
+    "description": {
+      "en": "Tower defense for developers: install linters, unit tests and rubber ducks to squash bugs before they reach production. Five levels.",
+      "nl": "Tower defense voor developers: installeer linters, unit tests en rubber ducks en squash bugs voor ze productie halen. Vijf levels."
+    },
+    "framework": "Rust + WebAssembly",
+    "tooling": "cargo + esbuild",
+    "thumbnail": "/thumbs/bug-bash.svg",
+    "controls": {
+      "en": "Click a tool on the right, then an empty line to install it. Click a tool on the map to upgrade or sell it, git push starts a sprint. Keys: 1-6, arrows + Enter, U, S, Space, Esc.",
+      "nl": "Klik rechts op een tool en dan op een lege regel om hem te installeren. Klik op een tool op de kaart om te upgraden of verkopen, git push start een sprint. Toetsen: 1-6, pijltjes + Enter, U, S, spatie, Esc."
+    },
+    "aspect": "8 / 5"
   }
 ]

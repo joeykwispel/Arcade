@@ -22,7 +22,8 @@ test('home page lists the games in English and Dutch', async ({ page }) => {
 
   await page.goto('/nl/');
   await expect(page.locator('html')).toHaveAttribute('lang', 'nl');
-  await expect(page.locator('a.card')).toHaveAttribute('href', '/nl/play/duck/');
+  await expect(page.locator('a.card', { hasText: 'Rubber Duck Run' })).toHaveAttribute('href', '/nl/play/duck/');
+  await expect(page.locator('a.card', { hasText: 'Bug Bash' })).toHaveAttribute('href', '/nl/play/bug-bash/');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('andere stacks');
   expect(errors).toEqual([]);
 });
@@ -78,6 +79,39 @@ test('the game also works on its own page', async ({ page }) => {
   await expect(page.locator('html')).toHaveClass(/standalone/);
   await page.keyboard.press('Space');
   await expect(page.locator('#overlay')).toBeHidden();
+  expect(errors).toEqual([]);
+});
+
+test('Bug Bash loads its WebAssembly and starts a level from the keyboard', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/play/bug-bash/');
+  const frame = page.frameLocator('iframe');
+  const stage = frame.locator('#stage');
+  await expect(stage).toHaveAttribute('data-screen', 'menu');
+  await frame.locator('canvas#game').click();
+  await page.keyboard.press('Enter');
+  await expect(stage).toHaveAttribute('data-screen', 'playing');
+  await expect(frame.locator('#live')).toContainText('hello-world.js');
+  await page.keyboard.press('Space');
+  await expect(frame.locator('#live')).toContainText('Sprint 1 of 5');
+  await page.keyboard.press('Escape');
+  await expect(stage).toHaveAttribute('data-screen', 'paused');
+  expect(errors).toEqual([]);
+});
+
+test('Bug Bash follows the language of the hub and works on its own page', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/nl/play/bug-bash/');
+  const frame = page.frameLocator('iframe');
+  await expect(frame.locator('html')).toHaveAttribute('lang', 'nl');
+  await expect(frame.locator('#stage')).toHaveAttribute('data-screen', 'menu');
+  await frame.locator('canvas#game').click();
+  await page.keyboard.press('Enter');
+  await expect(frame.locator('#live')).toContainText('spatie');
+
+  await page.goto('/games/bug-bash/?lang=en');
+  await expect(page.locator('html')).toHaveClass(/standalone/);
+  await expect(page.locator('#stage')).toHaveAttribute('data-screen', 'menu');
   expect(errors).toEqual([]);
 });
 

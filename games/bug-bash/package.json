@@ -1,0 +1,20 @@
+{
+  "name": "play-bug-bash",
+  "version": "1.0.0",
+  "description": "Bug Bash: a tower defense for developers. Rust compiled to WebAssembly without wasm-bindgen; esbuild bundles the thin page layer.",
+  "author": "Joey Oosenbrug (https://github.com/joeykwispel)",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node build.mjs --serve",
+    "build": "node build.mjs",
+    "test": "cargo test"
+  },
+  "dependencies": {
+    "@fontsource-variable/jetbrains-mono": "^5.3.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
+}

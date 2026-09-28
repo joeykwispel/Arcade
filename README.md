@@ -4,9 +4,12 @@ A hub of small browser games at [play.joeyoosenbrug.nl](https://play.joeyoosenbr
 
 The hub looks like the rest of [joeyoosenbrug.nl](https://joeyoosenbrug.nl): it uses the portfolio's [design kit](https://github.com/joeykwispel/Portfolio/tree/main/docs/design-kit) (tokens, header, cards), English at `/` and Dutch at `/nl/`.
 
-| Game            | Stack               | Build tool | Folder        |
-| --------------- | ------------------- | ---------- | ------------- |
-| Rubber Duck Run | Vanilla JS + Canvas | esbuild    | `games/duck/` |
+| Game            | Stack               | Build tool      | Folder            |
+| --------------- | ------------------- | --------------- | ----------------- |
+| Rubber Duck Run | Vanilla JS + Canvas | esbuild         | `games/duck/`     |
+| Bug Bash        | Rust + WebAssembly  | cargo + esbuild | `games/bug-bash/` |
+
+Building Bug Bash needs Rust with the WebAssembly target: install [rustup](https://rustup.rs), then `rustup target add wasm32-unknown-unknown`. The game has no crates and no wasm-bindgen: the Rust code exports plain functions and leaves a draw list in memory, and `web/main.js` replays it on a canvas.
 
 ## How it fits together
 
