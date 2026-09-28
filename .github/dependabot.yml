@@ -69,6 +69,22 @@ updates:
       all:
         patterns: ['*']
 
+  - package-ecosystem: npm
+    directory: /games/deploy-tycoon
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      all:
+        patterns: ['*']
+
+  # Elm packages for Deploy Tycoon
+  - package-ecosystem: elm
+    directory: /games/deploy-tycoon
+    schedule:
+      interval: weekly
+      day: monday
+
   # Kotlin and the Gradle wrapper for Standup Survivor
   - package-ecosystem: gradle
     directory: /games/standup-survivor
