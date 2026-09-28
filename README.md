@@ -1,5 +1,7 @@
 # Play
 
+![Play: small games, different stacks](docs/banner.png)
+
 A hub of small browser games at [play.joeyoosenbrug.nl](https://play.joeyoosenbrug.nl), each built with a different frontend stack. It is a personal playground: the same kind of small project in different frameworks, to feel how they compare.
 
 The hub looks like the rest of [joeyoosenbrug.nl](https://joeyoosenbrug.nl): it uses the portfolio's [design kit](https://github.com/joeykwispel/Portfolio/tree/main/docs/design-kit) (tokens, header, cards), English at `/` and Dutch at `/nl/`.
@@ -37,6 +39,7 @@ scripts/build.mjs     builds the hub into dist/, then every game, and copies eac
 | `npm run lint`        | Prettier + ESLint                                                                |
 | `npm run test:unit`   | Hub unit tests (Vitest), including a check of every `games.json` entry           |
 | `npm run test:games`  | Each game's own tests                                                            |
+| `npm run og`          | Share images (`static/og/`) and the README banner, from screenshots of the build |
 | `npm run test:e2e`    | Playwright + axe on the build (`PW_CHANNEL=chrome` uses your installed Chrome)   |
 
 Inside a game folder, `npm run dev` / `npm run build` / `npm test` work on that game alone.
@@ -48,7 +51,7 @@ Inside a game folder, `npm run dev` / `npm run build` / `npm test` work on that 
    - Use **relative asset paths** (Vite: `base: './'`), because the game is served from `/games/<slug>/`.
    - Optionally read `?lang=` and listen for the `play:settings` message.
 2. Add a thumbnail to `static/thumbs/<slug>.svg` (one color; the hub tints it).
-3. Add one entry to `games.json`.
+3. Add one entry to `games.json`, a scene for it in `scripts/og.mjs`, and run `npm run build && npm run og` for its share image.
 4. Add a Dependabot entry for `/games/<slug>` in `.github/dependabot.yml`.
 
 `npm run test:unit` fails if the entry is incomplete, the thumbnail is missing or the game has no build script.

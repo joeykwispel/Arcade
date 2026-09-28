@@ -43,6 +43,8 @@
   title={fill(c.meta.gameTitle, { title })}
   description={fill(c.meta.gameDescription, { description: game.description[app.locale], framework: game.framework })}
   path={`/play/${game.slug}/`}
+  image={`/og/${game.slug}.png`}
+  imageAlt={`${title}: ${game.framework}`}
 />
 
 <div class="container wrap">
