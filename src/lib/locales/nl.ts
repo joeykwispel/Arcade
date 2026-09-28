@@ -34,6 +34,10 @@ export default {
     nextDescription: 'Er komt nog een stack aan. React, Vue, Solid, Svelte, Angular: welke voelt het best voor een kleine game?',
     soon: 'binnenkort'
   },
+  upcoming: {
+    title: 'Binnenkort',
+    intro: 'Hierna gepland, elk in een stack die hier nog niet gebruikt is.'
+  },
   how: {
     title: 'Hoe het werkt',
     intro: 'Eén schil, veel stacks, niets gedeeld.',

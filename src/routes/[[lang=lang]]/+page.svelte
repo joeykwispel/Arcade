@@ -1,9 +1,10 @@
 <script lang="ts">
   import { app } from '$lib/app.svelte';
-  import { games } from '$lib/games';
+  import { games, upcoming } from '$lib/games';
   import { t } from '$lib/locales';
   import { reveal } from '$lib/utils/actions';
   import GameCard from '$lib/components/GameCard.svelte';
+  import UpcomingCard from '$lib/components/UpcomingCard.svelte';
   import SectionHead from '$lib/components/SectionHead.svelte';
   import Seo from '$lib/components/Seo.svelte';
 
@@ -34,6 +35,19 @@
     </ul>
   </div>
 </section>
+
+{#if upcoming.length}
+  <section class="section" id="upcoming">
+    <div class="container">
+      <SectionHead slug="roadmap" ext=".md" title={c.upcoming.title} intro={c.upcoming.intro} />
+      <ul class="grid">
+        {#each upcoming as game, i (game.slug)}
+          <UpcomingCard {game} index={i} />
+        {/each}
+      </ul>
+    </div>
+  </section>
+{/if}
 
 <section class="section" id="how">
   <div class="container">

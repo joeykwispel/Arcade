@@ -26,6 +26,19 @@ export interface Game {
   outDir?: string;
 }
 
+/** One entry in upcoming.json: a game that is planned but not built yet. */
+export interface Upcoming {
+  slug: string;
+  /** A short piece of code shown big on the card, instead of a thumbnail */
+  icon: string;
+  title: Localized;
+  /** Two or three words, e.g. "arcade · snake" */
+  genre: Localized;
+  description: Localized;
+  /** The stack it will be built with */
+  framework: string;
+}
+
 /** A link in the header menu. */
 export interface HeaderLink {
   label: string;

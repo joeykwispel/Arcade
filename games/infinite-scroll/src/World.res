@@ -67,6 +67,14 @@ let diff = (a, b) => {
   d > pi ? d -. tau : d
 }
 
+/** Deterministic random numbers (mulberry32): the same seed gives the same tunnel, for tests and `?seed=` */
+let seeded: int => unit => float = %raw(`seed => () => {
+  seed = (seed + 0x6d2b79f5) | 0;
+  let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+  t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+  return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+}`)
+
 let make = (~rand=Math.random) => {
   phase: Ready,
   angle: 0.0,

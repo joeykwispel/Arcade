@@ -199,11 +199,11 @@ test('Infinite Scroll renders the 3D tunnel, runs and pauses', async ({ page }) 
 });
 
 test('Infinite Scroll ends with an exception, keeps the best score, and speaks Dutch', async ({ page }) => {
-  await page.goto('/games/infinite-scroll/?lang=nl');
+  // seed 2: the same tunnel every time, where standing still hits the very first obstacle (checked in World_test.res)
+  await page.goto('/games/infinite-scroll/?lang=nl&seed=2');
   await expect(page.locator('html')).toHaveAttribute('lang', 'nl');
   await expect(page.locator('#hint')).toContainText('spatie');
   await page.keyboard.press('Space');
-  // never steering, something hits you soon enough
   await expect(page.locator('#stage')).toHaveAttribute('data-phase', 'over', { timeout: 30_000 });
   await expect(page.locator('#hint')).toContainText('npm run scroll');
   const best = await page.evaluate(() => Number(localStorage.getItem('play:infinite-scroll:best')));
@@ -270,6 +270,20 @@ test('pages have a large share image that exists', async ({ page, request }) => 
     expect(res.status()).toBe(200);
     expect(res.headers()['content-type']).toBe('image/png');
   }
+});
+
+test('the home page shows the planned games as coming soon, without links', async ({ page }) => {
+  await page.goto('/');
+  const soon = page.locator('#upcoming');
+  await expect(soon.getByRole('heading', { level: 2 })).toContainText('Coming soon');
+  await expect(soon.locator('article')).toHaveCount(7);
+  await expect(soon.locator('article', { hasText: 'rm -rf dungeon' })).toContainText('Python (Pyodide)');
+  await expect(soon.locator('a')).toHaveCount(0);
+  // the generic "next game" card is still there
+  await expect(page.locator('#games .next')).toBeVisible();
+  await page.goto('/nl/');
+  await expect(page.locator('#upcoming').getByRole('heading', { level: 2 })).toContainText('Binnenkort');
+  await expect(page.locator('#upcoming article', { hasText: 'Dependency Hell' })).toContainText('wiebelige toren');
 });
 
 test('unknown games get the 404 page', async ({ page }) => {

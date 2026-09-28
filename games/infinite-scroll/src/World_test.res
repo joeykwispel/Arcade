@@ -11,14 +11,6 @@ let check = (ok, msg) =>
   }
 let near = (a, b, msg) => check(Math.abs(a -. b) < 1e-6, `${msg}: ${Float.toString(a)} vs ${Float.toString(b)}`)
 
-/** Deterministic random numbers (mulberry32), so every run of a test plays the same tunnel */
-let seeded: int => unit => float = %raw(`seed => () => {
-  seed = (seed + 0x6d2b79f5) | 0;
-  let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
-  t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-  return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-}`)
-
 let dt = 1.0 /. 60.0
 
 let running = seed => {
@@ -124,6 +116,16 @@ describe("world", () => {
       check(w.phase == Running, `seed ${Int.toString(seed)} crashed at ${Float.toString(w.distance)}`)
       near(w.speed, maxSpeed, "top speed")
     })
+  })
+
+  test("seed 2 crashes a player who never steers at the first obstacle (the e2e test relies on it)", () => {
+    let w = running(2)
+    let i = ref(0)
+    while i.contents < 60 * 3 && w.phase == Running {
+      update(w, dt, 0.0)
+      i := i.contents + 1
+    }
+    check(w.phase == Over, "seed 2 should crash within three seconds")
   })
 
   test("does end a run that never steers", () => {

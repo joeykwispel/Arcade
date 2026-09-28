@@ -33,6 +33,10 @@ export default {
     nextDescription: 'Another stack is on its way. React, Vue, Solid, Svelte, Angular: which one feels best for a tiny game?',
     soon: 'coming soon'
   },
+  upcoming: {
+    title: 'Coming soon',
+    intro: 'Planned next, each in a stack this hub has not used yet.'
+  },
   how: {
     title: 'How it works',
     intro: 'One shell, many stacks, nothing shared between them.',
