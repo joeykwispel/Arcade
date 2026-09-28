@@ -56,7 +56,7 @@
     {#if game.tooling}<span class="tool mono">{game.tooling}</span>{/if}
   </div>
 
-  <div class="window glass" style:--aspect={game.aspect ?? '3 / 1'}>
+  <div class="window glass" style:--aspect={game.aspect ?? '3 / 1'} style:--aspect-phone={game.phoneAspect ?? '4 / 3'}>
     <div class="chrome mono" aria-hidden="true">
       <span class="dots"><i></i><i></i><i></i></span><span class="file">~/games/<b>{game.slug}</b>/index.html</span>
     </div>
@@ -189,7 +189,7 @@
   }
   @media (max-width: 640px) {
     iframe {
-      aspect-ratio: 4 / 3;
+      aspect-ratio: var(--aspect-phone);
     }
   }
 </style>

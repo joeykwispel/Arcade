@@ -38,6 +38,19 @@ updates:
       all:
         patterns: ['*']
 
+  - package-ecosystem: npm
+    directory: /games/git-gud
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      all:
+        patterns: ['*']
+    ignore:
+      # same as the hub: stay on TypeScript 6 for now
+      - dependency-name: typescript
+        versions: ['>=7']
+
   - package-ecosystem: github-actions
     directory: /
     schedule:

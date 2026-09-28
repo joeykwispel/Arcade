@@ -1,7 +1,10 @@
 [
   {
     "slug": "duck",
-    "title": { "en": "Rubber Duck Run", "nl": "Rubber Duck Run" },
+    "title": {
+      "en": "Rubber Duck Run",
+      "nl": "Rubber Duck Run"
+    },
     "description": {
       "en": "The offline dino game, for developers: jump the bugs and merge conflicts, duck under the meeting invites.",
       "nl": "Het offline dinospel, voor developers: spring over bugs en merge conflicts, duik onder meeting-uitnodigingen."
@@ -17,7 +20,10 @@
   },
   {
     "slug": "bug-bash",
-    "title": { "en": "Bug Bash", "nl": "Bug Bash" },
+    "title": {
+      "en": "Bug Bash",
+      "nl": "Bug Bash"
+    },
     "description": {
       "en": "Tower defense for developers: install linters, unit tests and rubber ducks to squash bugs before they reach production. Five levels.",
       "nl": "Tower defense voor developers: installeer linters, unit tests en rubber ducks en squash bugs voor ze productie halen. Vijf levels."
@@ -30,5 +36,25 @@
       "nl": "Klik rechts op een tool en dan op een lege regel om hem te installeren. Klik op een tool op de kaart om te upgraden of verkopen, git push start een sprint. Toetsen: 1-6, pijltjes + Enter, U, S, spatie, Esc."
     },
     "aspect": "8 / 5"
+  },
+  {
+    "slug": "git-gud",
+    "title": {
+      "en": "Git Gud",
+      "nl": "Git Gud"
+    },
+    "description": {
+      "en": "A git puzzle game: merge, rebase and cherry-pick the commit graph into shape with real git commands. Thirteen levels.",
+      "nl": "Een git-puzzelspel: merge, rebase en cherry-pick de commit graph in vorm met echte git commands. Dertien levels."
+    },
+    "framework": "React + TypeScript",
+    "tooling": "Vite",
+    "thumbnail": "/thumbs/git-gud.svg",
+    "controls": {
+      "en": "Type git commands in the terminal (Tab completes, ↑ recalls). Click a commit or branch to type its name. undo, hint and restart help out.",
+      "nl": "Typ git commands in de terminal (Tab vult aan, ↑ haalt terug). Klik op een commit of branch om zijn naam te typen. undo, hint en restart helpen je verder."
+    },
+    "aspect": "16 / 10",
+    "phoneAspect": "3 / 4"
   }
 ]

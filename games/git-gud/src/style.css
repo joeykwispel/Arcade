@@ -1,0 +1,561 @@
+/* Git Gud: an editor-and-terminal look in the joeyoosenbrug.nl tokens, dark and light. */
+
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --page: #0a0e17;
+  --bg: #0d1220;
+  --panel: #0a0e17;
+  --raised: #172033;
+  --border: #253049;
+  --text: #e6e9f2;
+  --muted: #98a3b9;
+  --faint: #8190ab;
+  --accent: #7dd3c0;
+  --accent-ink: #06201b;
+  --accent2: #c3b1ff;
+  --danger: #f7768e;
+  --warn: #e0af68;
+  --success: #9ece6a;
+  --edge: #4a5673;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --page: #f4f6fb;
+  --bg: #ffffff;
+  --panel: #f4f6fb;
+  --raised: #e8ecf4;
+  --border: #d3d9e6;
+  --text: #141b2d;
+  --muted: #4b566d;
+  --faint: #5f6a80;
+  --accent: #0f766e;
+  --accent-ink: #ffffff;
+  --accent2: #5b3fc4;
+  --danger: #c0364d;
+  --warn: #8a5300;
+  --success: #2f6b1f;
+  --edge: #9aa5bb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  /* transparent inside the hub, so its frosted frame shows through */
+  background: transparent;
+  color: var(--text);
+  font:
+    14px/1.45 'JetBrains Mono Variable',
+    'JetBrains Mono',
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Consolas,
+    monospace;
+  -webkit-font-smoothing: antialiased;
+}
+
+html.standalone body {
+  background: var(--page);
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+.app {
+  height: 100%;
+  background: var(--bg);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.btn {
+  border: 1px solid var(--border);
+  background: var(--raised);
+  border-radius: 7px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+.btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.btn.ghost {
+  background: transparent;
+}
+.btn.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------- level select ---------- */
+
+.menu {
+  height: 100%;
+  overflow: auto;
+  padding: clamp(1rem, 4vw, 2.2rem) clamp(1rem, 5vw, 3rem);
+}
+.menu-head {
+  margin-bottom: 1.4rem;
+}
+.comment {
+  color: var(--faint);
+  margin: 0;
+  font-size: 0.85rem;
+}
+.menu h1 {
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  letter-spacing: -0.05em;
+  margin: 0.2rem 0 0.4rem;
+  line-height: 1;
+}
+.caret {
+  display: inline-block;
+  width: 0.5em;
+  height: 0.85em;
+  margin-left: 0.1em;
+  background: var(--accent);
+  vertical-align: -0.08em;
+  animation: blink 1.1s steps(1) infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+.tagline {
+  color: var(--text);
+  margin: 0 0 0.3rem;
+  max-width: 60ch;
+}
+.how {
+  color: var(--muted);
+  margin: 0;
+  font-size: 0.85rem;
+  max-width: 70ch;
+}
+.chapter h2 {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin: 1.2rem 0 0.5rem;
+}
+.chapter .num {
+  color: var(--accent);
+}
+.level-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.5rem;
+}
+.level-card {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.7rem;
+  text-align: left;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--panel);
+  cursor: pointer;
+}
+.level-card:hover:not(:disabled) {
+  border-color: var(--accent);
+  background: var(--raised);
+}
+.level-card:disabled {
+  cursor: default;
+  color: var(--faint);
+}
+.level-card .n {
+  color: var(--accent);
+  font-weight: 700;
+}
+.level-card:disabled .n {
+  color: var(--faint);
+}
+.level-card .title {
+  font-weight: 600;
+}
+.level-card .stars {
+  color: var(--faint);
+  font-size: 0.8rem;
+}
+.level-card .stars.got {
+  color: var(--warn);
+}
+.all-done {
+  margin-top: 1.4rem;
+  color: var(--success);
+  font-weight: 600;
+}
+
+/* ---------- a level ---------- */
+
+.play {
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) minmax(130px, 36%);
+  position: relative;
+}
+
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.9rem;
+  padding: 0.5rem 0.8rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+.bar h1 {
+  font-size: 0.95rem;
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bar h1 .n {
+  color: var(--accent);
+}
+.score {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+.score b {
+  color: var(--text);
+}
+.actions {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  min-height: 0;
+}
+.panel {
+  margin: 0;
+  position: relative;
+  min-height: 0;
+  display: grid;
+}
+.panel figcaption {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.8rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--faint);
+  font-weight: 700;
+}
+.side {
+  border-left: 1px solid var(--border);
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  min-height: 0;
+  background: var(--panel);
+}
+.goal {
+  border-bottom: 1px solid var(--border);
+}
+.brief {
+  margin: 0;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+  max-height: 9em;
+  overflow: auto;
+}
+
+.graph {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  padding: 1.4rem 0.5rem 0.4rem;
+  overflow: visible;
+}
+.edge {
+  fill: none;
+  stroke: var(--edge);
+  stroke-width: 2.5;
+}
+.edge.second {
+  stroke-dasharray: 5 4;
+}
+.commit circle {
+  fill: var(--raised);
+  stroke: var(--muted);
+  stroke-width: 2;
+}
+.commit text,
+.ref text {
+  text-anchor: middle;
+  font-size: 9.5px;
+  font-weight: 700;
+  fill: var(--text);
+  pointer-events: none;
+}
+.commit.new circle {
+  stroke: var(--accent);
+  fill: color-mix(in srgb, var(--accent) 18%, var(--bg));
+}
+.commit.copy circle {
+  stroke: var(--accent2);
+  fill: color-mix(in srgb, var(--accent2) 18%, var(--bg));
+}
+.commit.merge circle {
+  stroke: var(--accent);
+}
+.commit.merge circle.inner {
+  fill: none;
+  stroke-width: 1.5;
+}
+.commit.revert circle {
+  stroke: var(--danger);
+  fill: color-mix(in srgb, var(--danger) 16%, var(--bg));
+}
+.head-ring {
+  fill: none;
+  stroke: var(--warn);
+  stroke-width: 2;
+  stroke-dasharray: 3 3;
+}
+.ref rect {
+  fill: var(--raised);
+  stroke: var(--border);
+}
+.ref.current rect {
+  fill: color-mix(in srgb, var(--warn) 20%, var(--bg));
+  stroke: var(--warn);
+}
+.ref.detached rect {
+  fill: var(--warn);
+  stroke: var(--warn);
+}
+.ref.detached text {
+  fill: var(--bg);
+}
+.pickable {
+  cursor: pointer;
+}
+.commit.pickable:hover circle,
+.ref.pickable:hover rect {
+  stroke: var(--text);
+}
+.goal .graph {
+  opacity: 0.9;
+}
+
+/* ---------- terminal ---------- */
+
+.terminal {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto auto;
+  border-top: 1px solid var(--border);
+  background: var(--panel);
+  min-height: 0;
+  cursor: text;
+}
+.log {
+  overflow: auto;
+  padding: 0.5rem 0.8rem 0.2rem;
+  font-size: 0.8rem;
+}
+.log p {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.log .cmd {
+  color: var(--text);
+  font-weight: 600;
+}
+.log .out {
+  color: var(--muted);
+}
+.log .err {
+  color: var(--danger);
+}
+.log .info {
+  color: var(--accent);
+}
+.prompt {
+  color: var(--success);
+  white-space: nowrap;
+}
+.prompt .path {
+  color: var(--accent2);
+}
+.prompt .branch {
+  color: var(--warn);
+}
+.chips {
+  display: flex;
+  gap: 0.3rem;
+  padding: 0.25rem 0.8rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.chip {
+  flex: none;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--raised);
+  padding: 0.1rem 0.6rem;
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+.chip:hover {
+  border-color: var(--accent);
+}
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.8rem 0.55rem;
+  font-size: 0.85rem;
+}
+.input-row input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  outline: none;
+  caret-color: var(--accent);
+}
+.input-row input::placeholder {
+  color: var(--faint);
+}
+
+/* ---------- solved ---------- */
+
+.dialog-backdrop {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--page) 70%, transparent);
+  animation: fade 0.25s ease both;
+}
+.dialog {
+  min-width: min(360px, 90%);
+  text-align: center;
+  padding: 1.3rem 1.6rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--panel);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+.dialog h2 {
+  color: var(--success);
+  margin: 0.4rem 0 0.2rem;
+  font-size: 1.3rem;
+}
+.big-stars {
+  font-size: 2rem;
+  color: var(--warn);
+  margin: 0.2rem 0;
+  letter-spacing: 0.1em;
+}
+.result {
+  margin: 0;
+  font-weight: 600;
+}
+.note {
+  margin: 0.2rem 0 1rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.dialog .row {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .play {
+    grid-template-rows: auto minmax(0, 1fr) minmax(120px, 34%);
+  }
+  .board {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 3fr) minmax(0, 2fr);
+  }
+  .side {
+    border-left: 0;
+    border-top: 1px solid var(--border);
+  }
+  .brief {
+    display: none;
+  }
+  .bar {
+    gap: 0.3rem 0.5rem;
+    padding: 0.4rem 0.6rem;
+  }
+  .bar h1 {
+    order: -1;
+    flex-basis: 100%;
+  }
+  .btn {
+    padding: 0.25rem 0.55rem;
+  }
+  .input-row .path {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

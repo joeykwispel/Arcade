@@ -10,6 +10,7 @@ The hub looks like the rest of [joeyoosenbrug.nl](https://joeyoosenbrug.nl): it 
 | --------------- | ------------------- | --------------- | ----------------- |
 | Rubber Duck Run | Vanilla JS + Canvas | esbuild         | `games/duck/`     |
 | Bug Bash        | Rust + WebAssembly  | cargo + esbuild | `games/bug-bash/` |
+| Git Gud         | React + TypeScript  | Vite            | `games/git-gud/`  |
 
 Building Bug Bash needs Rust with the WebAssembly target: install [rustup](https://rustup.rs), then `rustup target add wasm32-unknown-unknown`. The game has no crates and no wasm-bindgen: the Rust code exports plain functions and leaves a draw list in memory, and `web/main.js` replays it on a canvas.
 

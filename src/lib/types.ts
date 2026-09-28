@@ -18,8 +18,10 @@ export interface Game {
   thumbnail: string;
   /** How to play, shown under the game */
   controls?: Localized;
-  /** CSS aspect-ratio of the game frame on wide screens, e.g. "3 / 1". Phones always get a taller frame. */
+  /** CSS aspect-ratio of the game frame on wide screens, e.g. "3 / 1". */
   aspect?: string;
+  /** Aspect ratio on phones (up to 640px wide). Defaults to "4 / 3"; a game with a lot of UI can ask for a taller frame. */
+  phoneAspect?: string;
   /** Where the game's build ends up, relative to its folder. Defaults to "dist". */
   outDir?: string;
 }
