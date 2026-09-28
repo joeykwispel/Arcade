@@ -99,6 +99,20 @@ const scenes = {
       await page.waitForTimeout(600);
     }
   },
+  'semicolon-snake': {
+    viewport: { width: 1200, height: 750 },
+    // the whole editor: the line being written and what it expects are the point of the game
+    selector: '#stage',
+    // start, and turn a few times so the snake has moved into the board
+    async play(page) {
+      await page.keyboard.press('Space');
+      for (const key of ['ArrowDown', 'ArrowRight', 'ArrowUp']) {
+        await page.waitForTimeout(450);
+        await page.keyboard.press(key);
+      }
+      await page.waitForTimeout(250);
+    }
+  },
   'bug-bash': {
     viewport: { width: 1200, height: 750 },
     // two levels done, so level 3 (two paths merging) is the one that opens
@@ -141,7 +155,7 @@ for (const g of games) {
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(500);
   await scene.play(page);
-  const view = page.locator('canvas, #root, .app').first();
+  const view = page.locator(scene.selector ?? 'canvas, #root, .app').first();
   shots[g.slug] = `data:image/png;base64,${(await view.screenshot()).toString('base64')}`;
   await ctx.close();
 }

@@ -116,5 +116,25 @@
     },
     "aspect": "16 / 10",
     "phoneAspect": "3 / 4"
+  },
+  {
+    "slug": "semicolon-snake",
+    "title": {
+      "en": "Semicolon Snake",
+      "nl": "Semicolon Snake"
+    },
+    "description": {
+      "en": "Snake where your body is a line of code. Eat the tokens in an order that still compiles; one syntax error and you're done.",
+      "nl": "Snake waarin je lijf een regel code is. Eet de tokens in een volgorde die nog compileert; één syntax error en je bent klaar."
+    },
+    "framework": "Lua (Fengari)",
+    "tooling": "Vite",
+    "thumbnail": "/thumbs/semicolon-snake.svg",
+    "controls": {
+      "en": "Arrow keys or WASD to turn, swipe on a phone. The line above the board says what the code expects next; a ; runs it. Space starts, P pauses.",
+      "nl": "Pijltjes of WASD om te draaien, veeg op je telefoon. De regel boven het bord zegt wat de code nu verwacht; een ; voert hem uit. Spatie start, P pauzeert."
+    },
+    "aspect": "16 / 10",
+    "phoneAspect": "3 / 4"
   }
 ]
