@@ -1,0 +1,3 @@
+# ReScript output (compiled from the .res files) and its build cache
+*.res.mjs
+lib/

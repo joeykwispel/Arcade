@@ -1,23 +1,22 @@
 {
   "name": "play-infinite-scroll",
   "version": "1.0.0",
-  "description": "Infinite Scroll: fly a cursor through an endless tunnel of code and dodge the exceptions. TypeScript + Three.js, built with Vite.",
+  "description": "Infinite Scroll: fly a cursor through an endless tunnel of code and dodge the exceptions. Written in ReScript, rendered with Three.js, built with Vite.",
   "author": "Joey Oosenbrug (https://github.com/joeykwispel)",
   "license": "MIT",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc --noEmit && vite build",
-    "test": "vitest run"
+    "dev": "rescript watch & vite",
+    "build": "rescript && vite build",
+    "test": "rescript && vitest run"
   },
   "dependencies": {
     "@fontsource-variable/jetbrains-mono": "^5.3.0",
     "three": "^0.186.1"
   },
   "devDependencies": {
-    "@types/three": "^0.186.0",
-    "typescript": "^6.0.3",
+    "rescript": "^12.3.1",
     "vite": "^8.3.1",
     "vitest": "^5.0.2"
   }

@@ -68,10 +68,6 @@ updates:
     groups:
       all:
         patterns: ['*']
-    ignore:
-      # same as the hub: stay on TypeScript 6 for now
-      - dependency-name: typescript
-        versions: ['>=7']
 
   # Kotlin and the Gradle wrapper for Standup Survivor
   - package-ecosystem: gradle
