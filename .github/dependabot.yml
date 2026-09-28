@@ -60,6 +60,15 @@ updates:
       all:
         patterns: ['*']
 
+  - package-ecosystem: npm
+    directory: /games/infinite-scroll
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      all:
+        patterns: ['*']
+
   # Kotlin and the Gradle wrapper for Standup Survivor
   - package-ecosystem: gradle
     directory: /games/standup-survivor

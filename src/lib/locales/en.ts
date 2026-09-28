@@ -3,7 +3,7 @@ export default {
   meta: {
     title: 'Play | small browser games by Joey Oosenbrug',
     description:
-      'Small browser games, each built with a different frontend stack: vanilla JS, Rust + WebAssembly, React, Kotlin, and more to come. A playground for comparing how frameworks feel on the same kind of project.',
+      'Small browser games, each built with a different frontend stack: vanilla JS, Rust + WebAssembly, React, Kotlin, ReScript, and more to come. A playground for comparing how frameworks feel on the same kind of project.',
     gameTitle: '{title} | Play',
     gameDescription: '{description} Built with {framework}.'
   },
