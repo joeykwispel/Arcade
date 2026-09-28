@@ -19,7 +19,14 @@ let lang = ref(
   },
 )
 let best = ref(storageGet(bestKey)->Option.flatMap(s => Int.fromString(s))->Option.getOr(0))
-let world = ref(World.make())
+/** `?seed=42` plays the same tunnel every time (for challenges, and for the tests) */
+let seed: option<int> = %raw(`new URLSearchParams(location.search).get("seed") ?? undefined`)->Option.flatMap(s => Int.fromString(s))
+let newWorld = () =>
+  switch seed {
+  | Some(n) => World.make(~rand=World.seeded(n))
+  | None => World.make()
+  }
+let world = ref(newWorld())
 let overLine = ref(0)
 let newBest = ref(false)
 let endedAt = ref(0.0)
@@ -149,7 +156,7 @@ let press = () => {
   | Paused => World.togglePause(w)
   | Over =>
     if performanceNow() -. endedAt.contents >= 500.0 {
-      let fresh = World.make()
+      let fresh = newWorld()
       World.start(fresh)
       world := fresh
     }

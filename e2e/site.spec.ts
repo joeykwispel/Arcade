@@ -199,11 +199,11 @@ test('Infinite Scroll renders the 3D tunnel, runs and pauses', async ({ page }) 
 });
 
 test('Infinite Scroll ends with an exception, keeps the best score, and speaks Dutch', async ({ page }) => {
-  await page.goto('/games/infinite-scroll/?lang=nl');
+  // seed 2: the same tunnel every time, where standing still hits the very first obstacle (checked in World_test.res)
+  await page.goto('/games/infinite-scroll/?lang=nl&seed=2');
   await expect(page.locator('html')).toHaveAttribute('lang', 'nl');
   await expect(page.locator('#hint')).toContainText('spatie');
   await page.keyboard.press('Space');
-  // never steering, something hits you soon enough
   await expect(page.locator('#stage')).toHaveAttribute('data-phase', 'over', { timeout: 30_000 });
   await expect(page.locator('#hint')).toContainText('npm run scroll');
   const best = await page.evaluate(() => Number(localStorage.getItem('play:infinite-scroll:best')));
