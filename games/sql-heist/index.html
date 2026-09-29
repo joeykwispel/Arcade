@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0a0e17" />
+    <!-- SQLite runs as WebAssembly (sql.js), which needs 'wasm-unsafe-eval'; everything is served from here. -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'"
+    />
+    <title>SQL Heist</title>
+    <meta name="description" content="Rob the bank with nothing but SQL, on a real SQLite database running in your browser." />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <main id="stage" class="stage" data-phase="loading">
+      <header class="hud">
+        <p><span data-t="level">step</span> <b id="level-n">1/7</b></p>
+        <p><span data-t="queries">queries</span> <b id="queries">0</b></p>
+        <p><span data-t="best">best</span> <b id="best">–</b></p>
+      </header>
+      <div class="room">
+        <section class="brief" aria-labelledby="level-title">
+          <h1 id="level-title">…</h1>
+          <p id="task" class="task"></p>
+          <p class="hint-row"><button type="button" id="hint-btn" data-t="showHint">hint</button> <span id="hint" class="hint-text"></span></p>
+          <h2 data-t="schema">tables</h2>
+          <ul id="schema" class="schema"></ul>
+        </section>
+        <section class="console">
+          <label for="sql" class="sr-only" data-t="yourSql">your SQL</label>
+          <textarea id="sql" spellcheck="false" autocapitalize="off" autocorrect="off" disabled rows="4"></textarea>
+          <p class="run-row">
+            <button type="button" id="run" disabled data-t="run">run ▶</button>
+            <span class="keys" data-t="keys">Ctrl+Enter</span>
+            <button type="button" id="next" hidden data-t="next">next step →</button>
+          </p>
+          <p id="status" class="status" role="status" aria-live="polite"></p>
+          <div id="result" class="result"></div>
+        </section>
+      </div>
+      <div class="overlay" id="overlay">
+        <p class="big" id="o-title">SQL Heist</p>
+        <div id="o-body" class="o-body"></div>
+        <p class="o-hint" id="o-hint"></p>
+      </div>
+    </main>
+    <script type="module" src="./src/main.ts"></script>
+  </body>
+</html>

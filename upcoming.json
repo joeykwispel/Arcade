@@ -1,22 +1,5 @@
 [
   {
-    "slug": "sql-heist",
-    "icon": "SELECT *",
-    "title": {
-      "en": "SQL Heist",
-      "nl": "SQL Heist"
-    },
-    "genre": {
-      "en": "puzzle · heist",
-      "nl": "puzzel · kraak"
-    },
-    "description": {
-      "en": "Rob the bank vault with nothing but queries against a real database, running in your browser.",
-      "nl": "Beroof de bankkluis met alleen queries op een echte database, die in je browser draait."
-    },
-    "framework": "SQL (SQLite wasm)"
-  },
-  {
     "slug": "kernel-panic-pinball",
     "icon": "0x0000",
     "title": {

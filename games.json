@@ -378,5 +378,25 @@
     },
     "aspect": "16 / 10",
     "phoneAspect": "3 / 4"
+  },
+  {
+    "slug": "sql-heist",
+    "title": {
+      "en": "SQL Heist",
+      "nl": "SQL Heist"
+    },
+    "description": {
+      "en": "Rob the bank with nothing but SQL: case the vaults, follow the keys, find the gap in the guard shifts, disarm the alarm and wipe the logs. Real SQLite, in your browser.",
+      "nl": "Beroof de bank met alleen SQL: verken de kluizen, volg de sleutels, vind het gat in de bewakingsrooster, zet het alarm uit en wis de logs. Echte SQLite, in je browser."
+    },
+    "framework": "SQL (SQLite wasm)",
+    "tooling": "sql.js + Vite",
+    "thumbnail": "/thumbs/sql-heist.svg",
+    "controls": {
+      "en": "Write SQL in the console and run it with Ctrl+Enter (or the run button). Any query that gets the right result counts. Click a table or column name to insert it. Fewest queries wins.",
+      "nl": "Schrijf SQL in de console en voer hem uit met Ctrl+Enter (of de knop). Elke query met het goede resultaat telt. Klik op een tabel- of kolomnaam om hem in te voegen. Minste queries wint."
+    },
+    "aspect": "16 / 10",
+    "phoneAspect": "3 / 4"
   }
 ]

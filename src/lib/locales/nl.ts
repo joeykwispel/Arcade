@@ -4,7 +4,7 @@ export default {
   meta: {
     title: 'Play | kleine browsergames van Joey Oosenbrug',
     description:
-      'Kleine browsergames, elk gebouwd met een andere frontend-stack: vanilla JS, Rust + WebAssembly, React, Kotlin, ReScript, Elm, Lua, C++, Gleam, Flutter, Python, Godot, Go, Ruby, Zig, Vue, Solid, ClojureScript, alleen HTML en CSS, en er komen er meer. Een speeltuin om te voelen hoe frameworks zich verhouden bij hetzelfde soort project.',
+      'Kleine browsergames, elk gebouwd met een andere frontend-stack: vanilla JS, Rust + WebAssembly, React, Kotlin, ReScript, Elm, Lua, C++, Gleam, Flutter, Python, Godot, Go, Ruby, Zig, Vue, Solid, ClojureScript, SQL, alleen HTML en CSS, en er komen er meer. Een speeltuin om te voelen hoe frameworks zich verhouden bij hetzelfde soort project.',
     gameTitle: '{title} | Play',
     gameDescription: '{description} Gebouwd met {framework}.'
   },
