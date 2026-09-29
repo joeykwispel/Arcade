@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0a0e17" />
+    <!-- the Brainf*ck interpreter is WebAssembly (written by hand in src/bf.wat), which needs 'wasm-unsafe-eval' -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'"
+    />
+    <title>Brainf*ck Bomb Defuser</title>
+    <meta name="description" content="Work out what a tiny Brainf*ck program prints before the bomb goes off. The interpreter is hand-written WebAssembly." />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <main id="stage" class="stage" data-phase="title">
+      <header class="hud">
+        <p><span data-t="bomb">bomb</span> <b id="bomb-n">1/6</b></p>
+        <p><span data-t="score">score</span> <b id="score">0</b></p>
+        <p><span data-t="best">best</span> <b id="best">0</b></p>
+      </header>
+      <section class="bomb" aria-labelledby="timer">
+        <p id="timer" class="timer" role="timer">00:60</p>
+        <p class="label" data-t="prints">This program prints the code. What does it print?</p>
+        <pre id="program" class="program"></pre>
+        <form id="defuse" class="defuse" autocomplete="off">
+          <label for="code" class="sr-only" data-t="code">code</label>
+          <input id="code" type="text" maxlength="12" spellcheck="false" autocapitalize="characters" autocorrect="off" disabled enterkeyhint="done" />
+          <button type="submit" id="cut" disabled data-t="cut">cut the wire ✂</button>
+        </form>
+        <p id="status" class="status" role="status" aria-live="polite"></p>
+        <details class="cheat">
+          <summary data-t="cheat">cheat sheet</summary>
+          <dl id="cheat-list"></dl>
+          <p id="ascii" class="ascii"></p>
+        </details>
+      </section>
+      <div class="overlay" id="overlay">
+        <p class="big" id="o-title">Brainf*ck Bomb Defuser</p>
+        <p class="sub" id="o-sub"></p>
+        <p class="how" id="o-how"></p>
+        <p class="hint" id="o-hint"></p>
+      </div>
+    </main>
+    <script type="module" src="./web/main.js"></script>
+  </body>
+</html>

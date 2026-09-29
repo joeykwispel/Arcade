@@ -458,5 +458,25 @@
     },
     "aspect": "16 / 10",
     "phoneAspect": "3 / 4"
+  },
+  {
+    "slug": "brainfuck-bomb",
+    "title": {
+      "en": "Brainf*ck Bomb Defuser",
+      "nl": "Brainf*ck Bomb Defuser"
+    },
+    "description": {
+      "en": "Six bombs, each showing a tiny Brainf*ck program. The code that defuses it is whatever the program prints: work it out in your head before the timer hits zero.",
+      "nl": "Zes bommen, elk met een piepklein Brainf*ck-programma. De code die hem onschadelijk maakt is wat het programma print: reken het uit in je hoofd voor de timer op nul staat."
+    },
+    "framework": "WebAssembly Text (hand-written)",
+    "tooling": "wabt + Vite",
+    "thumbnail": "/thumbs/brainfuck-bomb.svg",
+    "controls": {
+      "en": "Read the program, type what it prints, and cut the wire (Enter). A wrong code costs 10 seconds. The cheat sheet explains the commands and the character codes.",
+      "nl": "Lees het programma, typ wat het print en knip de draad (Enter). Een verkeerde code kost 10 seconden. De spiekbrief legt de opdrachten en de tekencodes uit."
+    },
+    "aspect": "16 / 10",
+    "phoneAspect": "3 / 4"
   }
 ]
