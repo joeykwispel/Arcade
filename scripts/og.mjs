@@ -324,6 +324,17 @@ const scenes = {
       await page.waitForTimeout(1300);
     }
   },
+  'estimate-poker': {
+    viewport: { width: 960, height: 600 },
+    selector: '.stage',
+    // the first ticket, let the scope creep in for a while, then vote and see what everyone said
+    async play(page) {
+      await page.keyboard.press('Space');
+      await page.waitForTimeout(8000);
+      await page.keyboard.press('4');
+      await page.waitForTimeout(300);
+    }
+  },
   'bug-bash': {
     viewport: { width: 1200, height: 750 },
     // two levels done, so level 3 (two paths merging) is the one that opens

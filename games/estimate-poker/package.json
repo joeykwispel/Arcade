@@ -1,0 +1,19 @@
+{
+  "name": "play-estimate-poker",
+  "version": "1.0.0",
+  "description": "Estimate Poker: planning poker where the ticket keeps growing while you think. F#, compiled to JavaScript by Fable; Vite builds the page.",
+  "author": "Joey Oosenbrug (https://github.com/joeykwispel)",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node build.mjs --test"
+  },
+  "dependencies": {
+    "@fontsource-variable/jetbrains-mono": "^5.3.0"
+  },
+  "devDependencies": {
+    "vite": "^8.3.1"
+  }
+}
