@@ -196,6 +196,25 @@ updates:
       all:
         patterns: ['*']
 
+  # F# packages (NuGet) and npm for Estimate Poker
+  - package-ecosystem: nuget
+    directory: /games/estimate-poker
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      all:
+        patterns: ['*']
+
+  - package-ecosystem: npm
+    directory: /games/estimate-poker
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      all:
+        patterns: ['*']
+
   # C# packages (NuGet) for Kernel Panic Pinball
   - package-ecosystem: nuget
     directory: /games/kernel-panic-pinball

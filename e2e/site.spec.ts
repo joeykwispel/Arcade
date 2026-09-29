@@ -682,6 +682,31 @@ test('Kernel Panic Pinball speaks Dutch on its own page', async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test('Estimate Poker runs its F# (Fable): scope creeps in, a vote reveals the real size', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/play/estimate-poker/');
+  const frame = page.frameLocator('iframe');
+  const stage = frame.locator('.stage');
+  await expect(stage).toHaveAttribute('data-phase', 'title');
+  await frame.locator('.overlay').click();
+  await expect(stage).toHaveAttribute('data-phase', 'voting');
+  // the first scope line creeps in after a few seconds
+  await expect(frame.locator('.creep')).toHaveCount(1, { timeout: 6_000 });
+  await frame.getByRole('button', { name: /^5 points/ }).click();
+  await expect(stage).toHaveAttribute('data-phase', 'reveal');
+  await expect(frame.locator('.votes li')).toHaveCount(3);
+  await expect(stage).not.toHaveAttribute('data-score', '0');
+  expect(errors).toEqual([]);
+});
+
+test('Estimate Poker speaks Dutch on its own page', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/games/estimate-poker/?lang=nl');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'nl');
+  await expect(page.locator('.overlay .hint')).toContainText('spatie');
+  expect(errors).toEqual([]);
+});
+
 test('the home page shows the planned games as coming soon, without links', async ({ page }) => {
   await page.goto('/');
   const soon = page.locator('#upcoming');
@@ -694,7 +719,7 @@ test('the home page shows the planned games as coming soon, without links', asyn
   await expect(page.locator('#games .next')).toBeVisible();
   await page.goto('/nl/');
   await expect(page.locator('#upcoming').getByRole('heading', { level: 2 })).toContainText('Binnenkort');
-  await expect(page.locator('#upcoming article', { hasText: 'Estimate Poker' })).toContainText('scope gewoon door');
+  await expect(page.locator('#upcoming article', { hasText: 'Git Blame Detective' })).toContainText('drie maanden geleden');
 });
 
 test('unknown games get the 404 page', async ({ page }) => {

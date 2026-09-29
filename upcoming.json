@@ -1,22 +1,5 @@
 [
   {
-    "slug": "estimate-poker",
-    "icon": "? pts",
-    "title": {
-      "en": "Estimate Poker",
-      "nl": "Estimate Poker"
-    },
-    "genre": {
-      "en": "cards · bluffing",
-      "nl": "kaarten · bluffen"
-    },
-    "description": {
-      "en": "Guess how long the task really takes. While you guess, the scope keeps growing.",
-      "nl": "Schat hoe lang de taak echt duurt. Terwijl je schat, groeit de scope gewoon door."
-    },
-    "framework": "F# (Fable)"
-  },
-  {
     "slug": "git-blame-detective",
     "icon": "git blame",
     "title": {

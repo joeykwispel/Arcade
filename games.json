@@ -418,5 +418,25 @@
     },
     "aspect": "16 / 10",
     "phoneAspect": "3 / 4"
+  },
+  {
+    "slug": "estimate-poker",
+    "title": {
+      "en": "Estimate Poker",
+      "nl": "Estimate Poker"
+    },
+    "description": {
+      "en": "Planning poker where the ticket keeps growing while you think. Its real size includes the scope creep you haven’t seen yet: vote early and gamble, or wait and waste the meeting.",
+      "nl": "Planning poker waarbij het ticket blijft groeien terwijl je nadenkt. De echte grootte telt ook de scope creep die je nog niet zag: stem vroeg en gok, of wacht en verspil de meeting."
+    },
+    "framework": "F# (Fable)",
+    "tooling": "Fable + Vite",
+    "thumbnail": "/thumbs/estimate-poker.svg",
+    "controls": {
+      "en": "Pick a card (or press 1 to 7) for each ticket. The closer to the real size, and the quicker, the more points. Space goes to the next ticket.",
+      "nl": "Kies een kaart (of druk 1 tot 7) voor elk ticket. Hoe dichter bij de echte grootte, en hoe sneller, hoe meer punten. Spatie gaat naar het volgende ticket."
+    },
+    "aspect": "16 / 10",
+    "phoneAspect": "3 / 4"
   }
 ]
