@@ -265,6 +265,22 @@ const scenes = {
       }
     }
   },
+  'meeting-bingo': {
+    viewport: { width: 960, height: 600 },
+    selector: '.stage',
+    // join, let the meeting talk for a while, then mark everything that has been said
+    async play(page) {
+      await page.keyboard.press('Space');
+      await page.waitForTimeout(16_000);
+      const said = await page.locator('.log li').allTextContents();
+      for (const cell of await page.locator('.cell:not(.free)').all()) {
+        const phrase = (await cell.textContent())?.toLowerCase() ?? '';
+        const words = phrase.split(/W+/).filter((w) => w.length > 3);
+        if (words.length && said.some((line) => words.every((w) => line.toLowerCase().includes(w)))) await cell.click();
+      }
+      await page.waitForTimeout(300);
+    }
+  },
   'bug-bash': {
     viewport: { width: 1200, height: 750 },
     // two levels done, so level 3 (two paths merging) is the one that opens

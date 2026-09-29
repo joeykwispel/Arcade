@@ -1,0 +1,269 @@
+/* Meeting Bingo: a bingo card next to a video call, in the joeyoosenbrug.nl tokens, dark and light. */
+
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --page: #0a0e17;
+  --bg: #0d1220;
+  --panel: #111827;
+  --raised: #182033;
+  --border: #253049;
+  --text: #e6e9f2;
+  --muted: #98a3b9;
+  --accent: #7dd3c0;
+  --on-accent: #06201b;
+  --accent2: #c3b1ff;
+  --danger: #f7768e;
+  --warn: #e0af68;
+}
+:root[data-theme='light'] {
+  color-scheme: light;
+  --page: #f4f6fb;
+  --bg: #ffffff;
+  --panel: #f4f6fb;
+  --raised: #e8ecf4;
+  --border: #d3d9e6;
+  --text: #141b2d;
+  --muted: #4b566d;
+  --accent: #0f766e;
+  --on-accent: #ffffff;
+  --accent2: #5b3fc4;
+  --danger: #b4233f;
+  --warn: #8a5300;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body,
+#app {
+  margin: 0;
+  height: 100%;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font:
+    14px/1.4 'JetBrains Mono Variable',
+    ui-monospace,
+    Menlo,
+    Consolas,
+    monospace;
+  overflow: hidden;
+}
+html.standalone body {
+  background: var(--page);
+}
+p,
+ol {
+  margin: 0;
+}
+button {
+  font: inherit;
+  color: inherit;
+}
+button:focus-visible {
+  outline: 2px solid var(--accent2);
+  outline-offset: 2px;
+}
+
+.stage {
+  position: relative;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  background: var(--bg);
+}
+.hud {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 0.9rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.hud b {
+  color: var(--text);
+}
+.rec {
+  display: inline-block;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--danger);
+  vertical-align: 0.05em;
+}
+.stage[data-phase='playing'] .rec {
+  animation: rec 1.2s steps(1) infinite;
+}
+@keyframes rec {
+  50% {
+    opacity: 0.2;
+  }
+}
+
+.room {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 0.8rem;
+  padding: 0.8rem;
+  min-height: 0;
+}
+
+/* ---------- the card ---------- */
+
+.card {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 0.35rem;
+  min-height: 0;
+}
+.cell {
+  display: grid;
+  place-items: center;
+  padding: 0.25rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel);
+  font-size: clamp(0.58rem, 1.5vw, 0.78rem);
+  line-height: 1.15;
+  text-align: center;
+  cursor: pointer;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  transition:
+    background 0.12s,
+    border-color 0.12s;
+}
+.cell:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+.cell:disabled {
+  cursor: default;
+}
+.cell.marked {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+  font-weight: 700;
+}
+.cell.free {
+  background: var(--raised);
+  color: var(--muted);
+  border-style: dashed;
+  font-weight: 400;
+}
+.cell.win {
+  background: var(--accent2);
+  border-color: var(--accent2);
+  color: var(--bg);
+}
+.cell.wrong {
+  border-color: var(--danger);
+  animation: shake 0.3s;
+}
+@keyframes shake {
+  25% {
+    translate: -3px 0;
+  }
+  75% {
+    translate: 3px 0;
+  }
+}
+
+/* ---------- the call ---------- */
+
+.call {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 0.4rem;
+  min-height: 0;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel);
+}
+.call-title {
+  color: var(--muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.log {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0;
+  list-style: none;
+  overflow-y: auto;
+  font-size: 0.82rem;
+}
+.log b {
+  color: var(--accent2);
+  font-weight: 700;
+}
+.log .system {
+  color: var(--muted);
+  font-style: italic;
+}
+.false {
+  position: absolute;
+  bottom: 0.6rem;
+  left: 0.7rem;
+  right: 0.7rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  background: var(--danger);
+  color: var(--bg);
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+/* ---------- overlays ---------- */
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.7rem;
+  padding: 1.5rem;
+  text-align: center;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  cursor: pointer;
+}
+.big {
+  font-size: clamp(1.6rem, 5vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+.big.win {
+  color: var(--accent);
+}
+.big.lose {
+  color: var(--danger);
+}
+.sub,
+.how {
+  color: var(--muted);
+  max-width: 54ch;
+}
+.accent,
+.hint {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+@media (max-width: 600px) {
+  .room {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, 1.6fr) minmax(0, 1fr);
+    padding: 0.5rem;
+  }
+}

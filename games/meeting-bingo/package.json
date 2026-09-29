@@ -1,0 +1,23 @@
+{
+  "name": "play-meeting-bingo",
+  "version": "1.0.0",
+  "description": "Meeting Bingo: fill a line before the meeting turns out to be an email. SolidJS; Vite builds it.",
+  "author": "Joey Oosenbrug (https://github.com/joeykwispel)",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc --noEmit && vite build",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "solid-js": "^1.9.15"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.0",
+    "vite": "^8.3.1",
+    "vite-plugin-solid": "^2.11.14",
+    "vitest": "^5.0.2"
+  }
+}

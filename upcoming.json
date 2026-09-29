@@ -1,22 +1,5 @@
 [
   {
-    "slug": "meeting-bingo",
-    "icon": "B I N G O",
-    "title": {
-      "en": "Meeting Bingo",
-      "nl": "Meeting Bingo"
-    },
-    "genre": {
-      "en": "bingo · real time",
-      "nl": "bingo · realtime"
-    },
-    "description": {
-      "en": "\"Can you see my screen?\" \"Let's take this offline.\" Fill a line before the meeting turns out to be an email.",
-      "nl": "\"Zien jullie mijn scherm?\" \"Laten we dat offline bespreken.\" Vul een rij voor de meeting een mail had kunnen zijn."
-    },
-    "framework": "Solid"
-  },
-  {
     "slug": "rubber-duck-therapy",
     "icon": "quack();",
     "title": {

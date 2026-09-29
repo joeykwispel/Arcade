@@ -338,5 +338,25 @@
     },
     "aspect": "16 / 10",
     "phoneAspect": "4 / 3"
+  },
+  {
+    "slug": "meeting-bingo",
+    "title": {
+      "en": "Meeting Bingo",
+      "nl": "Meeting Bingo"
+    },
+    "description": {
+      "en": "\"Can you see my screen?\" \"Let's take this offline.\" Mark the clichés on your card as they are said, and get a line before the meeting runs over.",
+      "nl": "\"Zien jullie mijn scherm?\" \"Laten we dat offline bespreken.\" Streep de clichés op je kaart af als ze gezegd worden, en haal een rij voor de meeting uitloopt."
+    },
+    "framework": "Solid",
+    "tooling": "Vite + vite-plugin-solid",
+    "thumbnail": "/thumbs/meeting-bingo.svg",
+    "controls": {
+      "en": "Read the live transcript. When someone says a phrase on your card, click it. Five in a row, column or diagonal is bingo. Marking something nobody said costs 50 points.",
+      "nl": "Lees het live transcript. Zegt iemand een zin van je kaart, klik hem dan aan. Vijf op een rij, kolom of diagonaal is bingo. Iets afstrepen dat niemand zei kost 50 punten."
+    },
+    "aspect": "16 / 10",
+    "phoneAspect": "3 / 4"
   }
 ]
