@@ -478,5 +478,25 @@
     },
     "aspect": "16 / 10",
     "phoneAspect": "3 / 4"
+  },
+  {
+    "slug": "legacy-archaeology",
+    "title": {
+      "en": "Legacy Code Archaeology",
+      "nl": "Legacy Code Archaeology"
+    },
+    "description": {
+      "en": "Three layers of legacy PHP. Dig out every line that does nothing without changing what it prints; real PHP 8.4 checks every dig. Whatever you do, leave the load-bearing comment alone.",
+      "nl": "Drie lagen legacy PHP. Graaf elke regel weg die niets doet zonder te veranderen wat hij print; echte PHP 8.4 controleert elke graafbeurt. Wat je ook doet, laat het dragende commentaar met rust."
+    },
+    "framework": "PHP (php-wasm)",
+    "tooling": "php-wasm + Vite",
+    "thumbnail": "/thumbs/legacy-archaeology.svg",
+    "controls": {
+      "en": "Click lines to select them, then dig. If the output changes, the dig is undone and a server goes down; three down and it is over. Ship a layer when nothing more can go: a clean layer earns a bonus.",
+      "nl": "Klik regels aan en graaf ze weg. Verandert de output, dan wordt het teruggedraaid en valt er een server uit; drie eruit en het is voorbij. Lever een laag op als er niets meer weg kan: een schone laag levert een bonus op."
+    },
+    "aspect": "16 / 10",
+    "phoneAspect": "3 / 4"
   }
 ]

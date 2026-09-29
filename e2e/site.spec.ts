@@ -767,19 +767,51 @@ test('Brainf*ck Bomb Defuser speaks Dutch on its own page', async ({ page }) => 
   expect(errors).toEqual([]);
 });
 
-test('the home page shows the planned games as coming soon, without links', async ({ page }) => {
+test('Legacy Code Archaeology runs real PHP: a safe dig scores, a dig that changes the output breaks production', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/play/legacy-archaeology/');
+  const frame = page.frameLocator('iframe');
+  const stage = frame.locator('#stage');
+  // booting PHP 8.4 (php-wasm) takes a moment
+  await expect(stage).toHaveAttribute('data-phase', 'title', { timeout: 60_000 });
+  await expect(stage).toHaveAttribute('data-php', /^8\.4\./);
+  await frame.locator('#overlay').click();
+  await expect(stage).toHaveAttribute('data-phase', 'digging');
+  await expect(frame.locator('#expected')).toContainText('Total: 42');
+  const line = (text: string) => frame.locator('#code button.line', { hasText: text });
+  const dig = frame.locator('#dig');
+  // the TODO comment does nothing: it can go
+  await line('TODO: remove before launch').click();
+  await dig.click();
+  await expect(stage).toHaveAttribute('data-score', '10');
+  await expect(line('TODO: remove before launch')).toHaveCount(0);
+  // $debug alone can't go: the if below it then warns about an undefined variable
+  await line('$debug = false;').click();
+  await dig.click();
+  await expect(stage).toHaveAttribute('data-lives', '2');
+  await expect(frame.locator('#status')).toContainText('Production broke');
+  await expect(line('$debug = false;')).toHaveCount(1);
+  expect(errors).toEqual([]);
+});
+
+test('Legacy Code Archaeology speaks Dutch on its own page', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/games/legacy-archaeology/?lang=nl');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'nl');
+  await expect(page.locator('#stage')).toHaveAttribute('data-phase', 'title', { timeout: 60_000 });
+  await expect(page.locator('#o-hint')).toContainText('graven');
+  expect(errors).toEqual([]);
+});
+
+test('the home page has no coming-soon section once every planned game is built', async ({ page }) => {
+  expect(upcoming).toEqual([]);
   await page.goto('/');
-  const soon = page.locator('#upcoming');
-  await expect(soon.getByRole('heading', { level: 2 })).toContainText('Coming soon');
-  await expect(soon.locator('article')).toHaveCount(upcoming.length);
-  await expect(soon.locator('article', { hasText: 'Legacy Code Archaeology' })).toContainText('PHP (php-wasm)');
-  await expect(soon.locator('a')).toHaveCount(0);
+  await expect(page.locator('#upcoming')).toHaveCount(0);
   // every built game has a card, plus the generic "next game" card
   await expect(page.locator('#games .grid > li')).toHaveCount(games.length + 1);
   await expect(page.locator('#games .next')).toBeVisible();
   await page.goto('/nl/');
-  await expect(page.locator('#upcoming').getByRole('heading', { level: 2 })).toContainText('Binnenkort');
-  await expect(page.locator('#upcoming article', { hasText: 'Legacy Code Archaeology' })).toContainText('dragende commentaar');
+  await expect(page.locator('#upcoming')).toHaveCount(0);
 });
 
 test('unknown games get the 404 page', async ({ page }) => {
