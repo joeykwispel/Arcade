@@ -349,6 +349,19 @@ const scenes = {
       await page.waitForTimeout(200);
     }
   },
+  'brainfuck-bomb': {
+    viewport: { width: 960, height: 600 },
+    selector: '#stage',
+    // defuse the first two bombs, and face the third with the clock running
+    async play(page) {
+      await page.keyboard.press('Enter');
+      for (const code of ['0', '5']) {
+        await page.locator('#code').fill(code);
+        await page.keyboard.press('Enter');
+      }
+      await page.waitForTimeout(3200);
+    }
+  },
   'bug-bash': {
     viewport: { width: 1200, height: 750 },
     // two levels done, so level 3 (two paths merging) is the one that opens

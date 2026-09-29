@@ -1,0 +1,270 @@
+/* Brainf*ck Bomb Defuser: a bomb with a countdown, in the joeyoosenbrug.nl tokens, dark and light. */
+
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --page: #0a0e17;
+  --bg: #0d1220;
+  --panel: #111827;
+  --raised: #182033;
+  --border: #253049;
+  --text: #e6e9f2;
+  --muted: #98a3b9;
+  --accent: #7dd3c0;
+  --on-accent: #06201b;
+  --accent2: #c3b1ff;
+  --danger: #f7768e;
+  --warn: #e0af68;
+  --ok: #9ece6a;
+  --led: #ff5c7a;
+  --led-bg: #1a0a10;
+}
+:root[data-theme='light'] {
+  color-scheme: light;
+  --page: #f4f6fb;
+  --bg: #ffffff;
+  --panel: #f4f6fb;
+  --raised: #e8ecf4;
+  --border: #d3d9e6;
+  --text: #141b2d;
+  --muted: #4b566d;
+  --accent: #0f766e;
+  --on-accent: #ffffff;
+  --accent2: #5b3fc4;
+  --danger: #b4233f;
+  --warn: #8a5300;
+  --ok: #2f6b1f;
+  --led: #ff5c7a;
+  --led-bg: #1a0a10;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font:
+    14px/1.45 'JetBrains Mono Variable',
+    ui-monospace,
+    Menlo,
+    Consolas,
+    monospace;
+  font-variant-ligatures: none;
+  overflow: hidden;
+}
+html.standalone body {
+  background: var(--page);
+}
+p,
+pre,
+dl,
+dd {
+  margin: 0;
+}
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+button:focus-visible,
+input:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--accent2);
+  outline-offset: 2px;
+}
+
+.stage {
+  position: relative;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  background: var(--bg);
+}
+.stage.shake {
+  animation: shake 0.3s;
+}
+@keyframes shake {
+  25% {
+    translate: -6px 0;
+  }
+  75% {
+    translate: 6px 0;
+  }
+}
+.hud {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 0.9rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.hud b {
+  color: var(--text);
+}
+
+.bomb {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 0.8rem;
+  padding: 1rem;
+  min-height: 0;
+  overflow-y: auto;
+}
+.timer {
+  padding: 0.2rem 1rem;
+  border: 3px solid #333a48;
+  border-radius: 10px;
+  background: var(--led-bg);
+  color: var(--led);
+  font-size: clamp(2.2rem, 8vw, 3.6rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 12px color-mix(in srgb, var(--led) 60%, transparent);
+  font-variant-numeric: tabular-nums;
+}
+.timer.low {
+  animation: blink 0.5s steps(1) infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0.35;
+  }
+}
+.label {
+  color: var(--muted);
+  text-align: center;
+}
+.program {
+  max-width: min(100%, 40rem);
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel);
+  font-size: clamp(1rem, 3.2vw, 1.4rem);
+  white-space: pre-wrap;
+  word-break: break-all;
+  color: var(--accent2);
+}
+.defuse {
+  display: flex;
+  gap: 0.5rem;
+}
+#code {
+  width: 9rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel);
+  /* 16px: no zoom on focus on iOS */
+  font-size: 16px;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 0.15em;
+}
+#cut {
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--danger);
+  border-radius: 8px;
+  background: var(--danger);
+  color: var(--bg);
+  font-weight: 700;
+  cursor: pointer;
+}
+#cut:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.status {
+  min-height: 1.45em;
+  font-weight: 700;
+}
+.status.ok {
+  color: var(--ok);
+}
+.status.err {
+  color: var(--danger);
+}
+.cheat {
+  max-width: 34rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.cheat summary {
+  cursor: pointer;
+  text-align: center;
+}
+.cheat dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.2rem 0.8rem;
+  margin: 0.5rem 0;
+}
+.cheat dt {
+  color: var(--accent2);
+  font-weight: 700;
+}
+.ascii {
+  color: var(--warn);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.7rem;
+  padding: 1.5rem;
+  text-align: center;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  cursor: pointer;
+}
+.overlay[hidden] {
+  display: none;
+}
+.big {
+  font-size: clamp(1.6rem, 5vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+.stage[data-phase='boom'] .big {
+  color: var(--danger);
+  font-size: clamp(3rem, 12vw, 5rem);
+}
+.sub,
+.how {
+  color: var(--muted);
+  max-width: 54ch;
+}
+.how:empty {
+  display: none;
+}
+.hint {
+  color: var(--accent);
+  font-weight: 700;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage.shake,
+  .timer.low {
+    animation: none;
+  }
+}

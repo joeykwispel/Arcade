@@ -739,6 +739,34 @@ test('Git Blame Detective speaks Dutch on its own page', async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test('Brainf*ck Bomb Defuser runs its hand-written WebAssembly: a wrong code costs time, the right one defuses', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/play/brainfuck-bomb/');
+  const frame = page.frameLocator('iframe');
+  const stage = frame.locator('#stage');
+  await expect(stage).toHaveAttribute('data-phase', 'title');
+  await frame.locator('#overlay').click();
+  await expect(stage).toHaveAttribute('data-phase', 'ticking');
+  const code = frame.locator('#code');
+  await code.fill('7');
+  await code.press('Enter');
+  await expect(frame.locator('#status')).toContainText('10 seconds');
+  // ++++++++[>++++++<-]>. is 8 × 6 = 48: "0"
+  await code.fill('0');
+  await code.press('Enter');
+  await expect(stage).toHaveAttribute('data-bomb', '2');
+  await expect(stage).not.toHaveAttribute('data-score', '0');
+  expect(errors).toEqual([]);
+});
+
+test('Brainf*ck Bomb Defuser speaks Dutch on its own page', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/games/brainfuck-bomb/?lang=nl');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'nl');
+  await expect(page.locator('#o-hint')).toContainText('eerste bom');
+  expect(errors).toEqual([]);
+});
+
 test('the home page shows the planned games as coming soon, without links', async ({ page }) => {
   await page.goto('/');
   const soon = page.locator('#upcoming');

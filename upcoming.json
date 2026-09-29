@@ -1,22 +1,5 @@
 [
   {
-    "slug": "brainfuck-bomb",
-    "icon": "+[->.<]",
-    "title": {
-      "en": "Brainf*ck Bomb Defuser",
-      "nl": "Brainf*ck Bomb Defuser"
-    },
-    "genre": {
-      "en": "puzzle · timer",
-      "nl": "puzzel · timer"
-    },
-    "description": {
-      "en": "The bomb prints a code when the tiny program runs. Work out what it prints before the timer hits zero.",
-      "nl": "De bom print een code als het piepkleine programma draait. Bedenk wat het print voor de timer op nul staat."
-    },
-    "framework": "WebAssembly Text (hand-written)"
-  },
-  {
     "slug": "legacy-archaeology",
     "icon": "// 2009",
     "title": {

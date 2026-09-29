@@ -1,0 +1,21 @@
+{
+  "name": "play-brainfuck-bomb",
+  "version": "1.0.0",
+  "description": "Brainf*ck Bomb Defuser: work out what a tiny program prints before the timer runs out. The interpreter is hand-written WebAssembly text.",
+  "author": "Joey Oosenbrug (https://github.com/joeykwispel)",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node build.mjs --wasm && vitest run"
+  },
+  "dependencies": {
+    "@fontsource-variable/jetbrains-mono": "^5.3.0"
+  },
+  "devDependencies": {
+    "vite": "^8.3.1",
+    "vitest": "^5.0.2",
+    "wabt": "^1.0.39"
+  }
+}
