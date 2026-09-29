@@ -572,6 +572,32 @@ test('Null Pointer Dodge speaks Dutch on its own page', async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test('Meeting Bingo runs its meeting in Solid: a false alarm, then the transcript talks', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/play/meeting-bingo/');
+  const frame = page.frameLocator('iframe');
+  const stage = frame.locator('.stage');
+  await expect(stage).toHaveAttribute('data-phase', 'title');
+  await frame.locator('.overlay').click();
+  await expect(stage).toHaveAttribute('data-phase', 'playing');
+  // nobody has said anything yet, so marking a square now is a false alarm
+  await frame.locator('.cell').first().click();
+  await expect(frame.locator('.false')).toBeVisible();
+  await expect(frame.locator('.cell').first()).toHaveAttribute('aria-pressed', 'false');
+  await expect(frame.locator('.cell.free')).toHaveAttribute('aria-pressed', 'true');
+  // then the meeting starts talking
+  await expect(frame.locator('.log li')).not.toHaveCount(1, { timeout: 10_000 });
+  expect(errors).toEqual([]);
+});
+
+test('Meeting Bingo speaks Dutch on its own page', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/games/meeting-bingo/?lang=nl');
+  await expect(page.locator('.hint')).toContainText('spatie');
+  await expect(page.locator('.cell.free')).toHaveText('je staat op mute');
+  expect(errors).toEqual([]);
+});
+
 test('the home page shows the planned games as coming soon, without links', async ({ page }) => {
   await page.goto('/');
   const soon = page.locator('#upcoming');
@@ -584,7 +610,7 @@ test('the home page shows the planned games as coming soon, without links', asyn
   await expect(page.locator('#games .next')).toBeVisible();
   await page.goto('/nl/');
   await expect(page.locator('#upcoming').getByRole('heading', { level: 2 })).toContainText('Binnenkort');
-  await expect(page.locator('#upcoming article', { hasText: 'Meeting Bingo' })).toContainText('een mail had kunnen zijn');
+  await expect(page.locator('#upcoming article', { hasText: 'Kernel Panic Pinball' })).toContainText('blauw scherm');
 });
 
 test('unknown games get the 404 page', async ({ page }) => {
