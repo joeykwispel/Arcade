@@ -1,0 +1,19 @@
+{
+  "name": "play-stack-overflow",
+  "version": "1.0.0",
+  "description": "Stack Overflow: drop stack frames on the call stack until it overflows. Zig compiled to WebAssembly; Vite builds the page.",
+  "author": "Joey Oosenbrug (https://github.com/joeykwispel)",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node build.mjs --test"
+  },
+  "dependencies": {
+    "@fontsource-variable/jetbrains-mono": "^5.3.0"
+  },
+  "devDependencies": {
+    "vite": "^8.3.1"
+  }
+}

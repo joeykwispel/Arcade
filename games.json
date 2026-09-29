@@ -298,5 +298,25 @@
     },
     "aspect": "16 / 10",
     "phoneAspect": "3 / 4"
+  },
+  {
+    "slug": "stack-overflow",
+    "title": {
+      "en": "Stack Overflow",
+      "nl": "Stack Overflow"
+    },
+    "description": {
+      "en": "Drop stack frames onto the call stack. What hangs over is cut off; miss and it’s a segfault. Reach 64 frames and the stack overflows, which is the point.",
+      "nl": "Laat stackframes op de call stack vallen. Wat uitsteekt gaat eraf; mis en het is een segfault. Haal 64 frames en de stack loopt over, en dat is precies de bedoeling."
+    },
+    "framework": "Zig (WebAssembly)",
+    "tooling": "zig + Vite",
+    "thumbnail": "/thumbs/stack-overflow.svg",
+    "controls": {
+      "en": "Space, Enter, ↓, a click or a tap drops the sliding frame. Three perfect drops in a row give you some width back.",
+      "nl": "Spatie, Enter, ↓, een klik of een tik laat het schuivende frame vallen. Drie keer perfect op rij geeft je wat breedte terug."
+    },
+    "aspect": "16 / 10",
+    "phoneAspect": "3 / 4"
   }
 ]
