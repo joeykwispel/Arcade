@@ -1,0 +1,197 @@
+@*
+  Kernel Panic Pinball: the Blazor side. The physics live in Pinball.Core (plain C#); wwwroot/pinball.js runs the
+  animation loop, calls Frame() here every frame (synchronously: this is WebAssembly, in the same thread) and draws
+  the flat snapshot it gets back. Razor only renders the HUD and the overlays, when something changes.
+*@
+@implements IAsyncDisposable
+@inject IJSRuntime JS
+
+<main class="stage" data-phase="@PhaseName">
+    <header class="hud">
+        <p>@T("score") <b>@table.Score</b></p>
+        <p class="balls" aria-label="@($"{T("balls")}: {table.BallsLeft}")">
+            @T("balls")&nbsp;
+            @for (var i = 0; i < Table.StartBalls; i++)
+            {
+                <span class="@(i < table.BallsLeft ? "on" : "off")">●</span>
+            }
+        </p>
+        <p>@T("best") <b>@best</b></p>
+    </header>
+    <div class="table-wrap">
+        <canvas id="table" width="600" height="1040" aria-label="@T("table")"></canvas>
+        <div class="pad" aria-hidden="true">
+            <button type="button" tabindex="-1" data-hold="left">◀</button>
+            <button type="button" tabindex="-1" data-hold="plunger">⏎</button>
+            <button type="button" tabindex="-1" data-hold="right">▶</button>
+        </div>
+    </div>
+    @if (mode != "playing")
+    {
+        <div class="overlay @mode" data-primary>
+            @if (mode == "title")
+            {
+                <p class="big">Kernel Panic Pinball</p>
+                <p class="sub">@T("tagline")</p>
+                <p class="how">@T("how")</p>
+                <p class="hint">@T("start")</p>
+            }
+            else if (mode == "panic")
+            {
+                <p class="big">:(</p>
+                <p class="bsod">Kernel panic - not syncing: Attempted to kill init!</p>
+                <p class="sub">@string.Format(T("panicSub"), table.BallsLeft)</p>
+                <p class="hint">@T("reboot")</p>
+            }
+            else
+            {
+                <p class="big">@T("over")</p>
+                <p class="sub">@string.Format(T("result"), table.Score)</p>
+                @if (newBest)
+                {
+                    <p class="accent">@T("newBest")</p>
+                }
+                <p class="hint">@T("again")</p>
+            }
+        </div>
+    }
+</main>
+
+@code {
+    private readonly Table table = new((uint)Environment.TickCount);
+    private DotNetObjectReference<App>? self;
+    private IJSObjectReference? module;
+    private string lang = "en";
+    private int best;
+    private bool newBest;
+    // what the overlay shows: title, playing, panic (a ball lost) or over
+    private string mode = "title";
+
+    private string PhaseName => mode;
+
+    private static readonly Dictionary<string, Dictionary<string, string>> Text = new()
+    {
+        ["en"] = new()
+        {
+            ["score"] = "score", ["balls"] = "reboots", ["best"] = "best", ["table"] = "pinball table",
+            ["tagline"] = "The bumpers are syscalls. fork() splits your ball in two. Losing the ball is a kernel panic.",
+            ["how"] = "← and → (or A and L) work the flippers. Hold Space to pull the plunger, let go to launch. On a phone: the buttons under the table.",
+            ["start"] = "Press Space or tap to boot",
+            ["panicSub"] = "Your ball was lost. {0} reboot(s) left.",
+            ["reboot"] = "Press Space or tap to reboot",
+            ["over"] = "System halted",
+            ["result"] = "Uptime score: {0}",
+            ["newBest"] = "New best score!",
+            ["again"] = "Press Space or tap to boot again",
+        },
+        ["nl"] = new()
+        {
+            ["score"] = "score", ["balls"] = "reboots", ["best"] = "record", ["table"] = "flipperkast",
+            ["tagline"] = "De bumpers zijn syscalls. fork() splitst je bal in tweeën. De bal verliezen is een kernel panic.",
+            ["how"] = "← en → (of A en L) bedienen de flippers. Houd spatie ingedrukt om de veer te spannen, laat los om af te schieten. Op je telefoon: de knoppen onder de kast.",
+            ["start"] = "Druk op spatie of tik om op te starten",
+            ["panicSub"] = "Je bal is kwijt. Nog {0} reboot(s).",
+            ["reboot"] = "Druk op spatie of tik om te herstarten",
+            ["over"] = "Systeem gestopt",
+            ["result"] = "Uptime-score: {0}",
+            ["newBest"] = "Nieuw record!",
+            ["again"] = "Druk op spatie of tik om opnieuw op te starten",
+        },
+    };
+
+    private string T(string key) => Text[lang][key];
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+        self = DotNetObjectReference.Create(this);
+        module = await JS.InvokeAsync<IJSObjectReference>("import", "./pinball.js");
+        var settings = await module.InvokeAsync<string[]>("start", self, Layout(), table.Bumpers.Select(b => b.Name).ToArray());
+        lang = settings[0];
+        best = int.TryParse(settings[1], out var b) ? b : 0;
+        StateHasChanged();
+    }
+
+    /// <summary>The fixed parts of the table, flat: walls (x1, y1, x2, y2)…, then bumpers (x, y, r)….</summary>
+    private double[] Layout()
+    {
+        var walls = table.Walls.SelectMany(w => new[] { w.A.X, w.A.Y, w.B.X, w.B.Y });
+        var bumpers = table.Bumpers.SelectMany(b => new[] { b.Pos.X, b.Pos.Y, b.Radius });
+        return [table.Walls.Count, table.Bumpers.Count, .. walls, .. bumpers,
+            table.Left.Pivot.X, table.Left.Pivot.Y, table.Right.Pivot.X, table.Right.Pivot.Y, table.Left.Length];
+    }
+
+    /// <summary>Advances the game and returns what changed, flat: phase, score, balls left, plunger, the flippers'
+    /// angles, each bumper's flash, then each ball's x and y.</summary>
+    [JSInvokable]
+    public double[] Frame(double dt)
+    {
+        if (mode == "playing")
+        {
+            table.Step(dt);
+            if (table.Phase == Phase.Panic) SetMode("panic");
+            else if (table.Phase == Phase.Over)
+            {
+                newBest = table.Score > best;
+                if (newBest) best = table.Score;
+                SetMode("over");
+            }
+            else if (table.Events.Count > 0) InvokeAsync(StateHasChanged); // the score changed
+        }
+        var head = new double[] { (int)table.Phase, table.Score, table.BallsLeft, table.Plunger, table.Left.Angle, table.Right.Angle, table.Balls.Count };
+        var flashes = table.Bumpers.Select(b => b.Flash);
+        var balls = table.Balls.SelectMany(b => new[] { b.Pos.X, b.Pos.Y });
+        return [.. head, .. flashes, .. balls];
+    }
+
+    private void SetMode(string m)
+    {
+        mode = m;
+        InvokeAsync(StateHasChanged);
+    }
+
+    /// <summary>Space, Enter or a tap on an overlay: boot, or reboot after a panic.</summary>
+    [JSInvokable]
+    public void Primary()
+    {
+        if (mode == "title" || mode == "over")
+        {
+            table.Start();
+            newBest = false;
+            SetMode("playing");
+        }
+        else if (mode == "panic")
+        {
+            table.Reboot();
+            SetMode("playing");
+        }
+    }
+
+    [JSInvokable]
+    public void Hold(string what, bool down)
+    {
+        if (mode != "playing") return;
+        switch (what)
+        {
+            case "left": table.Left.Pressed = down; break;
+            case "right": table.Right.Pressed = down; break;
+            case "plunger": table.Pulling = down; break;
+        }
+    }
+
+    [JSInvokable]
+    public void SetLang(string l)
+    {
+        lang = l == "nl" ? "nl" : "en";
+        InvokeAsync(StateHasChanged);
+    }
+
+    [JSInvokable]
+    public int Best() => best;
+
+    public async ValueTask DisposeAsync()
+    {
+        if (module is not null) await module.DisposeAsync();
+        self?.Dispose();
+    }
+}

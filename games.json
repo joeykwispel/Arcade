@@ -398,5 +398,25 @@
     },
     "aspect": "16 / 10",
     "phoneAspect": "3 / 4"
+  },
+  {
+    "slug": "kernel-panic-pinball",
+    "title": {
+      "en": "Kernel Panic Pinball",
+      "nl": "Kernel Panic Pinball"
+    },
+    "description": {
+      "en": "Pinball where the bumpers are syscalls: read(), write(), exec(), kill -9, and fork(), which splits your ball in two. Losing the ball is a kernel panic.",
+      "nl": "Flipperen waarbij de bumpers syscalls zijn: read(), write(), exec(), kill -9, en fork(), die je bal in tweeën splitst. De bal verliezen is een kernel panic."
+    },
+    "framework": "C# (Blazor)",
+    "tooling": "Blazor WebAssembly",
+    "thumbnail": "/thumbs/kernel-panic-pinball.svg",
+    "controls": {
+      "en": "← and → (or A and L) work the flippers. Hold Space to pull the plunger and let go to launch. On a phone: the buttons under the table. Three reboots.",
+      "nl": "← en → (of A en L) bedienen de flippers. Houd spatie ingedrukt om de veer te spannen en laat los om af te schieten. Op je telefoon: de knoppen onder de kast. Drie reboots."
+    },
+    "aspect": "16 / 10",
+    "phoneAspect": "3 / 4"
   }
 ]

@@ -1,0 +1,196 @@
+/* Kernel Panic Pinball: a pinball table in a terminal, in the joeyoosenbrug.nl tokens, dark and light. */
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('fonts/jetbrains-mono.woff2') format('woff2');
+  font-weight: 100 800;
+  font-display: swap;
+}
+
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --page: #0a0e17;
+  --bg: #0d1220;
+  --panel: #111827;
+  --border: #253049;
+  --text: #e6e9f2;
+  --muted: #98a3b9;
+  --accent: #7dd3c0;
+  --danger: #f7768e;
+  --table: #0b101c;
+  --wall: #3a4a6b;
+  --bumper: #182033;
+  --hit: #7dd3c0;
+  --on-hit: #06201b;
+  --flipper: #c3b1ff;
+  --ball: #e6e9f2;
+  --bsod: #1e4fd6;
+}
+:root[data-theme='light'] {
+  color-scheme: light;
+  --page: #f4f6fb;
+  --bg: #ffffff;
+  --panel: #f4f6fb;
+  --border: #d3d9e6;
+  --text: #141b2d;
+  --muted: #4b566d;
+  --accent: #0f766e;
+  --danger: #b4233f;
+  --table: #fbfcfe;
+  --wall: #9aa6bd;
+  --bumper: #e8ecf4;
+  --hit: #0f766e;
+  --on-hit: #ffffff;
+  --flipper: #5b3fc4;
+  --ball: #4b566d;
+  --bsod: #1e4fd6;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body,
+#app {
+  margin: 0;
+  height: 100%;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font:
+    14px/1.45 'JetBrains Mono',
+    ui-monospace,
+    Menlo,
+    Consolas,
+    monospace;
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+html.standalone body {
+  background: var(--page);
+}
+p {
+  margin: 0;
+}
+.loading {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  color: var(--muted);
+}
+
+.stage {
+  position: relative;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  background: var(--bg);
+}
+.hud {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 0.9rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.hud b {
+  color: var(--text);
+}
+.balls .on {
+  color: var(--accent);
+}
+.balls .off {
+  color: var(--border);
+}
+
+.table-wrap {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  justify-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem;
+  min-height: 0;
+}
+#table {
+  height: 100%;
+  max-width: 100%;
+  aspect-ratio: 300 / 520;
+  border: 1px solid var(--border);
+  border-radius: 14px 14px 6px 6px;
+  touch-action: none;
+}
+.pad {
+  display: none;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.5rem;
+  width: min(100%, 22rem);
+}
+.pad button {
+  padding: 0.8rem 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--panel);
+  color: var(--text);
+  font: inherit;
+  font-size: 1.2rem;
+  touch-action: none;
+}
+@media (pointer: coarse) {
+  .pad {
+    display: grid;
+  }
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.7rem;
+  padding: 1.5rem;
+  text-align: center;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  cursor: pointer;
+}
+/* a lost ball: the blue screen */
+.overlay.panic {
+  background: var(--bsod);
+  color: #ffffff;
+  justify-items: start;
+  text-align: left;
+  padding: 2rem 2.5rem;
+}
+.overlay.panic .sub,
+.overlay.panic .hint {
+  color: #ffffff;
+}
+.bsod {
+  font-weight: 700;
+  max-width: 40ch;
+}
+.big {
+  font-size: clamp(1.6rem, 5vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+.overlay.panic .big {
+  font-size: clamp(3rem, 12vw, 5rem);
+}
+.sub,
+.how {
+  color: var(--muted);
+  max-width: 52ch;
+}
+.accent,
+.hint {
+  color: var(--accent);
+  font-weight: 700;
+}

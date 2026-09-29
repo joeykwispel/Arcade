@@ -657,6 +657,31 @@ test('SQL Heist speaks Dutch on its own page', async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test('Kernel Panic Pinball runs C# in Blazor: boot, and launch a ball into the syscalls', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/play/kernel-panic-pinball/');
+  const frame = page.frameLocator('iframe');
+  const body = frame.locator('body');
+  // Blazor renders, then pinball.js starts the loop and reports the phase on <body>
+  await expect(body).toHaveAttribute('data-phase', 'title', { timeout: 30_000 });
+  await page.locator('iframe').focus();
+  await page.keyboard.press('Space');
+  await expect(body).toHaveAttribute('data-phase', 'playing');
+  await page.keyboard.down('Space');
+  await page.waitForTimeout(900);
+  await page.keyboard.up('Space');
+  await expect(body).toHaveAttribute('data-balls', '3');
+  expect(errors).toEqual([]);
+});
+
+test('Kernel Panic Pinball speaks Dutch on its own page', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/games/kernel-panic-pinball/?lang=nl');
+  await expect(page.locator('body')).toHaveAttribute('data-phase', 'title', { timeout: 30_000 });
+  await expect(page.locator('.overlay .hint')).toContainText('spatie');
+  expect(errors).toEqual([]);
+});
+
 test('the home page shows the planned games as coming soon, without links', async ({ page }) => {
   await page.goto('/');
   const soon = page.locator('#upcoming');
@@ -669,7 +694,7 @@ test('the home page shows the planned games as coming soon, without links', asyn
   await expect(page.locator('#games .next')).toBeVisible();
   await page.goto('/nl/');
   await expect(page.locator('#upcoming').getByRole('heading', { level: 2 })).toContainText('Binnenkort');
-  await expect(page.locator('#upcoming article', { hasText: 'Kernel Panic Pinball' })).toContainText('blauw scherm');
+  await expect(page.locator('#upcoming article', { hasText: 'Estimate Poker' })).toContainText('scope gewoon door');
 });
 
 test('unknown games get the 404 page', async ({ page }) => {

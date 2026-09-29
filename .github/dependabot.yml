@@ -196,6 +196,25 @@ updates:
       all:
         patterns: ['*']
 
+  # C# packages (NuGet) for Kernel Panic Pinball
+  - package-ecosystem: nuget
+    directory: /games/kernel-panic-pinball
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      all:
+        patterns: ['*']
+
+  - package-ecosystem: npm
+    directory: /games/kernel-panic-pinball
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      all:
+        patterns: ['*']
+
   # Dart packages for Code Review Tinder
   - package-ecosystem: pub
     directory: /games/code-review-tinder
