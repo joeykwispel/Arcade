@@ -438,5 +438,25 @@
     },
     "aspect": "16 / 10",
     "phoneAspect": "3 / 4"
+  },
+  {
+    "slug": "git-blame-detective",
+    "title": {
+      "en": "Git Blame Detective",
+      "nl": "Git Blame Detective"
+    },
+    "description": {
+      "en": "Production is broken, and the commit history knows who did it. Investigate with git log, git blame and git show, then accuse the commit. Three cases; in the last one, it was you.",
+      "nl": "Productie is kapot, en de commitgeschiedenis weet wie het deed. Onderzoek met git log, git blame en git show, en beschuldig dan de commit. Drie zaken; in de laatste was jij het."
+    },
+    "framework": "OCaml (js_of_ocaml)",
+    "tooling": "dune + js_of_ocaml + Vite",
+    "thumbnail": "/thumbs/git-blame-detective.svg",
+    "controls": {
+      "en": "Type git commands (help lists them), or tap a hash to show that commit and a file to blame it. accuse <hash> names the culprit. Every command costs a little; a wrong accusation costs a lot.",
+      "nl": "Typ git-opdrachten (help toont ze), of tik op een hash om die commit te tonen en op een bestand om het te blamen. accuse <hash> wijst de schuldige aan. Elke opdracht kost een beetje; een verkeerde beschuldiging kost veel."
+    },
+    "aspect": "16 / 10",
+    "phoneAspect": "3 / 4"
   }
 ]

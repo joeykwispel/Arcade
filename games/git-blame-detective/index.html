@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0a0e17" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'"
+    />
+    <title>Git Blame Detective</title>
+    <meta name="description" content="Read the commit history and find out who broke production. Written in OCaml, compiled to JavaScript with js_of_ocaml." />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <main id="stage" class="stage" data-phase="title">
+      <header class="hud">
+        <p><span data-t="case">case</span> <b id="case">1/3</b></p>
+        <p><span data-t="commands">commands</span> <b id="commands">0</b></p>
+        <p><span data-t="score">score</span> <b id="score">0</b></p>
+        <p><span data-t="best">best</span> <b id="best">0</b></p>
+      </header>
+      <div id="out" class="out" role="log" aria-live="polite"></div>
+      <nav class="quick" aria-label="commands">
+        <button type="button" data-cmd="ls">ls</button>
+        <button type="button" data-cmd="git log">git log</button>
+        <button type="button" data-cmd="help">help</button>
+        <button type="button" data-cmd="next" class="next">next →</button>
+      </nav>
+      <form id="prompt" class="prompt" autocomplete="off">
+        <label for="cmd"><span class="ps1">~/incident $</span></label>
+        <input id="cmd" type="text" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send" />
+      </form>
+      <div class="overlay" id="overlay">
+        <p class="big" id="o-title">Git Blame Detective</p>
+        <p class="sub" id="o-sub"></p>
+        <p class="how" id="o-how"></p>
+        <p class="hint" id="o-hint"></p>
+      </div>
+    </main>
+    <script type="module" src="./web/main.js"></script>
+  </body>
+</html>

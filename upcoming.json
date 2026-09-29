@@ -1,22 +1,5 @@
 [
   {
-    "slug": "git-blame-detective",
-    "icon": "git blame",
-    "title": {
-      "en": "Git Blame Detective",
-      "nl": "Git Blame Detective"
-    },
-    "genre": {
-      "en": "mystery · deduction",
-      "nl": "mysterie · deductie"
-    },
-    "description": {
-      "en": "Read the commit history, question the suspects, and find out who broke production. It was you, three months ago.",
-      "nl": "Lees de commitgeschiedenis, ondervraag de verdachten en ontdek wie productie brak. Jij was het, drie maanden geleden."
-    },
-    "framework": "OCaml (js_of_ocaml)"
-  },
-  {
     "slug": "brainfuck-bomb",
     "icon": "+[->.<]",
     "title": {

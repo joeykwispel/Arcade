@@ -335,6 +335,20 @@ const scenes = {
       await page.waitForTimeout(300);
     }
   },
+  'git-blame-detective': {
+    viewport: { width: 960, height: 600 },
+    selector: '#stage',
+    // open the case, blame the file, and show the suspicious commit
+    async play(page) {
+      await page.keyboard.press('Enter');
+      const cmd = page.locator('#cmd');
+      for (const line of ['git blame checkout.js', 'git show e5d21b7']) {
+        await cmd.fill(line);
+        await cmd.press('Enter');
+      }
+      await page.waitForTimeout(200);
+    }
+  },
   'bug-bash': {
     viewport: { width: 1200, height: 750 },
     // two levels done, so level 3 (two paths merging) is the one that opens

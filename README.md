@@ -6,32 +6,33 @@ A hub of small browser games at [arcade.joeyoosenbrug.nl](https://arcade.joeyoos
 
 The hub looks like the rest of [joeyoosenbrug.nl](https://joeyoosenbrug.nl): it uses the portfolio's [design kit](https://github.com/joeykwispel/Portfolio/tree/main/docs/design-kit) (tokens, header, cards), English at `/` and Dutch at `/nl/`.
 
-| Game                    | Stack                     | Build tool               | Folder                         |
-| ----------------------- | ------------------------- | ------------------------ | ------------------------------ |
-| Rubber Duck Run         | Vanilla JS + Canvas       | esbuild                  | `games/duck/`                  |
-| Bug Bash                | Rust + WebAssembly        | cargo + esbuild          | `games/bug-bash/`              |
-| Git Gud                 | React + TypeScript        | Vite                     | `games/git-gud/`               |
-| Standup Survivor        | Kotlin/JS                 | Gradle                   | `games/standup-survivor/`      |
-| Infinite Scroll         | ReScript + Three.js       | ReScript + Vite          | `games/infinite-scroll/`       |
-| Deploy Tycoon           | Elm                       | elm make + Vite          | `games/deploy-tycoon/`         |
-| Semicolon Snake         | Lua (Fengari)             | Vite                     | `games/semicolon-snake/`       |
-| Dependency Hell         | C++ + Box2D               | Emscripten + Vite        | `games/dependency-hell/`       |
-| Dev-Ware                | Gleam + Lustre            | gleam + Vite             | `games/dev-ware/`              |
-| Cookie Consent Speedrun | HTML + CSS only           | no JavaScript            | `games/cookie-consent/`        |
-| Code Review Tinder      | Dart + Flutter            | flutter build web        | `games/code-review-tinder/`    |
-| rm -rf dungeon          | Python (Pyodide)          | Pyodide + Vite           | `games/rm-rf-dungeon/`         |
-| Localhost Golf          | Godot (GDScript)          | Godot web export         | `games/localhost-golf/`        |
-| Merge Conflict Tetris   | Go (TinyGo → WebAssembly) | TinyGo + Vite            | `games/merge-conflict-tetris/` |
-| Regex Sniper            | Ruby (ruby.wasm)          | ruby.wasm + Vite         | `games/regex-sniper/`          |
-| Stack Overflow          | Zig (WebAssembly)         | zig + Vite               | `games/stack-overflow/`        |
-| Null Pointer Dodge      | Vue                       | Vite + vue-tsc           | `games/null-pointer-dodge/`    |
-| Meeting Bingo           | Solid                     | Vite + vite-plugin-solid | `games/meeting-bingo/`         |
-| Rubber Duck Therapy     | ClojureScript             | shadow-cljs              | `games/rubber-duck-therapy/`   |
-| SQL Heist               | SQL (SQLite wasm)         | sql.js + Vite            | `games/sql-heist/`             |
-| Kernel Panic Pinball    | C# (Blazor)               | Blazor WebAssembly       | `games/kernel-panic-pinball/`  |
-| Estimate Poker          | F# (Fable)                | Fable + Vite             | `games/estimate-poker/`        |
+| Game                    | Stack                     | Build tool                | Folder                         |
+| ----------------------- | ------------------------- | ------------------------- | ------------------------------ |
+| Rubber Duck Run         | Vanilla JS + Canvas       | esbuild                   | `games/duck/`                  |
+| Bug Bash                | Rust + WebAssembly        | cargo + esbuild           | `games/bug-bash/`              |
+| Git Gud                 | React + TypeScript        | Vite                      | `games/git-gud/`               |
+| Standup Survivor        | Kotlin/JS                 | Gradle                    | `games/standup-survivor/`      |
+| Infinite Scroll         | ReScript + Three.js       | ReScript + Vite           | `games/infinite-scroll/`       |
+| Deploy Tycoon           | Elm                       | elm make + Vite           | `games/deploy-tycoon/`         |
+| Semicolon Snake         | Lua (Fengari)             | Vite                      | `games/semicolon-snake/`       |
+| Dependency Hell         | C++ + Box2D               | Emscripten + Vite         | `games/dependency-hell/`       |
+| Dev-Ware                | Gleam + Lustre            | gleam + Vite              | `games/dev-ware/`              |
+| Cookie Consent Speedrun | HTML + CSS only           | no JavaScript             | `games/cookie-consent/`        |
+| Code Review Tinder      | Dart + Flutter            | flutter build web         | `games/code-review-tinder/`    |
+| rm -rf dungeon          | Python (Pyodide)          | Pyodide + Vite            | `games/rm-rf-dungeon/`         |
+| Localhost Golf          | Godot (GDScript)          | Godot web export          | `games/localhost-golf/`        |
+| Merge Conflict Tetris   | Go (TinyGo → WebAssembly) | TinyGo + Vite             | `games/merge-conflict-tetris/` |
+| Regex Sniper            | Ruby (ruby.wasm)          | ruby.wasm + Vite          | `games/regex-sniper/`          |
+| Stack Overflow          | Zig (WebAssembly)         | zig + Vite                | `games/stack-overflow/`        |
+| Null Pointer Dodge      | Vue                       | Vite + vue-tsc            | `games/null-pointer-dodge/`    |
+| Meeting Bingo           | Solid                     | Vite + vite-plugin-solid  | `games/meeting-bingo/`         |
+| Rubber Duck Therapy     | ClojureScript             | shadow-cljs               | `games/rubber-duck-therapy/`   |
+| SQL Heist               | SQL (SQLite wasm)         | sql.js + Vite             | `games/sql-heist/`             |
+| Kernel Panic Pinball    | C# (Blazor)               | Blazor WebAssembly        | `games/kernel-panic-pinball/`  |
+| Estimate Poker          | F# (Fable)                | Fable + Vite              | `games/estimate-poker/`        |
+| Git Blame Detective     | OCaml (js_of_ocaml)       | dune + js_of_ocaml + Vite | `games/git-blame-detective/`   |
 
-Building Bug Bash needs Rust with the WebAssembly target: install [rustup](https://rustup.rs), then `rustup target add wasm32-unknown-unknown`. Standup Survivor needs a JDK 21 (`JAVA_HOME`); Gradle itself comes with the wrapper. Dependency Hell needs [Emscripten](https://emscripten.org) (`emcc` on the PATH, e.g. via emsdk); its build fetches Box2D itself. Dev-Ware needs [Gleam](https://gleam.run) (`gleam` on the PATH; it fetches Lustre itself); on Windows, turn on Developer Mode so Gleam can create symbolic links. Code Review Tinder needs [Flutter](https://flutter.dev) 3.47 (`flutter` on the PATH). rm -rf dungeon runs its tests with Python 3 (`python3` or `python`); in the browser, Pyodide comes from npm. Localhost Golf needs [Godot](https://godotengine.org) 4.7.2 and its `web_nothreads_release.zip` export template: set `GODOT` to the binary and `GODOT_TEMPLATES` to the folder with the template, if they aren’t in the default places. Merge Conflict Tetris needs [Go](https://go.dev) 1.27 for its tests, and [TinyGo](https://tinygo.org) 0.42 with Binaryen's `wasm-opt` on the PATH to build. Regex Sniper needs nothing extra: Ruby comes from npm as ruby.wasm, and its tests run in Node. Stack Overflow needs [Zig](https://ziglang.org) 0.16 (`zig` on the PATH, or `ZIG` pointing at it). Rubber Duck Therapy needs the same JDK 21 as Standup Survivor: shadow-cljs (from npm) compiles the ClojureScript, and fetches its Clojure dependencies itself. Kernel Panic Pinball needs the [.NET 10 SDK](https://dotnet.microsoft.com) (`dotnet` on the PATH), and so does Estimate Poker: Fable, the F# to JavaScript compiler, is a local dotnet tool that the build restores. Bug Bash has no crates and no wasm-bindgen: the Rust code exports plain functions and leaves a draw list in memory, and `web/main.js` replays it on a canvas.
+Building Bug Bash needs Rust with the WebAssembly target: install [rustup](https://rustup.rs), then `rustup target add wasm32-unknown-unknown`. Standup Survivor needs a JDK 21 (`JAVA_HOME`); Gradle itself comes with the wrapper. Dependency Hell needs [Emscripten](https://emscripten.org) (`emcc` on the PATH, e.g. via emsdk); its build fetches Box2D itself. Dev-Ware needs [Gleam](https://gleam.run) (`gleam` on the PATH; it fetches Lustre itself); on Windows, turn on Developer Mode so Gleam can create symbolic links. Code Review Tinder needs [Flutter](https://flutter.dev) 3.47 (`flutter` on the PATH). rm -rf dungeon runs its tests with Python 3 (`python3` or `python`); in the browser, Pyodide comes from npm. Localhost Golf needs [Godot](https://godotengine.org) 4.7.2 and its `web_nothreads_release.zip` export template: set `GODOT` to the binary and `GODOT_TEMPLATES` to the folder with the template, if they aren’t in the default places. Merge Conflict Tetris needs [Go](https://go.dev) 1.27 for its tests, and [TinyGo](https://tinygo.org) 0.42 with Binaryen's `wasm-opt` on the PATH to build. Regex Sniper needs nothing extra: Ruby comes from npm as ruby.wasm, and its tests run in Node. Stack Overflow needs [Zig](https://ziglang.org) 0.16 (`zig` on the PATH, or `ZIG` pointing at it). Rubber Duck Therapy needs the same JDK 21 as Standup Survivor: shadow-cljs (from npm) compiles the ClojureScript, and fetches its Clojure dependencies itself. Kernel Panic Pinball needs the [.NET 10 SDK](https://dotnet.microsoft.com) (`dotnet` on the PATH), and so does Estimate Poker: Fable, the F# to JavaScript compiler, is a local dotnet tool that the build restores. Git Blame Detective needs OCaml 5 with opam: `opam install dune js_of_ocaml js_of_ocaml-ppx alcotest` (on Windows, in WSL; the build then reuses that compile). Bug Bash has no crates and no wasm-bindgen: the Rust code exports plain functions and leaves a draw list in memory, and `web/main.js` replays it on a canvas.
 
 ## How it fits together
 

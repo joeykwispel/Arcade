@@ -707,6 +707,38 @@ test('Estimate Poker speaks Dutch on its own page', async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test('Git Blame Detective runs its OCaml: investigate, accuse the wrong commit, then the right one', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/play/git-blame-detective/');
+  const frame = page.frameLocator('iframe');
+  const stage = frame.locator('#stage');
+  await expect(stage).toHaveAttribute('data-phase', 'title');
+  await frame.locator('#overlay').click();
+  await expect(stage).toHaveAttribute('data-phase', 'investigating');
+  const cmd = frame.locator('#cmd');
+  await cmd.fill('git blame checkout.js');
+  await cmd.press('Enter');
+  // tap a hash: git show
+  await frame.locator('#out button.hash', { hasText: 'e5d21b7' }).first().click();
+  await expect(frame.locator('#out')).toContainText('Show the currency with the total');
+  await cmd.fill('accuse 3b77a10');
+  await cmd.press('Enter');
+  await expect(frame.locator('#out')).toContainText('innocent');
+  await cmd.fill('accuse e5d21b7');
+  await cmd.press('Enter');
+  await expect(stage).toHaveAttribute('data-phase', 'solved');
+  await expect(stage).not.toHaveAttribute('data-score', '0');
+  expect(errors).toEqual([]);
+});
+
+test('Git Blame Detective speaks Dutch on its own page', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/games/git-blame-detective/?lang=nl');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'nl');
+  await expect(page.locator('#o-hint')).toContainText('eerste zaak');
+  expect(errors).toEqual([]);
+});
+
 test('the home page shows the planned games as coming soon, without links', async ({ page }) => {
   await page.goto('/');
   const soon = page.locator('#upcoming');
@@ -719,7 +751,7 @@ test('the home page shows the planned games as coming soon, without links', asyn
   await expect(page.locator('#games .next')).toBeVisible();
   await page.goto('/nl/');
   await expect(page.locator('#upcoming').getByRole('heading', { level: 2 })).toContainText('Binnenkort');
-  await expect(page.locator('#upcoming article', { hasText: 'Git Blame Detective' })).toContainText('drie maanden geleden');
+  await expect(page.locator('#upcoming article', { hasText: 'Legacy Code Archaeology' })).toContainText('dragende commentaar');
 });
 
 test('unknown games get the 404 page', async ({ page }) => {
