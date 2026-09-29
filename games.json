@@ -318,5 +318,25 @@
     },
     "aspect": "16 / 10",
     "phoneAspect": "3 / 4"
+  },
+  {
+    "slug": "null-pointer-dodge",
+    "title": {
+      "en": "Null Pointer Dodge",
+      "nl": "Null Pointer Dodge"
+    },
+    "description": {
+      "en": "You are a tiny ?. operator. Dodge the null, undefined and NaN raining down, squeeze through TypeError walls, and graze the values for points.",
+      "nl": "Je bent een kleine ?.-operator. Ontwijk de null, undefined en NaN die op je neerregenen, glip door TypeError-muren en scheer langs waarden voor punten."
+    },
+    "framework": "Vue",
+    "tooling": "Vite + vue-tsc",
+    "thumbnail": "/thumbs/null-pointer-dodge.svg",
+    "controls": {
+      "en": "Arrow keys or WASD to move, or drag on the screen (on a phone your ?. floats just above your finger). Catch a ?? for a shield. Space starts, P pauses.",
+      "nl": "Pijltjes of WASD om te bewegen, of sleep over het scherm (op je telefoon zweeft je ?. net boven je vinger). Vang een ?? voor een schild. Spatie start, P pauzeert."
+    },
+    "aspect": "16 / 10",
+    "phoneAspect": "4 / 3"
   }
 ]

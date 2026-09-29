@@ -1,0 +1,168 @@
+/* Null Pointer Dodge: in the joeyoosenbrug.nl tokens, dark and light. */
+
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --page: #0a0e17;
+  --bg: #0d1220;
+  --panel: #111827;
+  --border: #253049;
+  --text: #e6e9f2;
+  --muted: #98a3b9;
+  --accent: #7dd3c0;
+  --danger: #f7768e;
+  --arena: #0b101c;
+  --grid: #151c2c;
+  --player: #7dd3c0;
+  --on-player: #06201b;
+  --null: #f7768e;
+  --undefined: #c3b1ff;
+  --nan: #e0af68;
+}
+:root[data-theme='light'] {
+  color-scheme: light;
+  --page: #f4f6fb;
+  --bg: #ffffff;
+  --panel: #f4f6fb;
+  --border: #d3d9e6;
+  --text: #141b2d;
+  --muted: #4b566d;
+  --accent: #0f766e;
+  --danger: #b4233f;
+  --arena: #fbfcfe;
+  --grid: #eef1f7;
+  --player: #0f766e;
+  --on-player: #ffffff;
+  --null: #d9486a;
+  --undefined: #7c5ce0;
+  --nan: #c07a10;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body,
+#app {
+  margin: 0;
+  height: 100%;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font:
+    14px/1.45 'JetBrains Mono Variable',
+    ui-monospace,
+    Menlo,
+    Consolas,
+    monospace;
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+html.standalone body {
+  background: var(--page);
+}
+p {
+  margin: 0;
+}
+
+.stage {
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  background: var(--bg);
+}
+.hud {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.3rem 1rem;
+  padding: 0.5rem 0.9rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.hud b {
+  color: var(--text);
+}
+/* off: plain muted text (still readable); on: highlighted */
+.shield {
+  color: var(--muted);
+}
+.shield.on {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.arena {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  padding: 0.5rem;
+}
+canvas {
+  display: block;
+  width: min(100%, calc((100vh - 3.5rem) * 1.6));
+  aspect-ratio: 480 / 300;
+  max-height: 100%;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  touch-action: none;
+  cursor: crosshair;
+}
+.flash {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  translate: -50% 0;
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  background: var(--panel);
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.85rem;
+  opacity: 0;
+  transition: opacity 0.15s;
+  pointer-events: none;
+}
+.flash.show {
+  opacity: 1;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.7rem;
+  padding: 1.5rem;
+  text-align: center;
+  background: color-mix(in srgb, var(--bg) 86%, transparent);
+  cursor: pointer;
+}
+.big {
+  font-size: clamp(1.4rem, 4.5vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  max-width: 34ch;
+}
+.big.error {
+  color: var(--danger);
+  font-size: clamp(0.95rem, 2.6vw, 1.4rem);
+}
+.sub,
+.how {
+  color: var(--muted);
+  max-width: 56ch;
+}
+.accent,
+.hint {
+  color: var(--accent);
+  font-weight: 700;
+}

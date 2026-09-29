@@ -549,6 +549,29 @@ test('Stack Overflow speaks Dutch on its own page', async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test('Null Pointer Dodge runs in Vue: you move, time counts, and a crash names the value', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/play/null-pointer-dodge/');
+  const frame = page.frameLocator('iframe');
+  const stage = frame.locator('.stage');
+  await expect(stage).toHaveAttribute('data-phase', 'title');
+  await frame.locator('.overlay').click();
+  await expect(stage).toHaveAttribute('data-phase', 'playing');
+  // standing still in the rain, sooner or later something hits you
+  await expect(stage).toHaveAttribute('data-phase', 'crashed', { timeout: 60_000 });
+  await expect(frame.locator('.big.error')).toContainText(/TypeError/);
+  await expect(stage).not.toHaveAttribute('data-score', '0');
+  expect(errors).toEqual([]);
+});
+
+test('Null Pointer Dodge speaks Dutch on its own page', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/games/null-pointer-dodge/?lang=nl');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'nl');
+  await expect(page.locator('.hint')).toContainText('spatie');
+  expect(errors).toEqual([]);
+});
+
 test('the home page shows the planned games as coming soon, without links', async ({ page }) => {
   await page.goto('/');
   const soon = page.locator('#upcoming');
