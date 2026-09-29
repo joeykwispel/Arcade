@@ -1,1 +1,206 @@
-[]
+[
+  {
+    "slug": "merge-conflict-tetris",
+    "icon": "<<<<<<<",
+    "title": {
+      "en": "Merge Conflict Tetris",
+      "nl": "Merge Conflict Tetris"
+    },
+    "genre": {
+      "en": "puzzle · falling blocks",
+      "nl": "puzzel · vallende blokken"
+    },
+    "description": {
+      "en": "Conflict markers fall from the sky. Clear a row by picking ours or theirs, before the file is unreadable.",
+      "nl": "Conflictmarkeringen vallen uit de lucht. Maak een rij leeg door ours of theirs te kiezen, voor het bestand onleesbaar is."
+    },
+    "framework": "Go (TinyGo → WebAssembly)"
+  },
+  {
+    "slug": "regex-golf",
+    "icon": "/^.*$/",
+    "title": {
+      "en": "Regex Golf Range",
+      "nl": "Regex Golf Range"
+    },
+    "genre": {
+      "en": "puzzle · golf",
+      "nl": "puzzel · golf"
+    },
+    "description": {
+      "en": "Match every green word and none of the red ones, in as few characters as you can. Par for every hole.",
+      "nl": "Match elk groen woord en geen enkel rood, in zo min mogelijk tekens. Par voor elke hole."
+    },
+    "framework": "Ruby (ruby.wasm)"
+  },
+  {
+    "slug": "stack-overflow",
+    "icon": "f(f(f(",
+    "title": {
+      "en": "Stack Overflow",
+      "nl": "Stack Overflow"
+    },
+    "genre": {
+      "en": "stacking · balance",
+      "nl": "stapelen · balans"
+    },
+    "description": {
+      "en": "Drop function frames onto the call stack. Stack too high, and it overflows.",
+      "nl": "Laat functieframes op de call stack vallen. Stapel te hoog en hij loopt over."
+    },
+    "framework": "Zig (WebAssembly)"
+  },
+  {
+    "slug": "null-pointer-dodge",
+    "icon": "?.",
+    "title": {
+      "en": "Null Pointer Dodge",
+      "nl": "Null Pointer Dodge"
+    },
+    "genre": {
+      "en": "bullet hell · arcade",
+      "nl": "bullet hell · arcade"
+    },
+    "description": {
+      "en": "You are a tiny ?. operator. Dodge the undefined, null and NaN raining down on you.",
+      "nl": "Je bent een kleine ?.-operator. Ontwijk de undefined, null en NaN die op je neerregenen."
+    },
+    "framework": "Vue"
+  },
+  {
+    "slug": "meeting-bingo",
+    "icon": "B I N G O",
+    "title": {
+      "en": "Meeting Bingo",
+      "nl": "Meeting Bingo"
+    },
+    "genre": {
+      "en": "bingo · real time",
+      "nl": "bingo · realtime"
+    },
+    "description": {
+      "en": "\"Can you see my screen?\" \"Let's take this offline.\" Fill a line before the meeting turns out to be an email.",
+      "nl": "\"Zien jullie mijn scherm?\" \"Laten we dat offline bespreken.\" Vul een rij voor de meeting een mail had kunnen zijn."
+    },
+    "framework": "Solid"
+  },
+  {
+    "slug": "rubber-duck-therapy",
+    "icon": "quack();",
+    "title": {
+      "en": "Rubber Duck Therapy",
+      "nl": "Rubber Duck Therapy"
+    },
+    "genre": {
+      "en": "story · choices",
+      "nl": "verhaal · keuzes"
+    },
+    "description": {
+      "en": "Explain your bug to the duck, one answer at a time. The duck says nothing. Somehow, that helps.",
+      "nl": "Leg je bug uit aan de eend, antwoord voor antwoord. De eend zegt niets. Op de een of andere manier helpt dat."
+    },
+    "framework": "ClojureScript"
+  },
+  {
+    "slug": "sql-heist",
+    "icon": "SELECT *",
+    "title": {
+      "en": "SQL Heist",
+      "nl": "SQL Heist"
+    },
+    "genre": {
+      "en": "puzzle · heist",
+      "nl": "puzzel · kraak"
+    },
+    "description": {
+      "en": "Rob the bank vault with nothing but queries against a real database, running in your browser.",
+      "nl": "Beroof de bankkluis met alleen queries op een echte database, die in je browser draait."
+    },
+    "framework": "SQL (SQLite wasm)"
+  },
+  {
+    "slug": "kernel-panic-pinball",
+    "icon": "0x0000",
+    "title": {
+      "en": "Kernel Panic Pinball",
+      "nl": "Kernel Panic Pinball"
+    },
+    "genre": {
+      "en": "pinball · physics",
+      "nl": "flipperkast · physics"
+    },
+    "description": {
+      "en": "Pinball where the bumpers are syscalls, and losing the ball is a blue screen.",
+      "nl": "Flipperen waarbij de bumpers syscalls zijn, en de bal verliezen een blauw scherm is."
+    },
+    "framework": "C# (Blazor)"
+  },
+  {
+    "slug": "estimate-poker",
+    "icon": "? pts",
+    "title": {
+      "en": "Estimate Poker",
+      "nl": "Estimate Poker"
+    },
+    "genre": {
+      "en": "cards · bluffing",
+      "nl": "kaarten · bluffen"
+    },
+    "description": {
+      "en": "Guess how long the task really takes. While you guess, the scope keeps growing.",
+      "nl": "Schat hoe lang de taak echt duurt. Terwijl je schat, groeit de scope gewoon door."
+    },
+    "framework": "F# (Fable)"
+  },
+  {
+    "slug": "git-blame-detective",
+    "icon": "git blame",
+    "title": {
+      "en": "Git Blame Detective",
+      "nl": "Git Blame Detective"
+    },
+    "genre": {
+      "en": "mystery · deduction",
+      "nl": "mysterie · deductie"
+    },
+    "description": {
+      "en": "Read the commit history, question the suspects, and find out who broke production. It was you, three months ago.",
+      "nl": "Lees de commitgeschiedenis, ondervraag de verdachten en ontdek wie productie brak. Jij was het, drie maanden geleden."
+    },
+    "framework": "OCaml (js_of_ocaml)"
+  },
+  {
+    "slug": "brainfuck-bomb",
+    "icon": "+[->.<]",
+    "title": {
+      "en": "Brainf*ck Bomb Defuser",
+      "nl": "Brainf*ck Bomb Defuser"
+    },
+    "genre": {
+      "en": "puzzle · timer",
+      "nl": "puzzel · timer"
+    },
+    "description": {
+      "en": "The bomb prints a code when the tiny program runs. Work out what it prints before the timer hits zero.",
+      "nl": "De bom print een code als het piepkleine programma draait. Bedenk wat het print voor de timer op nul staat."
+    },
+    "framework": "WebAssembly Text (hand-written)"
+  },
+  {
+    "slug": "legacy-archaeology",
+    "icon": "// 2009",
+    "title": {
+      "en": "Legacy Code Archaeology",
+      "nl": "Legacy Code Archaeology"
+    },
+    "genre": {
+      "en": "digging · puzzle",
+      "nl": "graven · puzzel"
+    },
+    "description": {
+      "en": "Dig through layers of COBOL, jQuery and TODOs from 2009. Whatever you do, don't remove the load-bearing comment.",
+      "nl": "Graaf door lagen COBOL, jQuery en TODO's uit 2009. Wat je ook doet, haal het dragende commentaar niet weg."
+    },
+    "framework": "PHP (php-wasm)"
+  }
+]

@@ -2,6 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 
 const games: { slug: string }[] = JSON.parse(readFileSync(new URL('../games.json', import.meta.url), 'utf8'));
+const upcoming: { slug: string }[] = JSON.parse(readFileSync(new URL('../upcoming.json', import.meta.url), 'utf8'));
 
 /** Collects CSP violations and uncaught errors, in the hub and in the game frame, so a test fails if either breaks. */
 function watchErrors(page: Page) {
@@ -456,11 +457,19 @@ test('Localhost Golf speaks Dutch on its own page', async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
-test('with every planned game built, there is no coming-soon section, and the next-game card stays', async ({ page }) => {
+test('the home page shows the planned games as coming soon, without links', async ({ page }) => {
   await page.goto('/');
+  const soon = page.locator('#upcoming');
+  await expect(soon.getByRole('heading', { level: 2 })).toContainText('Coming soon');
+  await expect(soon.locator('article')).toHaveCount(upcoming.length);
+  await expect(soon.locator('article', { hasText: 'SQL Heist' })).toContainText('SQLite wasm');
+  await expect(soon.locator('a')).toHaveCount(0);
+  // every built game has a card, plus the generic "next game" card
   await expect(page.locator('#games .grid > li')).toHaveCount(games.length + 1);
-  await expect(page.locator('#upcoming')).toHaveCount(0);
   await expect(page.locator('#games .next')).toBeVisible();
+  await page.goto('/nl/');
+  await expect(page.locator('#upcoming').getByRole('heading', { level: 2 })).toContainText('Binnenkort');
+  await expect(page.locator('#upcoming article', { hasText: 'Meeting Bingo' })).toContainText('een mail had kunnen zijn');
 });
 
 test('unknown games get the 404 page', async ({ page }) => {
