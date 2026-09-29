@@ -1,22 +1,5 @@
 [
   {
-    "slug": "regex-golf",
-    "icon": "/^.*$/",
-    "title": {
-      "en": "Regex Golf Range",
-      "nl": "Regex Golf Range"
-    },
-    "genre": {
-      "en": "puzzle · golf",
-      "nl": "puzzel · golf"
-    },
-    "description": {
-      "en": "Match every green word and none of the red ones, in as few characters as you can. Par for every hole.",
-      "nl": "Match elk groen woord en geen enkel rood, in zo min mogelijk tekens. Par voor elke hole."
-    },
-    "framework": "Ruby (ruby.wasm)"
-  },
-  {
     "slug": "stack-overflow",
     "icon": "f(f(f(",
     "title": {

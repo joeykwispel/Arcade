@@ -220,6 +220,19 @@ const scenes = {
       await page.waitForTimeout(300);
     }
   },
+  'regex-golf': {
+    viewport: { width: 960, height: 600 },
+    selector: '#stage',
+    // tee off, and type a regex that is almost there: some green hit, one red too
+    async play(page) {
+      await page.locator('#stage[data-phase="title"]').waitFor({ timeout: 30_000 });
+      await page.keyboard.press('Enter');
+      await page.locator('#regex').fill('^foo');
+      await page.keyboard.press('Enter');
+      await page.locator('#regex').fill(String.raw`\d+\.\d+`);
+      await page.waitForTimeout(200);
+    }
+  },
   'bug-bash': {
     viewport: { width: 1200, height: 750 },
     // two levels done, so level 3 (two paths merging) is the one that opens

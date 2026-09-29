@@ -134,6 +134,15 @@ updates:
         patterns: ['*']
 
   - package-ecosystem: npm
+    directory: /games/regex-golf
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      all:
+        patterns: ['*']
+
+  - package-ecosystem: npm
     directory: /games/merge-conflict-tetris
     schedule:
       interval: weekly
