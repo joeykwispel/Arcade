@@ -1,4 +1,4 @@
-/* Regex Golf Range: a scorecard and two lists of words, in the joeyoosenbrug.nl tokens, dark and light. */
+/* Regex Sniper: two lists of words, a regex, and a cheatsheet, in the joeyoosenbrug.nl tokens, dark and light. */
 
 :root,
 :root[data-theme='dark'] {
@@ -15,7 +15,7 @@
   --ok: #9ece6a;
   --danger: #f7768e;
   --warn: #e0af68;
-  --fairway: #0f1a17;
+  --field: #0f1a17;
 }
 :root[data-theme='light'] {
   color-scheme: light;
@@ -31,7 +31,7 @@
   --ok: #2f6b1f;
   --danger: #b4233f;
   --warn: #8a5300;
-  --fairway: #f1f8f4;
+  --field: #f1f8f4;
 }
 
 * {
@@ -93,11 +93,84 @@ input:focus-visible {
   color: var(--muted);
   font-size: 0.85rem;
 }
+.hud {
+  align-items: center;
+}
 .hud b {
   color: var(--text);
 }
+.cheat-toggle {
+  padding: 0.15rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--raised);
+  color: var(--text);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.cheat-open .cheat-toggle {
+  border-color: var(--accent);
+  color: var(--accent);
+}
 
-/* ---------- the hole ---------- */
+/* the level, with the cheatsheet next to it when it's open */
+.body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 0;
+}
+.cheat-open .body {
+  grid-template-columns: minmax(0, 1fr) minmax(15rem, 20rem);
+}
+.cheat {
+  display: none;
+  align-content: start;
+  gap: 0.5rem;
+  padding: 0.9rem;
+  border-left: 1px solid var(--border);
+  background: var(--panel);
+  overflow-y: auto;
+  min-height: 0;
+}
+.cheat-open .cheat {
+  display: grid;
+}
+.cheat h2 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.cheat dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.3rem 0.6rem;
+  margin: 0;
+  font-size: 0.8rem;
+}
+.cheat dt button {
+  min-width: 2.6rem;
+  padding: 0.1rem 0.35rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--accent2);
+  font-weight: 700;
+  cursor: pointer;
+}
+.cheat dt button:hover {
+  border-color: var(--accent2);
+}
+.cheat dd {
+  margin: 0;
+  color: var(--muted);
+  align-self: center;
+}
+.goal {
+  font-weight: 700;
+}
+
+/* ---------- the level ---------- */
 
 .course {
   display: grid;
@@ -105,7 +178,7 @@ input:focus-visible {
   gap: 0.8rem;
   padding: 0.9rem;
   min-height: 0;
-  background: var(--fairway);
+  background: var(--field);
 }
 .title h1 {
   font-size: clamp(1.1rem, 3vw, 1.5rem);
@@ -293,7 +366,7 @@ input:focus-visible {
   color: var(--accent);
   font-weight: 700;
 }
-.card {
+.results {
   text-align: left;
   color: var(--muted);
   font-size: 0.85rem;
@@ -305,6 +378,22 @@ input:focus-visible {
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
+}
+
+/* narrow: the cheatsheet opens over the level instead of next to it */
+@media (max-width: 720px) {
+  .cheat-open .body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .body {
+    position: relative;
+  }
+  .cheat {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-left: 0;
+  }
 }
 
 @media (max-width: 520px) {

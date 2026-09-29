@@ -9,38 +9,47 @@
       http-equiv="Content-Security-Policy"
       content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'"
     />
-    <title>Regex Golf Range</title>
+    <title>Regex Sniper</title>
     <meta
       name="description"
-      content="Hit every green word and no red one with the shortest regex you can. Real Ruby regexes, running in your browser with ruby.wasm."
+      content="Write one regex that matches every green word and none of the red ones. The shorter, the better. Real Ruby regexes, running in your browser with ruby.wasm."
     />
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
   </head>
   <body>
     <main id="stage" class="stage" data-phase="loading">
       <header class="hud">
-        <p><span data-t="hole">hole</span> <b id="hole-n">1/9</b></p>
-        <p>par <b id="par">0</b></p>
-        <p><span data-t="strokes">strokes</span> <b id="total">0</b></p>
+        <p><span data-t="level">level</span> <b id="level-n">1/9</b></p>
+        <p><span data-t="target">target</span> <b id="target">0</b> <span data-t="chars">chars</span></p>
+        <p><span data-t="total">total</span> <b id="total">0</b></p>
         <p><span data-t="best">best</span> <b id="best">–</b></p>
+        <button type="button" id="cheat-toggle" class="cheat-toggle" aria-expanded="false" aria-controls="cheat" data-t="cheatsheet">cheatsheet</button>
       </header>
 
-      <section class="course" aria-labelledby="hole-name">
-        <div class="title">
-          <h1 id="hole-name">…</h1>
-          <p id="tip" class="tip"></p>
-        </div>
-        <div class="lists">
-          <div class="list hit">
-            <h2 data-t="hitThese">hit these</h2>
-            <ul id="hit"></ul>
+      <div class="body">
+        <section class="course" aria-labelledby="level-name">
+          <div class="title">
+            <h1 id="level-name">…</h1>
+            <p class="goal" data-t="goal">Write one regex that matches every green word and none of the red ones.</p>
+            <p id="tip" class="tip"></p>
           </div>
-          <div class="list miss">
-            <h2 data-t="missThese">miss these</h2>
-            <ul id="miss"></ul>
+          <div class="lists">
+            <div class="list hit">
+              <h2 data-t="hitThese">must match</h2>
+              <ul id="hit"></ul>
+            </div>
+            <div class="list miss">
+              <h2 data-t="missThese">must not match</h2>
+              <ul id="miss"></ul>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+
+        <aside id="cheat" class="cheat" aria-labelledby="cheat-title">
+          <h2 id="cheat-title" data-t="cheatTitle">Common regex symbols</h2>
+          <dl id="cheat-list"></dl>
+        </aside>
+      </div>
 
       <form id="shot" class="shot" autocomplete="off">
         <label for="regex" class="sr-only" data-t="yourRegex">your regex</label>
@@ -52,13 +61,13 @@
         </p>
         <p id="status" class="status" role="status" aria-live="polite"></p>
         <p class="buttons">
-          <button type="button" id="mulligan" disabled data-t="mulligan">mulligan (+10)</button>
-          <button type="submit" id="next" disabled data-t="next">next hole →</button>
+          <button type="button" id="skip" disabled data-t="skip">skip (+10)</button>
+          <button type="submit" id="next" disabled data-t="next">next level →</button>
         </p>
       </form>
 
       <div class="overlay" id="overlay">
-        <p class="big" id="o-title">Regex Golf Range</p>
+        <p class="big" id="o-title">Regex Sniper</p>
         <div id="o-body" class="o-body"></div>
         <p class="hint" id="o-hint"></p>
       </div>

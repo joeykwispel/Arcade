@@ -1,7 +1,7 @@
 {
-  "name": "play-regex-golf",
+  "name": "play-regex-sniper",
   "version": "1.0.0",
-  "description": "Regex Golf Range: hit every green word and no red one with the shortest regex. Ruby, running in the browser with ruby.wasm; Vite builds the page.",
+  "description": "Regex Sniper: one regex that matches every green word and no red one, as short as you can. Ruby, running in the browser with ruby.wasm; Vite builds the page.",
   "author": "Joey Oosenbrug (https://github.com/joeykwispel)",
   "license": "MIT",
   "private": true,

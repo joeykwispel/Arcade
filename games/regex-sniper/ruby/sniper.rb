@@ -1,19 +1,19 @@
-# Regex Golf Range: hit every green word and none of the red ones, with the shortest regex you can.
+# Regex Sniper: write one regex that matches every green word and none of the red ones. The shorter, the better.
 #
 # The rules only. The page (web/main.js) runs this file in ruby.wasm, Ruby 3.4 compiled to WebAssembly, so the
-# regexes are real Ruby regexes (Onigmo), with Ruby's own error messages. The tests (test/golf_test.rb) run it
+# regexes are real Ruby regexes (Onigmo), with Ruby's own error messages. The tests (ruby/sniper_test.rb) run it
 # the same way, in Node.
 #
 # ruby.wasm without the standard library has no JSON, so results go back to JavaScript as a small hand-built string.
 
-module RegexGolf
+module RegexSniper
   # Catastrophic backtracking stops here instead of freezing the tab.
   Regexp.timeout = 0.2
 
-  # Each hole: words to hit, words to miss, and a known short solution. Par is that solution's length.
-  HOLES = [
+  # Each level: words to hit, words to miss, and a known short solution. Its length is the target.
+  LEVELS = [
     {
-      name: { en: 'Tee off', nl: 'Afslag' },
+      name: { en: 'Warm-up', nl: 'Opwarmen' },
       tip: { en: 'Everything that starts with foo.', nl: 'Alles wat met foo begint.' },
       hit: %w[foo food fool foot foobar],
       miss: %w[bar fob oof afoo],
@@ -51,7 +51,7 @@ module RegexGolf
       name: { en: 'Double trouble', nl: 'Dubbel op' },
       tip: { en: 'A letter, then the same letter again.', nl: 'Een letter, en dan dezelfde letter nog eens.' },
       hit: %w[coffee balloon success bookkeeper],
-      miss: %w[code regex golf ruby],
+      miss: %w[code regex java ruby],
       solution: '(.)\1'
     },
     {
@@ -69,7 +69,7 @@ module RegexGolf
       solution: '^[EWF]'
     },
     {
-      name: { en: 'The 9th: e-mail', nl: 'De negende: e-mail' },
+      name: { en: 'Final: e-mail', nl: 'Finale: e-mail' },
       tip: { en: 'Good enough for a signup form. Not for an RFC.', nl: 'Goed genoeg voor een aanmeldformulier. Niet voor een RFC.' },
       hit: ['a@b.co', 'dev@joeyoosenbrug.nl', 'x.y+z@mail.io'],
       miss: ['@b.co', 'a@b', 'a b@c.de', 'a@@b.co'],
@@ -77,24 +77,24 @@ module RegexGolf
     }
   ].freeze
 
-  # A mulligan (skipping a hole) costs par plus this.
-  MULLIGAN = 10
+  # Skipping a level costs its target length plus this.
+  SKIP = 10
 
   module_function
 
-  def par(i) = HOLES[i][:solution].length
+  def target(i) = LEVELS[i][:solution].length
 
-  def total_par = HOLES.each_index.sum { par(_1) }
+  def total_target = LEVELS.each_index.sum { target(_1) }
 
-  # Checks a regex against hole i. Returns [solved, hits, misses, error]: which green words it matches, which red
+  # Checks a regex against level i. Returns [solved, hits, misses, error]: which green words it matches, which red
   # ones it (wrongly) matches, and Ruby's error message if it isn't a valid regex.
   def check(i, source)
-    hole = HOLES[i]
+    level = LEVELS[i]
     return [false, [], [], ''] if source.empty?
 
     re = Regexp.new(source)
-    hits = hole[:hit].map { re.match?(_1) }
-    misses = hole[:miss].map { re.match?(_1) }
+    hits = level[:hit].map { re.match?(_1) }
+    misses = level[:miss].map { re.match?(_1) }
     [hits.all? && misses.none?, hits, misses, '']
   rescue RegexpError => e
     [false, [], [], e.message]
@@ -102,10 +102,11 @@ module RegexGolf
     [false, [], [], 'Regexp::TimeoutError: that took over 0.2 s. Catastrophic backtracking?']
   end
 
-  # The name for a score on a hole, like on a real scorecard.
-  def verdict(strokes, par)
-    return 'ace' if strokes <= par - 3
-    { -2 => 'eagle', -1 => 'birdie', 0 => 'par', 1 => 'bogey' }.fetch(strokes - par, strokes < par ? 'eagle' : 'over')
+  # How sharp a solution was, compared to the target length.
+  def verdict(length, target)
+    return 'sharper' if length < target
+    return 'target' if length == target
+    length <= target + 3 ? 'close' : 'loose'
   end
 
   # ---------- the bridge for JavaScript (no JSON library in ruby.wasm without stdlib) ----------
@@ -121,10 +122,10 @@ module RegexGolf
     end
   end
 
-  def holes_json(lang)
+  def levels_json(lang)
     l = lang.to_sym
-    js(HOLES.each_with_index.map do |h, i|
-      { name: h[:name][l], tip: h[:tip][l], hit: h[:hit], miss: h[:miss], par: par(i) }
+    js(LEVELS.each_with_index.map do |h, i|
+      { name: h[:name][l], tip: h[:tip][l], hit: h[:hit], miss: h[:miss], target: target(i) }
     end)
   end
 

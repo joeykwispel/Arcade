@@ -280,21 +280,21 @@
     "phoneAspect": "3 / 4"
   },
   {
-    "slug": "regex-golf",
+    "slug": "regex-sniper",
     "title": {
-      "en": "Regex Golf Range",
-      "nl": "Regex Golf Range"
+      "en": "Regex Sniper",
+      "nl": "Regex Sniper"
     },
     "description": {
-      "en": "Nine holes: hit every green word and none of the red ones, in as few characters as you can. Real Ruby regexes, running in your browser.",
-      "nl": "Negen holes: raak elk groen woord en geen enkel rood, in zo min mogelijk tekens. Echte Ruby-regexes, in je browser."
+      "en": "Nine levels: write one regex that matches every green word and none of the red ones. The fewer characters, the better. Real Ruby regexes, with a cheatsheet.",
+      "nl": "Negen levels: schrijf één regex die elk groen woord matcht en geen enkel rood. Hoe minder tekens, hoe beter. Echte Ruby-regexes, met spiekbrief."
     },
     "framework": "Ruby (ruby.wasm)",
     "tooling": "ruby.wasm + Vite",
-    "thumbnail": "/thumbs/regex-golf.svg",
+    "thumbnail": "/thumbs/regex-sniper.svg",
     "controls": {
-      "en": "Type a regex: every word lights up as you type. Enter goes to the next hole once it is in; a mulligan skips a hole for par + 10. Lowest total wins.",
-      "nl": "Typ een regex: elk woord licht op terwijl je typt. Enter gaat naar de volgende hole zodra hij erin ligt; een mulligan slaat een hole over voor par + 10. Het laagste totaal wint."
+      "en": "Type a regex: every word lights up as you type. Click a symbol in the cheatsheet to insert it. Enter goes to the next level once all words are right; skip a level for a 10-character penalty. Lowest total wins.",
+      "nl": "Typ een regex: elk woord licht op terwijl je typt. Klik op een teken in de spiekbrief om het in te voegen. Enter gaat naar het volgende level zodra alle woorden kloppen; een level overslaan kost 10 strafpunten. Het laagste totaal wint."
     },
     "aspect": "16 / 10",
     "phoneAspect": "3 / 4"

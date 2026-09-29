@@ -482,33 +482,41 @@ test('Merge Conflict Tetris speaks Dutch on its own page', async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
-test('Regex Golf Range checks real Ruby regexes in the browser', async ({ page }) => {
+test('Regex Sniper checks real Ruby regexes in the browser, with a cheatsheet', async ({ page }) => {
   const errors = watchErrors(page);
-  await page.goto('/play/regex-golf/');
+  await page.goto('/play/regex-sniper/');
   const frame = page.frameLocator('iframe');
   const stage = frame.locator('#stage');
   await expect(stage).toHaveAttribute('data-phase', 'title', { timeout: 30_000 });
   await expect(stage).toHaveAttribute('data-ruby', /^3\.\d/);
   await frame.locator('#overlay').click();
+  await expect(frame.locator('.goal')).toContainText('every green word');
   const regex = frame.locator('#regex');
   // a broken regex gets Ruby's own error
   await regex.fill('[a-');
   await expect(frame.locator('#status')).toContainText('premature end of char-class');
-  // the first hole's par solution sinks it
-  await regex.fill('^foo');
-  await expect(stage).toHaveAttribute('data-phase', 'sunk');
+  // the cheatsheet types symbols in: ^ then foo solves the warm-up on target
+  // (on a phone it starts closed)
+  await regex.fill('');
+  const toggle = frame.locator('#cheat-toggle');
+  if ((await toggle.getAttribute('aria-expanded')) === 'false') await toggle.click();
+  await frame.locator('#cheat-list button', { hasText: /^\^$/ }).click();
+  await regex.press('End');
+  await regex.pressSequentially('foo');
+  await expect(stage).toHaveAttribute('data-phase', 'solved');
   await regex.press('Enter');
-  await expect(stage).toHaveAttribute('data-hole', '2');
+  await expect(stage).toHaveAttribute('data-level', '2');
   await expect(stage).toHaveAttribute('data-total', '4');
   expect(errors).toEqual([]);
 });
 
-test('Regex Golf Range speaks Dutch on its own page', async ({ page }) => {
+test('Regex Sniper speaks Dutch on its own page', async ({ page }) => {
   const errors = watchErrors(page);
-  await page.goto('/games/regex-golf/?lang=nl');
+  await page.goto('/games/regex-sniper/?lang=nl');
   await expect(page.locator('#stage')).toHaveAttribute('data-phase', 'title', { timeout: 30_000 });
   await expect(page.locator('html')).toHaveAttribute('lang', 'nl');
-  await expect(page.locator('#hole-name')).toContainText('Afslag');
+  await expect(page.locator('#level-name')).toContainText('Opwarmen');
+  await expect(page.locator('#cheat-title')).toContainText('Veelgebruikte');
   expect(errors).toEqual([]);
 });
 
