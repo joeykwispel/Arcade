@@ -1,0 +1,318 @@
+/* Regex Golf Range: a scorecard and two lists of words, in the joeyoosenbrug.nl tokens, dark and light. */
+
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --page: #0a0e17;
+  --bg: #0d1220;
+  --panel: #111827;
+  --raised: #182033;
+  --border: #253049;
+  --text: #e6e9f2;
+  --muted: #98a3b9;
+  --accent: #7dd3c0;
+  --accent2: #c3b1ff;
+  --ok: #9ece6a;
+  --danger: #f7768e;
+  --warn: #e0af68;
+  --fairway: #0f1a17;
+}
+:root[data-theme='light'] {
+  color-scheme: light;
+  --page: #f4f6fb;
+  --bg: #ffffff;
+  --panel: #f4f6fb;
+  --raised: #e8ecf4;
+  --border: #d3d9e6;
+  --text: #141b2d;
+  --muted: #4b566d;
+  --accent: #0f766e;
+  --accent2: #5b3fc4;
+  --ok: #2f6b1f;
+  --danger: #b4233f;
+  --warn: #8a5300;
+  --fairway: #f1f8f4;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font:
+    14px/1.45 'JetBrains Mono Variable',
+    ui-monospace,
+    Menlo,
+    Consolas,
+    monospace;
+  overflow: hidden;
+}
+html.standalone body {
+  background: var(--page);
+}
+h1,
+h2,
+p,
+ul,
+ol {
+  margin: 0;
+}
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.stage {
+  position: relative;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  background: var(--bg);
+}
+
+.hud {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.3rem 1rem;
+  padding: 0.5rem 0.9rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.hud b {
+  color: var(--text);
+}
+
+/* ---------- the hole ---------- */
+
+.course {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 0.8rem;
+  padding: 0.9rem;
+  min-height: 0;
+  background: var(--fairway);
+}
+.title h1 {
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
+}
+.tip {
+  color: var(--muted);
+}
+.lists {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+  min-height: 0;
+}
+.list {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 0.4rem;
+  min-height: 0;
+}
+.list h2 {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.hit h2 {
+  color: var(--ok);
+}
+.miss h2 {
+  color: var(--danger);
+}
+.list ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0;
+  list-style: none;
+  overflow-y: auto;
+}
+.list li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel);
+  white-space: pre;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.list li::before {
+  content: '○';
+  color: var(--muted);
+}
+.hit li.on {
+  border-color: var(--ok);
+}
+.hit li.on::before {
+  content: '✓';
+  color: var(--ok);
+}
+.miss li.on {
+  border-color: var(--danger);
+}
+.miss li.on::before {
+  content: '✗';
+  color: var(--danger);
+}
+.hit li.bad::before {
+  content: '·';
+  color: var(--warn);
+}
+.list code {
+  font: inherit;
+}
+
+/* ---------- the shot ---------- */
+
+.shot {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.7rem 0.9rem 0.8rem;
+  border-top: 1px solid var(--border);
+  background: var(--panel);
+}
+.line {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.slash {
+  color: var(--accent2);
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+#regex {
+  flex: 1;
+  min-width: 0;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  /* 16px: no zoom on focus on iOS */
+  font-size: 16px;
+  caret-color: var(--accent);
+}
+.length {
+  min-width: 2.5rem;
+  text-align: right;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+.status {
+  min-height: 1.45em;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.status.ok {
+  color: var(--ok);
+  font-weight: 700;
+}
+.status.err {
+  color: var(--danger);
+}
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.buttons button {
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--raised);
+  cursor: pointer;
+}
+.buttons button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+#next:not(:disabled) {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--bg);
+  font-weight: 700;
+}
+
+/* ---------- overlays ---------- */
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.8rem;
+  padding: 1.5rem;
+  text-align: center;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  cursor: pointer;
+  overflow-y: auto;
+}
+.overlay[hidden] {
+  display: none;
+}
+.big {
+  font-size: clamp(1.5rem, 5vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+.o-body {
+  display: grid;
+  gap: 0.5rem;
+  max-width: 56ch;
+}
+.muted {
+  color: var(--muted);
+}
+.strong {
+  font-weight: 800;
+}
+.accent,
+.hint {
+  color: var(--accent);
+  font-weight: 700;
+}
+.card {
+  text-align: left;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 520px) {
+  .lists {
+    gap: 0.5rem;
+  }
+  .list li {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.4rem;
+  }
+}
