@@ -1,0 +1,381 @@
+/* Rubber Duck Therapy: code on the left, a duck on the right, in the joeyoosenbrug.nl tokens, dark and light. */
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('fonts/jetbrains-mono.woff2') format('woff2');
+  font-weight: 100 800;
+  font-display: swap;
+}
+
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --page: #0a0e17;
+  --bg: #0d1220;
+  --panel: #111827;
+  --raised: #182033;
+  --border: #253049;
+  --text: #e6e9f2;
+  --muted: #98a3b9;
+  --accent: #7dd3c0;
+  --accent2: #c3b1ff;
+  --danger: #f7768e;
+  --warn: #e0af68;
+  --duck: #f2c14e;
+  --beak: #f08a4b;
+}
+:root[data-theme='light'] {
+  color-scheme: light;
+  --page: #f4f6fb;
+  --bg: #ffffff;
+  --panel: #f4f6fb;
+  --raised: #e8ecf4;
+  --border: #d3d9e6;
+  --text: #141b2d;
+  --muted: #4b566d;
+  --accent: #0f766e;
+  --accent2: #5b3fc4;
+  --danger: #b4233f;
+  --warn: #8a5300;
+  --duck: #f2c14e;
+  --beak: #e0773a;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body,
+#app {
+  margin: 0;
+  height: 100%;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font:
+    14px/1.45 'JetBrains Mono',
+    ui-monospace,
+    Menlo,
+    Consolas,
+    monospace;
+  overflow: hidden;
+  /* no ligatures: in a debugging game, <= and ++ must look like what they are */
+  font-variant-ligatures: none;
+  font-feature-settings:
+    'calt' 0,
+    'liga' 0;
+}
+html.standalone body {
+  background: var(--page);
+}
+p,
+ol {
+  margin: 0;
+}
+button {
+  font: inherit;
+  color: inherit;
+}
+button:focus-visible {
+  outline: 2px solid var(--accent2);
+  outline-offset: 2px;
+}
+
+.stage {
+  position: relative;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  background: var(--bg);
+}
+.hud {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.3rem 1rem;
+  padding: 0.5rem 0.9rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.hud b {
+  color: var(--text);
+}
+.patience .on {
+  color: var(--warn);
+}
+.patience .off {
+  color: var(--border);
+}
+
+.room {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 0.8rem;
+  padding: 0.8rem;
+  min-height: 0;
+}
+
+/* ---------- the code ---------- */
+
+.code {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 0.5rem;
+  min-height: 0;
+  padding: 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel);
+}
+.file {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+.file b {
+  color: var(--text);
+}
+.lines {
+  padding: 0;
+  list-style: none;
+  overflow: auto;
+}
+.line {
+  display: flex;
+  gap: 0.8rem;
+  width: 100%;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  white-space: pre;
+}
+.line:hover:not(:disabled) {
+  border-color: var(--accent);
+  background: var(--raised);
+}
+.line:disabled {
+  cursor: default;
+}
+.line .n {
+  color: var(--muted);
+  min-width: 1.2rem;
+  text-align: right;
+}
+.line code {
+  font: inherit;
+}
+.line.done {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+.line.done .n::after {
+  content: '✓';
+  margin-left: 0.2rem;
+  color: var(--accent);
+}
+.line.bug {
+  border-color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 16%, transparent);
+}
+.hint {
+  color: var(--accent);
+  font-size: 0.85rem;
+}
+
+/* ---------- the duck ---------- */
+
+.chat {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 0.6rem;
+  min-height: 0;
+}
+.duck {
+  justify-self: center;
+  width: clamp(5rem, 18vh, 9rem);
+  height: auto;
+  transform-origin: 50% 90%;
+}
+.duck .body {
+  fill: var(--duck);
+}
+.duck .beak {
+  fill: var(--beak);
+}
+.duck .wing {
+  fill: color-mix(in srgb, var(--duck) 80%, black);
+}
+.duck .eye circle:first-child {
+  fill: #141b2d;
+}
+.duck .glint {
+  fill: #fff;
+}
+.duck .eye {
+  transform-origin: 40px 36px;
+  animation: blink 4s infinite;
+}
+.duck.listen {
+  animation: bob 2.4s ease-in-out infinite;
+}
+.duck.stare .eye {
+  animation: none;
+  transform: scale(1.35);
+}
+.duck.aha {
+  animation: tilt 0.6s ease-in-out 2;
+}
+@keyframes blink {
+  0%,
+  96%,
+  100% {
+    transform: scaleY(1);
+  }
+  98% {
+    transform: scaleY(0.1);
+  }
+}
+@keyframes bob {
+  50% {
+    transform: translateY(3px) rotate(-2deg);
+  }
+}
+@keyframes tilt {
+  50% {
+    transform: rotate(-12deg);
+  }
+}
+
+.said {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0;
+  list-style: none;
+  overflow-y: auto;
+  font-size: 0.82rem;
+}
+.said li {
+  padding: 0.35rem 0.6rem;
+  border-radius: 8px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+}
+.said .m-you b {
+  color: var(--accent2);
+}
+.said .m-duck {
+  color: var(--muted);
+  font-style: italic;
+}
+.said .m-duck b {
+  color: var(--warn);
+}
+.said .m-actually {
+  border-color: var(--danger);
+}
+.said .m-actually b {
+  color: var(--danger);
+}
+.said .m-aha {
+  border-color: var(--accent);
+  font-weight: 700;
+}
+
+.fixes,
+.excuses {
+  display: grid;
+  gap: 0.35rem;
+}
+.fixes p,
+.excuses p {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+.excuses {
+  grid-template-columns: 1fr 1fr;
+}
+.excuses p {
+  grid-column: 1 / -1;
+}
+.fix,
+.excuse {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--raised);
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+.fix {
+  border-color: var(--accent);
+}
+.fix code {
+  font: inherit;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.fix:hover,
+.excuse:hover:not(:disabled) {
+  border-color: var(--accent2);
+}
+
+/* ---------- overlays ---------- */
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.7rem;
+  padding: 1.5rem;
+  text-align: center;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  cursor: pointer;
+}
+.big {
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+.big.win {
+  color: var(--accent);
+}
+.big.lose {
+  color: var(--danger);
+}
+.sub,
+.how {
+  color: var(--muted);
+  max-width: 54ch;
+}
+.accent,
+.overlay .hint {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .room {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
+    padding: 0.5rem;
+    overflow-y: auto;
+  }
+  .duck {
+    width: 4.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .duck,
+  .duck .eye {
+    animation: none !important;
+  }
+}

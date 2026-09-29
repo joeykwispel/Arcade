@@ -281,6 +281,18 @@ const scenes = {
       await page.waitForTimeout(300);
     }
   },
+  'rubber-duck-therapy': {
+    viewport: { width: 960, height: 600 },
+    selector: '.stage',
+    // pick up the duck, explain two lines, blame the cache once, then find the bug
+    async play(page) {
+      await page.keyboard.press('Space');
+      await page.locator('.line').nth(1).click();
+      await page.locator('.excuse').nth(1).click();
+      await page.locator('.line').nth(2).click();
+      await page.waitForTimeout(700);
+    }
+  },
   'bug-bash': {
     viewport: { width: 1200, height: 750 },
     // two levels done, so level 3 (two paths merging) is the one that opens

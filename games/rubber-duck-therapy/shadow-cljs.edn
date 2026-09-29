@@ -1,0 +1,14 @@
+;; ClojureScript builds for Rubber Duck Therapy.
+;;   app   the page: src/duck/main.cljs, compiled with Closure's advanced optimizations into dist/js/main.js
+;;   test  the rules tests, run with Node (npm test)
+{:source-paths ["src" "test"]
+ :dependencies []
+ :builds
+ {:app {:target :browser
+        :output-dir "dist/js"
+        :asset-path "js"
+        :modules {:main {:init-fn duck.main/init}}}
+  :test {:target :node-test
+         :output-to "out/test.cjs"
+         :ns-regexp "-test$"
+         :autorun false}}}

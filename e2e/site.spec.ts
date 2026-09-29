@@ -598,6 +598,33 @@ test('Meeting Bingo speaks Dutch on its own page', async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test('Rubber Duck Therapy runs its ClojureScript: explain, find the bug, fix it', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/play/rubber-duck-therapy/');
+  const frame = page.frameLocator('iframe');
+  const stage = frame.locator('.stage');
+  await expect(stage).toHaveAttribute('data-phase', 'title');
+  await frame.locator('.overlay').click();
+  await expect(stage).toHaveAttribute('data-phase', 'explaining');
+  // an innocent line: the duck agrees, a minute gone
+  await frame.locator('.line').nth(1).click();
+  await expect(stage).toHaveAttribute('data-minutes', '1');
+  // the loop starts at 1: that's the bug
+  await frame.locator('.line').nth(2).click();
+  await expect(stage).toHaveAttribute('data-phase', 'aha');
+  await frame.locator('.fix', { hasText: 'let i = 0' }).click();
+  await expect(stage).toHaveAttribute('data-case', '2');
+  expect(errors).toEqual([]);
+});
+
+test('Rubber Duck Therapy speaks Dutch on its own page', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/games/rubber-duck-therapy/?lang=nl');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'nl');
+  await expect(page.locator('.overlay .hint')).toContainText('spatie');
+  expect(errors).toEqual([]);
+});
+
 test('the home page shows the planned games as coming soon, without links', async ({ page }) => {
   await page.goto('/');
   const soon = page.locator('#upcoming');

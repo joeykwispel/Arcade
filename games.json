@@ -358,5 +358,25 @@
     },
     "aspect": "16 / 10",
     "phoneAspect": "3 / 4"
+  },
+  {
+    "slug": "rubber-duck-therapy",
+    "title": {
+      "en": "Rubber Duck Therapy",
+      "nl": "Rubber Duck Therapy"
+    },
+    "description": {
+      "en": "Explain your bug to the rubber duck, line by line. The duck says nothing. Somehow, that helps: five buggy snippets, and the fewer minutes you need, the better.",
+      "nl": "Leg je bug regel voor regel uit aan de badeend. De eend zegt niets. Op de een of andere manier helpt dat: vijf buggy stukjes code, en hoe minder minuten je nodig hebt, hoe beter."
+    },
+    "framework": "ClojureScript",
+    "tooling": "shadow-cljs",
+    "thumbnail": "/thumbs/rubber-duck-therapy.svg",
+    "controls": {
+      "en": "Click a line of code to explain it to the duck. When you explain the buggy line, you realise what it really does: then pick the fix. Blaming the cache or the compiler costs minutes and the duck’s patience.",
+      "nl": "Klik op een regel code om hem aan de eend uit te leggen. Leg je de buggy regel uit, dan zie je wat hij echt doet: kies dan de fix. De cache of de compiler de schuld geven kost minuten en het geduld van de eend."
+    },
+    "aspect": "16 / 10",
+    "phoneAspect": "3 / 4"
   }
 ]
