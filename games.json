@@ -258,5 +258,25 @@
     },
     "aspect": "16 / 10",
     "phoneAspect": "16 / 10"
+  },
+  {
+    "slug": "merge-conflict-tetris",
+    "title": {
+      "en": "Merge Conflict Tetris",
+      "nl": "Merge Conflict Tetris"
+    },
+    "description": {
+      "en": "Falling blocks where every piece is a merge conflict: accept the current change, the incoming one, or both. Too slow, and git keeps both.",
+      "nl": "Vallende blokken waarbij elk stuk een mergeconflict is: accepteer de huidige wijziging, de inkomende, of beide. Te traag, en git houdt ze allebei."
+    },
+    "framework": "Go (TinyGo → WebAssembly)",
+    "tooling": "TinyGo + Vite",
+    "thumbnail": "/thumbs/merge-conflict-tetris.svg",
+    "controls": {
+      "en": "Pick a side: ↑ or 1 current, ↓ or 2 incoming, Space or 3 both. Then ← → move, ↑ rotates, ↓ drops, Space slams it down. On a phone: tap a side, swipe the board. P pauses.",
+      "nl": "Kies een kant: ↑ of 1 huidige, ↓ of 2 inkomende, spatie of 3 beide. Dan ← → schuiven, ↑ draait, ↓ laat zakken, spatie knalt hem neer. Op je telefoon: tik een kant, veeg over het bord. P pauzeert."
+    },
+    "aspect": "16 / 10",
+    "phoneAspect": "3 / 4"
   }
 ]

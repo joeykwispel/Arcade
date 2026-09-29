@@ -200,6 +200,26 @@ const scenes = {
       await page.waitForTimeout(300);
     }
   },
+  'merge-conflict-tetris': {
+    viewport: { width: 960, height: 600 },
+    selector: '#stage',
+    // a few pieces down, and the next conflict on screen
+    async play(page) {
+      await page.keyboard.press('Space');
+      for (const [side, moves] of [
+        ['1', ['ArrowLeft', 'ArrowLeft', 'ArrowLeft']],
+        ['2', ['ArrowRight', 'ArrowRight']],
+        ['1', ['ArrowUp', 'ArrowRight', 'ArrowRight', 'ArrowRight', 'ArrowRight']],
+        ['2', ['ArrowLeft']]
+      ]) {
+        await page.keyboard.press(side);
+        for (const m of moves) await page.keyboard.press(m);
+        await page.keyboard.press('Space');
+        await page.waitForTimeout(80);
+      }
+      await page.waitForTimeout(300);
+    }
+  },
   'bug-bash': {
     viewport: { width: 1200, height: 750 },
     // two levels done, so level 3 (two paths merging) is the one that opens

@@ -457,6 +457,31 @@ test('Localhost Golf speaks Dutch on its own page', async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test('Merge Conflict Tetris runs its Go/WebAssembly rules and drops a piece', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/play/merge-conflict-tetris/');
+  const frame = page.frameLocator('iframe');
+  const stage = frame.locator('#stage');
+  await expect(stage).toHaveAttribute('data-phase', 'title');
+  await frame.locator('#overlay').click();
+  await expect(stage).toHaveAttribute('data-phase', 'choosing');
+  await frame.getByRole('button', { name: 'Accept Current Change' }).click();
+  await expect(stage).toHaveAttribute('data-phase', 'falling');
+  await frame.locator('[data-input="5"]').dispatchEvent('pointerdown');
+  // landing on the bottom scores the drop, and the next conflict comes up
+  await expect(stage).toHaveAttribute('data-phase', 'choosing');
+  await expect(stage).not.toHaveAttribute('data-score', '0');
+  expect(errors).toEqual([]);
+});
+
+test('Merge Conflict Tetris speaks Dutch on its own page', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/games/merge-conflict-tetris/?lang=nl');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'nl');
+  await expect(page.getByRole('button', { name: 'Huidige wijziging accepteren' })).toBeAttached();
+  expect(errors).toEqual([]);
+});
+
 test('the home page shows the planned games as coming soon, without links', async ({ page }) => {
   await page.goto('/');
   const soon = page.locator('#upcoming');

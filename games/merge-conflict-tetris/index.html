@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="theme-color" content="#0a0e17" />
+    <!-- the game is Go compiled to WebAssembly by TinyGo, which needs 'wasm-unsafe-eval' -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'"
+    />
+    <title>Merge Conflict Tetris</title>
+    <meta name="description" content="Falling blocks where every piece is a merge conflict. Written in Go, compiled to WebAssembly with TinyGo." />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <main id="stage" class="stage" data-phase="title">
+      <section class="editor" aria-label="board">
+        <p class="tab"><span class="dot"></span> merge.js <span class="flag" data-t="conflict">CONFLICT</span></p>
+        <canvas id="board" width="360" height="600"></canvas>
+      </section>
+      <aside class="side">
+        <div class="conflict" id="conflict">
+          <p class="lens">
+            <button type="button" id="ours" data-t="current">Accept Current Change</button> |
+            <button type="button" id="theirs" data-t="incoming">Accept Incoming Change</button> |
+            <button type="button" id="both" data-t="both">Accept Both Changes</button>
+          </p>
+          <div class="hunk ours">
+            <p class="marker">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD <span data-t="currentShort">(Current Change)</span></p>
+            <canvas id="prev-ours" width="120" height="60"></canvas>
+          </div>
+          <p class="marker sep">=======</p>
+          <div class="hunk theirs">
+            <canvas id="prev-theirs" width="120" height="60"></canvas>
+            <p class="marker">&gt;&gt;&gt;&gt;&gt;&gt;&gt; main <span data-t="incomingShort">(Incoming Change)</span></p>
+          </div>
+          <progress id="timer" max="1" value="1"></progress>
+        </div>
+        <dl class="stats">
+          <div>
+            <dt data-t="score">score</dt>
+            <dd id="score">0</dd>
+          </div>
+          <div>
+            <dt data-t="lines">lines</dt>
+            <dd id="lines">0</dd>
+          </div>
+          <div>
+            <dt data-t="level">level</dt>
+            <dd id="level">1</dd>
+          </div>
+          <div>
+            <dt>fast-forward</dt>
+            <dd id="ff">0</dd>
+          </div>
+          <div>
+            <dt data-t="best">best</dt>
+            <dd id="best">0</dd>
+          </div>
+        </dl>
+        <div class="pad" aria-hidden="true">
+          <button type="button" tabindex="-1" data-input="1">◀</button>
+          <button type="button" tabindex="-1" data-input="3">⟳</button>
+          <button type="button" tabindex="-1" data-input="2">▶</button>
+          <button type="button" tabindex="-1" data-input="4">▼</button>
+          <button type="button" tabindex="-1" data-input="5">⤓</button>
+        </div>
+      </aside>
+      <div class="overlay" id="overlay">
+        <p class="big" id="o-title">Merge Conflict Tetris</p>
+        <p class="sub" id="o-sub"></p>
+        <p class="how" id="o-how"></p>
+        <p class="hint" id="o-hint"></p>
+      </div>
+      <p class="sr-only" id="live" aria-live="polite"></p>
+    </main>
+    <script type="module" src="./web/main.js"></script>
+  </body>
+</html>
