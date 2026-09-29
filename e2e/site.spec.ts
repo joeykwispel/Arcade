@@ -512,6 +512,35 @@ test('Regex Golf Range speaks Dutch on its own page', async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test('Stack Overflow runs its Zig/WebAssembly rules: a frame lands, a miss segfaults', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/play/stack-overflow/');
+  const frame = page.frameLocator('iframe');
+  const stage = frame.locator('#stage');
+  await expect(stage).toHaveAttribute('data-phase', 'title');
+  await page.locator('iframe').focus();
+  await page.keyboard.press('Space');
+  await expect(stage).toHaveAttribute('data-phase', 'playing');
+  // the first frame slides in over main() from the right: after a moment it lands
+  await page.waitForTimeout(700);
+  await page.keyboard.press('Space');
+  await expect(stage).toHaveAttribute('data-depth', '2');
+  // the next comes in from the far left: dropped straight away, it lands on nothing
+  await page.waitForTimeout(150);
+  await page.keyboard.press('Space');
+  await expect(stage).toHaveAttribute('data-phase', 'segfault');
+  await expect(frame.locator('#o-title')).toContainText('Segmentation fault');
+  expect(errors).toEqual([]);
+});
+
+test('Stack Overflow speaks Dutch on its own page', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/games/stack-overflow/?lang=nl');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'nl');
+  await expect(page.locator('#o-hint')).toContainText('spatie');
+  expect(errors).toEqual([]);
+});
+
 test('the home page shows the planned games as coming soon, without links', async ({ page }) => {
   await page.goto('/');
   const soon = page.locator('#upcoming');

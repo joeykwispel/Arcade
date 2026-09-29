@@ -233,6 +233,16 @@ const scenes = {
       await page.waitForTimeout(200);
     }
   },
+  'stack-overflow': {
+    viewport: { width: 960, height: 600 },
+    selector: '#stage',
+    // ?demo=22 plays itself, perfectly, up to 22 frames deep: a tall stack with the next frame sliding in
+    async play(page) {
+      await page.goto(`${page.url()}&demo=22`);
+      await page.locator('#stage[data-depth="22"]').waitFor({ timeout: 30_000 });
+      await page.waitForTimeout(700);
+    }
+  },
   'bug-bash': {
     viewport: { width: 1200, height: 750 },
     // two levels done, so level 3 (two paths merging) is the one that opens

@@ -1,22 +1,5 @@
 [
   {
-    "slug": "stack-overflow",
-    "icon": "f(f(f(",
-    "title": {
-      "en": "Stack Overflow",
-      "nl": "Stack Overflow"
-    },
-    "genre": {
-      "en": "stacking · balance",
-      "nl": "stapelen · balans"
-    },
-    "description": {
-      "en": "Drop function frames onto the call stack. Stack too high, and it overflows.",
-      "nl": "Laat functieframes op de call stack vallen. Stapel te hoog en hij loopt over."
-    },
-    "framework": "Zig (WebAssembly)"
-  },
-  {
     "slug": "null-pointer-dodge",
     "icon": "?.",
     "title": {

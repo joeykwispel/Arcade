@@ -1,0 +1,175 @@
+/* Stack Overflow: a call stack on a canvas, in the joeyoosenbrug.nl tokens, dark and light. */
+
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --page: #0a0e17;
+  --bg: #0d1220;
+  --panel: #111827;
+  --border: #253049;
+  --text: #e6e9f2;
+  --muted: #98a3b9;
+  --accent: #7dd3c0;
+  --cool: #7dd3c0;
+  --warm: #c3b1ff;
+  --hot: #f7768e;
+  --on-frame: rgba(6, 16, 24, 0.8);
+}
+:root[data-theme='light'] {
+  color-scheme: light;
+  --page: #f4f6fb;
+  --bg: #ffffff;
+  --panel: #f4f6fb;
+  --border: #d3d9e6;
+  --text: #141b2d;
+  --muted: #4b566d;
+  --accent: #0f766e;
+  --cool: #5fc9b4;
+  --warm: #a996f5;
+  --hot: #ec6a83;
+  --on-frame: rgba(10, 16, 30, 0.85);
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font:
+    14px/1.45 'JetBrains Mono Variable',
+    ui-monospace,
+    Menlo,
+    Consolas,
+    monospace;
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+html.standalone body {
+  background: var(--page);
+}
+p {
+  margin: 0;
+}
+
+.stage {
+  position: relative;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  background: var(--bg);
+  touch-action: manipulation;
+  cursor: pointer;
+}
+
+.hud {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.3rem 1rem;
+  padding: 0.5rem 0.9rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.hud b {
+  color: var(--text);
+}
+.of {
+  color: var(--muted);
+}
+meter {
+  flex: 1;
+  min-width: 6rem;
+  max-width: 16rem;
+  height: 0.6rem;
+}
+
+#view {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.toast {
+  position: absolute;
+  top: 3.2rem;
+  left: 50%;
+  translate: -50% 0;
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  background: var(--panel);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-weight: 700;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+}
+.toast.show {
+  opacity: 1;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+}
+.stage[data-phase='playing'] .overlay {
+  display: none;
+}
+.card {
+  display: grid;
+  justify-items: center;
+  gap: 0.7rem;
+  max-width: 34rem;
+  text-align: center;
+}
+.card.answer {
+  justify-items: start;
+  text-align: left;
+  padding: 1.2rem 1.4rem;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: 10px;
+  background: var(--panel);
+}
+.big {
+  font-size: clamp(1.4rem, 4.5vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+.stage[data-phase='segfault'] .big {
+  color: var(--hot);
+  font-size: clamp(1.1rem, 3.4vw, 1.8rem);
+}
+.card.answer .big {
+  font-size: clamp(1rem, 3vw, 1.4rem);
+}
+.card.answer .sub {
+  color: var(--accent);
+}
+.sub,
+.how {
+  color: var(--muted);
+}
+.sub:empty,
+.how:empty {
+  display: none;
+}
+.hint {
+  color: var(--accent);
+  font-weight: 700;
+}

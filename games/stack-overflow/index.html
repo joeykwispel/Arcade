@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="theme-color" content="#0a0e17" />
+    <!-- the rules are Zig compiled to WebAssembly, which needs 'wasm-unsafe-eval' -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'"
+    />
+    <title>Stack Overflow</title>
+    <meta name="description" content="Drop stack frames onto the call stack until it overflows. Written in Zig, compiled to WebAssembly." />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <main id="stage" class="stage" data-phase="title">
+      <header class="hud">
+        <p><span data-t="depth">depth</span> <b id="depth">1</b><span class="of">/64</span></p>
+        <meter id="meter" min="0" max="64" low="40" high="56" optimum="0" value="1"></meter>
+        <p><span data-t="score">score</span> <b id="score">0</b></p>
+        <p><span data-t="best">best</span> <b id="best">0</b></p>
+      </header>
+      <canvas id="view" width="800" height="500" aria-label="the call stack"></canvas>
+      <p id="toast" class="toast" aria-live="polite"></p>
+      <div class="overlay" id="overlay">
+        <div class="card" id="card">
+          <p class="big" id="o-title">Stack Overflow</p>
+          <p class="sub" id="o-sub"></p>
+          <p class="how" id="o-how"></p>
+          <p class="hint" id="o-hint"></p>
+        </div>
+      </div>
+    </main>
+    <script type="module" src="./web/main.js"></script>
+  </body>
+</html>

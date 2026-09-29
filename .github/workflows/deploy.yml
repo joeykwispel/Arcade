@@ -82,6 +82,11 @@ jobs:
           echo "$HOME/tinygo/bin" >> "$GITHUB_PATH"
           echo "$HOME/binaryen-version_133/bin" >> "$GITHUB_PATH"
 
+      # Stack Overflow is Zig, compiled to freestanding WebAssembly
+      - uses: mlugg/setup-zig@v2
+        with:
+          version: 0.16.0
+
       # Code Review Tinder is Dart + Flutter
       - uses: subosito/flutter-action@v2
         with:
