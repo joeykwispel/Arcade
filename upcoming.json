@@ -1,22 +1,5 @@
 [
   {
-    "slug": "merge-conflict-tetris",
-    "icon": "<<<<<<<",
-    "title": {
-      "en": "Merge Conflict Tetris",
-      "nl": "Merge Conflict Tetris"
-    },
-    "genre": {
-      "en": "puzzle · falling blocks",
-      "nl": "puzzel · vallende blokken"
-    },
-    "description": {
-      "en": "Conflict markers fall from the sky. Clear a row by picking ours or theirs, before the file is unreadable.",
-      "nl": "Conflictmarkeringen vallen uit de lucht. Maak een rij leeg door ours of theirs te kiezen, voor het bestand onleesbaar is."
-    },
-    "framework": "Go (TinyGo → WebAssembly)"
-  },
-  {
     "slug": "regex-golf",
     "icon": "/^.*$/",
     "title": {

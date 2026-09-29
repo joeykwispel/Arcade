@@ -133,6 +133,15 @@ updates:
       all:
         patterns: ['*']
 
+  - package-ecosystem: npm
+    directory: /games/merge-conflict-tetris
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      all:
+        patterns: ['*']
+
   # Dart packages for Code Review Tinder
   - package-ecosystem: pub
     directory: /games/code-review-tinder

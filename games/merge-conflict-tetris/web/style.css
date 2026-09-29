@@ -1,0 +1,327 @@
+/* Merge Conflict Tetris: an editor with a conflict in it, in the joeyoosenbrug.nl tokens, dark and light. */
+
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --page: #0a0e17;
+  --bg: #0d1220;
+  --panel: #111827;
+  --raised: #182033;
+  --border: #253049;
+  --text: #e6e9f2;
+  --muted: #98a3b9;
+  --accent: #7dd3c0;
+  --danger: #f7768e;
+  --editor: #0b101c;
+  --grid: #1b2336;
+  --gutter: #4d5a75;
+  --ours: #7dd3c0;
+  --theirs: #c3b1ff;
+  --on-cell: rgba(6, 16, 24, 0.55);
+}
+:root[data-theme='light'] {
+  color-scheme: light;
+  --page: #f4f6fb;
+  --bg: #ffffff;
+  --panel: #f4f6fb;
+  --raised: #e8ecf4;
+  --border: #d3d9e6;
+  --text: #141b2d;
+  --muted: #4b566d;
+  --accent: #0f766e;
+  --danger: #b4233f;
+  --editor: #fbfcfe;
+  --grid: #e3e8f1;
+  --gutter: #6b7589;
+  --ours: #14b8a6;
+  --theirs: #8b6cf0;
+  --on-cell: rgba(255, 255, 255, 0.6);
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font:
+    14px/1.45 'JetBrains Mono Variable',
+    ui-monospace,
+    Menlo,
+    Consolas,
+    monospace;
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+html.standalone body {
+  background: var(--page);
+}
+p,
+dl,
+dd {
+  margin: 0;
+}
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.stage {
+  position: relative;
+  height: 100%;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1rem;
+  padding: 0.8rem;
+  background: var(--bg);
+}
+
+/* ---------- the editor ---------- */
+
+.editor {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  min-height: 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--editor);
+}
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.7rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+  font-size: 0.8rem;
+}
+.dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--danger);
+}
+.flag {
+  margin-left: auto;
+  color: var(--danger);
+  font-weight: 700;
+  font-size: 0.7rem;
+}
+#board {
+  height: 100%;
+  width: auto;
+  aspect-ratio: 360 / 600;
+  display: block;
+  touch-action: none;
+}
+
+/* ---------- the conflict ---------- */
+
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+}
+.conflict {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel);
+  opacity: 0.35;
+  transition: opacity 0.15s;
+}
+.conflict.open {
+  opacity: 1;
+}
+.lens {
+  color: var(--muted);
+  font-size: 0.78rem;
+  margin-bottom: 0.3rem;
+}
+.lens button {
+  padding: 0.1rem 0.15rem;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.lens button:hover {
+  color: var(--accent);
+}
+.conflict:not(.open) .lens button {
+  pointer-events: none;
+}
+.hunk {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+}
+.hunk.ours {
+  background: color-mix(in srgb, var(--ours) 16%, transparent);
+}
+.hunk.theirs {
+  background: color-mix(in srgb, var(--theirs) 16%, transparent);
+}
+.hunk canvas {
+  justify-self: center;
+}
+.marker {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+.sep {
+  padding-left: 0.5rem;
+}
+progress {
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  margin-top: 0.4rem;
+  border: 0;
+  border-radius: 3px;
+  background: var(--raised);
+  overflow: hidden;
+}
+progress::-webkit-progress-bar {
+  background: var(--raised);
+}
+progress::-webkit-progress-value {
+  background: var(--danger);
+}
+progress::-moz-progress-bar {
+  background: var(--danger);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
+  gap: 0.5rem 1rem;
+}
+.stats dt {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+.stats dd {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.pad {
+  display: none;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.4rem;
+  margin-top: auto;
+}
+.pad button {
+  padding: 0.7rem 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--raised);
+  font-size: 1.1rem;
+}
+@media (pointer: coarse) {
+  .pad {
+    display: grid;
+  }
+}
+
+/* ---------- overlays ---------- */
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.7rem;
+  padding: 1.5rem;
+  text-align: center;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  cursor: pointer;
+}
+.stage[data-phase='choosing'] .overlay,
+.stage[data-phase='falling'] .overlay {
+  display: none;
+}
+.big {
+  font-size: clamp(1.4rem, 4vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  max-width: 30ch;
+}
+.stage[data-phase='over'] .big {
+  color: var(--danger);
+  font-size: clamp(1.1rem, 3vw, 1.7rem);
+}
+.sub,
+.how {
+  color: var(--muted);
+  max-width: 52ch;
+}
+.sub:empty,
+.how:empty {
+  display: none;
+}
+.hint {
+  color: var(--accent);
+  font-weight: 700;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* phones: the board on top, everything else under it */
+@media (max-width: 560px) {
+  .stage {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+  .editor {
+    justify-self: center;
+  }
+  .stats {
+    grid-template-columns: repeat(5, auto);
+    font-size: 0.8rem;
+  }
+  .hunk canvas {
+    height: 36px;
+  }
+  .conflict {
+    grid-template-columns: 1fr 1fr;
+  }
+  .lens,
+  progress {
+    grid-column: 1 / -1;
+  }
+  .sep {
+    display: none;
+  }
+}
