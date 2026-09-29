@@ -1,0 +1,16 @@
+{
+  "name": "play-kernel-panic-pinball",
+  "version": "1.0.0",
+  "description": "Kernel Panic Pinball: pinball where the bumpers are syscalls. C# with Blazor WebAssembly.",
+  "author": "Joey Oosenbrug (https://github.com/joeykwispel)",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node build.mjs --test"
+  },
+  "dependencies": {
+    "@fontsource-variable/jetbrains-mono": "^5.3.0"
+  }
+}

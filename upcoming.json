@@ -1,22 +1,5 @@
 [
   {
-    "slug": "kernel-panic-pinball",
-    "icon": "0x0000",
-    "title": {
-      "en": "Kernel Panic Pinball",
-      "nl": "Kernel Panic Pinball"
-    },
-    "genre": {
-      "en": "pinball · physics",
-      "nl": "flipperkast · physics"
-    },
-    "description": {
-      "en": "Pinball where the bumpers are syscalls, and losing the ball is a blue screen.",
-      "nl": "Flipperen waarbij de bumpers syscalls zijn, en de bal verliezen een blauw scherm is."
-    },
-    "framework": "C# (Blazor)"
-  },
-  {
     "slug": "estimate-poker",
     "icon": "? pts",
     "title": {

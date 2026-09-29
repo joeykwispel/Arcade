@@ -26,3 +26,6 @@ games/*/build-test
 # ClojureScript (shadow-cljs) caches and test output
 .shadow-cljs
 games/*/out
+# .NET build output
+**/bin
+**/obj

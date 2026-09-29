@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="theme-color" content="#0a0e17" />
+    <!-- .NET runs as WebAssembly (Blazor), which needs 'wasm-unsafe-eval'; everything is served from here. -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'"
+    />
+    <title>Kernel Panic Pinball</title>
+    <meta name="description" content="Pinball where the bumpers are syscalls and losing the ball is a kernel panic. Written in C# with Blazor WebAssembly." />
+    <base href="/games/kernel-panic-pinball/" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body data-phase="loading">
+    <div id="app"><p class="loading">booting the kernel…</p></div>
+    <script src="_framework/blazor.webassembly.js"></script>
+  </body>
+</html>

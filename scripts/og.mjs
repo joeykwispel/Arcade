@@ -311,6 +311,19 @@ const scenes = {
       await page.waitForTimeout(200);
     }
   },
+  'kernel-panic-pinball': {
+    viewport: { width: 960, height: 600 },
+    selector: '.stage',
+    // boot, launch the ball hard, and catch it bouncing among the syscalls
+    async play(page) {
+      await page.locator('body[data-phase="title"]').waitFor({ timeout: 30_000 });
+      await page.keyboard.press('Space');
+      await page.keyboard.down('Space');
+      await page.waitForTimeout(900);
+      await page.keyboard.up('Space');
+      await page.waitForTimeout(1300);
+    }
+  },
   'bug-bash': {
     viewport: { width: 1200, height: 750 },
     // two levels done, so level 3 (two paths merging) is the one that opens
