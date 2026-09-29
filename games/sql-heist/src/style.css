@@ -1,0 +1,319 @@
+/* SQL Heist: a briefing and a database console, in the joeyoosenbrug.nl tokens, dark and light. */
+
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --page: #0a0e17;
+  --bg: #0d1220;
+  --panel: #111827;
+  --raised: #182033;
+  --border: #253049;
+  --text: #e6e9f2;
+  --muted: #98a3b9;
+  --accent: #7dd3c0;
+  --on-accent: #06201b;
+  --accent2: #c3b1ff;
+  --danger: #f7768e;
+  --warn: #e0af68;
+  --ok: #9ece6a;
+}
+:root[data-theme='light'] {
+  color-scheme: light;
+  --page: #f4f6fb;
+  --bg: #ffffff;
+  --panel: #f4f6fb;
+  --raised: #e8ecf4;
+  --border: #d3d9e6;
+  --text: #141b2d;
+  --muted: #4b566d;
+  --accent: #0f766e;
+  --on-accent: #ffffff;
+  --accent2: #5b3fc4;
+  --danger: #b4233f;
+  --warn: #8a5300;
+  --ok: #2f6b1f;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font:
+    14px/1.45 'JetBrains Mono Variable',
+    ui-monospace,
+    Menlo,
+    Consolas,
+    monospace;
+  font-variant-ligatures: none;
+  overflow: hidden;
+}
+html.standalone body {
+  background: var(--page);
+}
+h1,
+h2,
+p,
+ul {
+  margin: 0;
+}
+button,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+button:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--accent2);
+  outline-offset: 2px;
+}
+
+.stage {
+  position: relative;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  background: var(--bg);
+}
+.stage.alarm {
+  animation: alarm 0.5s steps(1) 3;
+}
+@keyframes alarm {
+  50% {
+    background: color-mix(in srgb, var(--danger) 25%, var(--bg));
+  }
+}
+.hud {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 0.9rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.hud b {
+  color: var(--text);
+}
+
+.room {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.3fr);
+  gap: 0.8rem;
+  padding: 0.8rem;
+  min-height: 0;
+}
+
+/* ---------- the briefing ---------- */
+
+.brief {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel);
+}
+.brief h1 {
+  font-size: 1.15rem;
+}
+.task {
+  font-weight: 700;
+}
+.hint-row button,
+.run-row button {
+  padding: 0.25rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--raised);
+  cursor: pointer;
+}
+.hint-text {
+  color: var(--warn);
+  font-size: 0.85rem;
+}
+.brief h2 {
+  margin-top: 0.4rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.schema {
+  display: grid;
+  gap: 0.3rem;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8rem;
+}
+/* at least 24 × 24 px each, so they're easy to tap */
+.schema button {
+  min-width: 24px;
+  min-height: 24px;
+  margin: 1px;
+  padding: 0.1rem 0.3rem;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  cursor: pointer;
+}
+.schema button:hover {
+  background: var(--raised);
+}
+.schema .table {
+  color: var(--accent);
+  font-weight: 700;
+}
+.schema .cols {
+  margin-left: 0.3rem;
+}
+.schema .col {
+  color: var(--muted);
+}
+
+/* ---------- the console ---------- */
+
+.console {
+  display: grid;
+  grid-template-rows: auto auto auto minmax(0, 1fr);
+  gap: 0.5rem;
+  min-height: 0;
+}
+textarea {
+  width: 100%;
+  resize: vertical;
+  min-height: 5.5rem;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel);
+  caret-color: var(--accent);
+  /* 16px: no zoom on focus on iOS */
+  font-size: 16px;
+}
+.run-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+#run:not(:disabled) {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 700;
+}
+#run:disabled {
+  opacity: 0.5;
+}
+#next {
+  margin-left: auto;
+  border-color: var(--accent2);
+  color: var(--accent2);
+  font-weight: 700;
+}
+.keys {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+.status {
+  min-height: 1.4em;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.status.ok {
+  color: var(--ok);
+  font-weight: 700;
+}
+.status.err {
+  color: var(--danger);
+}
+.result {
+  min-height: 0;
+  overflow: auto;
+}
+table {
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+caption {
+  caption-side: bottom;
+  text-align: left;
+  padding-top: 0.3rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+th,
+td {
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--border);
+  text-align: left;
+  white-space: nowrap;
+}
+th {
+  background: var(--raised);
+}
+.muted {
+  color: var(--muted);
+}
+
+/* ---------- overlays ---------- */
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.7rem;
+  padding: 1.5rem;
+  text-align: center;
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
+  cursor: pointer;
+}
+.overlay[hidden] {
+  display: none;
+}
+.big {
+  font-size: clamp(1.6rem, 5vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+.o-body {
+  display: grid;
+  gap: 0.5rem;
+  max-width: 54ch;
+}
+.accent,
+.o-hint {
+  color: var(--accent);
+  font-weight: 700;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .room {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
+    padding: 0.5rem;
+  }
+  .brief {
+    max-height: 40vh;
+  }
+}

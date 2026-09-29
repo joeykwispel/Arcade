@@ -293,6 +293,24 @@ const scenes = {
       await page.waitForTimeout(700);
     }
   },
+  'sql-heist': {
+    viewport: { width: 960, height: 600 },
+    selector: '#stage',
+    // break in, and follow the keys: step 3 with a JOIN and its result
+    async play(page) {
+      await page.locator('#stage[data-phase="title"]').waitFor({ timeout: 20_000 });
+      await page.keyboard.press('Enter');
+      const sql = page.locator('#sql');
+      for (const query of ['SELECT * FROM vaults', 'SELECT name FROM vaults ORDER BY balance DESC LIMIT 1']) {
+        await sql.fill(query);
+        await sql.press('Control+Enter');
+        await page.locator('#next').click();
+      }
+      await sql.fill('SELECT s.name, s.role FROM staff s JOIN keys k ON k.staff_id = s.id WHERE k.vault_id = 2');
+      await sql.press('Control+Enter');
+      await page.waitForTimeout(200);
+    }
+  },
   'bug-bash': {
     viewport: { width: 1200, height: 750 },
     // two levels done, so level 3 (two paths merging) is the one that opens

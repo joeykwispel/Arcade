@@ -625,12 +625,44 @@ test('Rubber Duck Therapy speaks Dutch on its own page', async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test('SQL Heist runs real SQLite: an error, a solved step, and Bobby Tables', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/play/sql-heist/');
+  const frame = page.frameLocator('iframe');
+  const stage = frame.locator('#stage');
+  await expect(stage).toHaveAttribute('data-phase', 'title', { timeout: 20_000 });
+  await expect(stage).toHaveAttribute('data-sqlite', /^3\.\d/);
+  await frame.locator('#overlay').click();
+  const sql = frame.locator('#sql');
+  await sql.fill('SELEKT * FROM vaults');
+  await sql.press('Control+Enter');
+  await expect(frame.locator('#status')).toContainText('syntax error');
+  await sql.fill('SELECT * FROM vaults');
+  await sql.press('Control+Enter');
+  await expect(stage).toHaveAttribute('data-phase', 'solved');
+  await expect(frame.locator('#result tbody tr')).toHaveCount(5);
+  await frame.locator('#next').click();
+  await sql.fill('DROP TABLE vaults;');
+  await sql.press('Control+Enter');
+  await expect(frame.locator('#status')).toContainText('Bobby Tables');
+  expect(errors).toEqual([]);
+});
+
+test('SQL Heist speaks Dutch on its own page', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/games/sql-heist/?lang=nl');
+  await expect(page.locator('#stage')).toHaveAttribute('data-phase', 'title', { timeout: 20_000 });
+  await expect(page.locator('html')).toHaveAttribute('lang', 'nl');
+  await expect(page.locator('#o-hint')).toContainText('in te breken');
+  expect(errors).toEqual([]);
+});
+
 test('the home page shows the planned games as coming soon, without links', async ({ page }) => {
   await page.goto('/');
   const soon = page.locator('#upcoming');
   await expect(soon.getByRole('heading', { level: 2 })).toContainText('Coming soon');
   await expect(soon.locator('article')).toHaveCount(upcoming.length);
-  await expect(soon.locator('article', { hasText: 'SQL Heist' })).toContainText('SQLite wasm');
+  await expect(soon.locator('article', { hasText: 'Legacy Code Archaeology' })).toContainText('PHP (php-wasm)');
   await expect(soon.locator('a')).toHaveCount(0);
   // every built game has a card, plus the generic "next game" card
   await expect(page.locator('#games .grid > li')).toHaveCount(games.length + 1);
