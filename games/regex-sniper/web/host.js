@@ -1,7 +1,7 @@
 // The arcade around the game: language and theme (from ?lang, the site's cookie, and its play:settings messages),
 // and the best score.
 
-const BEST_KEY = 'play:regex-golf:best';
+const BEST_KEY = 'play:regex-sniper:best';
 
 /** The language from ?lang=, or the browser's. */
 export function initialLang() {

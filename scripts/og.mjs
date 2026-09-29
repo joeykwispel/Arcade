@@ -220,10 +220,10 @@ const scenes = {
       await page.waitForTimeout(300);
     }
   },
-  'regex-golf': {
+  'regex-sniper': {
     viewport: { width: 960, height: 600 },
     selector: '#stage',
-    // tee off, and type a regex that is almost there: some green hit, one red too
+    // start, solve the warm-up, and type a regex that is almost there: every green matched, but reds too
     async play(page) {
       await page.locator('#stage[data-phase="title"]').waitFor({ timeout: 30_000 });
       await page.keyboard.press('Enter');

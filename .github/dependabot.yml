@@ -143,7 +143,7 @@ updates:
         patterns: ['*']
 
   - package-ecosystem: npm
-    directory: /games/regex-golf
+    directory: /games/regex-sniper
     schedule:
       interval: weekly
       day: monday
