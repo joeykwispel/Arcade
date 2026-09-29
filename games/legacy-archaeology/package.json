@@ -1,0 +1,23 @@
+{
+  "name": "play-legacy-archaeology",
+  "version": "1.0.0",
+  "description": "Legacy Code Archaeology: dig dead lines out of legacy PHP without changing what it prints. Real PHP 8.4, in the browser with php-wasm.",
+  "author": "Joey Oosenbrug (https://github.com/joeykwispel)",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@php-wasm/universal": "3.1.56",
+    "@php-wasm/web-8-4": "3.1.56"
+  },
+  "devDependencies": {
+    "@php-wasm/node": "3.1.56",
+    "vite": "^8.3.1",
+    "vitest": "^5.0.2"
+  }
+}

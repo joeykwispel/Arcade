@@ -362,6 +362,24 @@ const scenes = {
       await page.waitForTimeout(3200);
     }
   },
+  'legacy-archaeology': {
+    viewport: { width: 960, height: 600 },
+    selector: '#stage',
+    // one safe dig done, two more lines picked for the next one
+    async play(page) {
+      await page.locator('#stage[data-phase="title"]').waitFor({ timeout: 60_000 });
+      await page.keyboard.press('Enter');
+      await page.locator('#dig').waitFor();
+      const line = (text) => page.locator('#code button.line', { hasText: text });
+      await line('TODO: remove before launch').click();
+      await line('unused since 2011').click();
+      await page.locator('#dig').click();
+      await page.locator('#stage[data-score="20"]').waitFor();
+      await line("Kevin's fix").click();
+      await line('if ($debug)').click();
+      await page.waitForTimeout(300);
+    }
+  },
   'bug-bash': {
     viewport: { width: 1200, height: 750 },
     // two levels done, so level 3 (two paths merging) is the one that opens

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0a0e17" />
+    <!-- PHP runs as WebAssembly (php-wasm), which needs 'wasm-unsafe-eval'; everything is served from here. -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'"
+    />
+    <title>Legacy Code Archaeology</title>
+    <meta name="description" content="Dig dead lines out of legacy PHP without changing what it prints. Real PHP 8.4, running in your browser." />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <main id="stage" class="stage" data-phase="loading">
+      <header class="hud">
+        <p><span data-t="layer">layer</span> <b id="layer-n">1/3</b></p>
+        <p><span data-t="lines">lines</span> <b id="lines">0</b></p>
+        <p class="servers" id="servers" aria-live="polite"></p>
+        <p><span data-t="score">score</span> <b id="score">0</b></p>
+        <p><span data-t="best">best</span> <b id="best">0</b></p>
+      </header>
+      <div class="dig">
+        <section class="code" aria-labelledby="layer-title">
+          <h1 id="layer-title">…</h1>
+          <ol id="code" class="lines" tabindex="0"></ol>
+        </section>
+        <section class="prod">
+          <h2 data-t="expected">what it must print</h2>
+          <pre id="expected" class="output"></pre>
+          <h2 data-t="now">what it prints now</h2>
+          <pre id="now" class="output"></pre>
+          <p id="status" class="status" role="status" aria-live="polite"></p>
+          <p class="buttons">
+            <button type="button" id="dig" disabled data-t="dig">dig ⛏</button>
+            <button type="button" id="ship" disabled data-t="ship">ship this layer →</button>
+          </p>
+        </section>
+      </div>
+      <div class="overlay" id="overlay">
+        <p class="big" id="o-title">Legacy Code Archaeology</p>
+        <p class="sub" id="o-sub"></p>
+        <p class="how" id="o-how"></p>
+        <p class="hint" id="o-hint"></p>
+      </div>
+    </main>
+    <script type="module" src="./web/main.js"></script>
+  </body>
+</html>
