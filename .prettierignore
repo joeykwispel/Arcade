@@ -29,3 +29,5 @@ games/*/out
 # .NET build output
 **/bin
 **/obj
+# OCaml (dune) build output
+_build

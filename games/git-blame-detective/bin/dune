@@ -1,0 +1,7 @@
+; the page's copy of the rules: js_of_ocaml compiles this to main.bc.js
+(executable
+ (name main)
+ (modes js)
+ (libraries detective js_of_ocaml)
+ (preprocess
+  (pps js_of_ocaml-ppx)))

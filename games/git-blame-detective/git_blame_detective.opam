@@ -1,0 +1,13 @@
+# What CI installs with opam (see the workflows): the build and test dependencies.
+opam-version: "2.0"
+synopsis: "Git Blame Detective: find who broke production, in the commit history"
+maintainer: "Joey Oosenbrug"
+authors: "Joey Oosenbrug"
+depends: [
+  "ocaml" {>= "5.2"}
+  "dune" {>= "3.0"}
+  "js_of_ocaml" {>= "6.0"}
+  "js_of_ocaml-ppx" {>= "6.0"}
+  "alcotest" {with-test}
+]
+build: ["dune" "build" "-p" name]

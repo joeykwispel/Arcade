@@ -100,6 +100,13 @@ jobs:
         with:
           dotnet-version: '10.0.x'
 
+      # Git Blame Detective is OCaml, compiled to JavaScript by js_of_ocaml (setup-ocaml caches the opam switch)
+      - uses: ocaml/setup-ocaml@v3
+        with:
+          ocaml-compiler: '5.3'
+      - name: Install dune, js_of_ocaml and alcotest
+        run: opam install -y dune js_of_ocaml js_of_ocaml-ppx alcotest
+
       # Code Review Tinder is Dart + Flutter
       - uses: subosito/flutter-action@v2
         with:

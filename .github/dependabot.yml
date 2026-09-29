@@ -196,6 +196,15 @@ updates:
       all:
         patterns: ['*']
 
+  - package-ecosystem: npm
+    directory: /games/git-blame-detective
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      all:
+        patterns: ['*']
+
   # F# packages (NuGet) and npm for Estimate Poker
   - package-ecosystem: nuget
     directory: /games/estimate-poker
