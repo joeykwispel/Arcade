@@ -134,6 +134,15 @@ updates:
         patterns: ['*']
 
   - package-ecosystem: npm
+    directory: /games/rubber-duck-therapy
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      all:
+        patterns: ['*']
+
+  - package-ecosystem: npm
     directory: /games/meeting-bingo
     schedule:
       interval: weekly

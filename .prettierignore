@@ -23,3 +23,6 @@ games/*/web/build
 games/*/build-test
 # Flutter: tool cache
 .dart_tool
+# ClojureScript (shadow-cljs) caches and test output
+.shadow-cljs
+games/*/out

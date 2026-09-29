@@ -1,0 +1,19 @@
+{
+  "name": "play-rubber-duck-therapy",
+  "version": "1.0.0",
+  "description": "Rubber Duck Therapy: explain your bug to the duck, line by line, until you find it yourself. ClojureScript, compiled with shadow-cljs.",
+  "author": "Joey Oosenbrug (https://github.com/joeykwispel)",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "shadow-cljs compile test && node out/test.cjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/jetbrains-mono": "^5.3.0"
+  },
+  "devDependencies": {
+    "shadow-cljs": "^3.5.3"
+  }
+}

@@ -1,22 +1,5 @@
 [
   {
-    "slug": "rubber-duck-therapy",
-    "icon": "quack();",
-    "title": {
-      "en": "Rubber Duck Therapy",
-      "nl": "Rubber Duck Therapy"
-    },
-    "genre": {
-      "en": "story · choices",
-      "nl": "verhaal · keuzes"
-    },
-    "description": {
-      "en": "Explain your bug to the duck, one answer at a time. The duck says nothing. Somehow, that helps.",
-      "nl": "Leg je bug uit aan de eend, antwoord voor antwoord. De eend zegt niets. Op de een of andere manier helpt dat."
-    },
-    "framework": "ClojureScript"
-  },
-  {
     "slug": "sql-heist",
     "icon": "SELECT *",
     "title": {
