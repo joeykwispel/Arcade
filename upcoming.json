@@ -1,22 +1,5 @@
 [
   {
-    "slug": "null-pointer-dodge",
-    "icon": "?.",
-    "title": {
-      "en": "Null Pointer Dodge",
-      "nl": "Null Pointer Dodge"
-    },
-    "genre": {
-      "en": "bullet hell · arcade",
-      "nl": "bullet hell · arcade"
-    },
-    "description": {
-      "en": "You are a tiny ?. operator. Dodge the undefined, null and NaN raining down on you.",
-      "nl": "Je bent een kleine ?.-operator. Ontwijk de undefined, null en NaN die op je neerregenen."
-    },
-    "framework": "Vue"
-  },
-  {
     "slug": "meeting-bingo",
     "icon": "B I N G O",
     "title": {

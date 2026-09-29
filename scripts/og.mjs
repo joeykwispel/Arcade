@@ -243,6 +243,28 @@ const scenes = {
       await page.waitForTimeout(700);
     }
   },
+  'null-pointer-dodge': {
+    viewport: { width: 960, height: 600 },
+    selector: '.stage',
+    // start, and weave around for about six seconds, so the thrown fans of undefined are on screen too
+    async play(page) {
+      await page.keyboard.press('Space');
+      for (const [key, ms] of [
+        ['ArrowLeft', 600],
+        ['ArrowRight', 900],
+        ['ArrowLeft', 700],
+        ['ArrowUp', 400],
+        ['ArrowRight', 1000],
+        ['ArrowLeft', 800],
+        ['ArrowRight', 600],
+        ['ArrowDown', 300]
+      ]) {
+        await page.keyboard.down(key);
+        await page.waitForTimeout(ms);
+        await page.keyboard.up(key);
+      }
+    }
+  },
   'bug-bash': {
     viewport: { width: 1200, height: 750 },
     // two levels done, so level 3 (two paths merging) is the one that opens
