@@ -2,8 +2,8 @@
   // Self-hosted fonts (no requests to Google, so no visitor IPs shared with third parties)
   import '@fontsource-variable/inter';
   import '@fontsource-variable/jetbrains-mono';
-  import '$lib/jo/jo-kit.css';
-  import '$lib/jo/jo-header.css';
+  import '@joeykwispel/design-kit/kit.css';
+  import '@joeykwispel/design-kit/header.css';
   import '../app.css';
   import { page } from '$app/state';
   import { app } from '$lib/app.svelte';
@@ -42,7 +42,7 @@
   });
 </script>
 
-<!-- Re-created per page and language, so jo-header.js picks up the new links and labels. -->
+<!-- Re-created per page and language, so the header picks up the new links and labels. -->
 {#key `${page.url.pathname}`}
   <Header {links} />
 {/key}

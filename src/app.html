@@ -5,18 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#0a0e17" />
     <link rel="icon" href="%sveltekit.assets%/favicon.svg" type="image/svg+xml" />
+    <!-- The design kit's theme script. hooks.server.ts fills it in, svelte.config.js hashes it for the CSP. -->
     <script>
-      try {
-        var d = document.documentElement;
-        d.classList.add('js');
-        // the design kit's theme: the jo-theme cookie is shared by every *.joeyoosenbrug.nl app
-        var m = document.cookie.match(/(?:^|; )jo-theme=(dark|light)/);
-        var t = (m && m[1]) || localStorage.getItem('theme');
-        if (t === 'light' || t === 'dark') d.dataset.theme = t;
-        // a reader who chose Dutch before lands on /nl/ instead of the English home page
-        var b = '%sveltekit.assets%';
-        if (localStorage.getItem('lang') === 'nl' && location.pathname === b + '/') location.replace(b + '/nl/' + location.hash);
-      } catch (e) {}
+      %jo.head%
     </script>
     %sveltekit.head%
   </head>

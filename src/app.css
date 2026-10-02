@@ -1,6 +1,6 @@
 /*
  * Hub-only additions. Tokens, base styles, buttons, tags and cards come from the design kit
- * (src/lib/jo/jo-kit.css, a copy of the portfolio's app.css); change those in the portfolio first.
+ * (@joeykwispel/design-kit); change those in the designkit repository.
  */
 
 body {

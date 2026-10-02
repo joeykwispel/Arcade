@@ -4,7 +4,7 @@
 
 A hub of small browser games at [arcade.joeyoosenbrug.nl](https://arcade.joeyoosenbrug.nl), each built with a different frontend stack. It is a personal playground: the same kind of small project in different frameworks, to feel how they compare.
 
-The hub looks like the rest of [joeyoosenbrug.nl](https://joeyoosenbrug.nl): it uses the portfolio's [design kit](https://github.com/joeykwispel/Portfolio/tree/main/docs/design-kit) (tokens, header, cards), English at `/` and Dutch at `/nl/`.
+The hub looks like the rest of [joeyoosenbrug.nl](https://joeyoosenbrug.nl): it uses the [design kit](https://designkit.joeyoosenbrug.nl), the npm package `@joeykwispel/design-kit` (tokens, header, cards), English at `/` and Dutch at `/nl/`.
 
 | Game                    | Stack                           | Build tool                | Folder                         |
 | ----------------------- | ------------------------------- | ------------------------- | ------------------------------ |

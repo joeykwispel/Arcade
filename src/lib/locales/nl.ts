@@ -9,13 +9,6 @@ export default {
     gameDescription: '{description} Gebouwd met {framework}.'
   },
   header: {
-    home: 'joeyoosenbrug.nl',
-    main: 'Hoofdmenu',
-    language: 'Taal wijzigen',
-    toLight: 'Schakel naar licht thema',
-    toDark: 'Schakel naar donker thema',
-    menu: 'Menu',
-    skip: 'Naar de inhoud',
     games: 'Games',
     how: 'Hoe het werkt'
   },

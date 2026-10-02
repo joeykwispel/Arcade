@@ -26,5 +26,5 @@ export default ts.config(
     }
   },
   // Each game has its own tooling and lints itself; the kit's header script is a verbatim copy.
-  { ignores: ['dist/', '.svelte-kit/', 'node_modules/', 'test-results/', 'playwright-report/', '.playwright-mcp/', 'games/', 'src/lib/jo/jo-header.js'] }
+  { ignores: ['dist/', '.svelte-kit/', 'node_modules/', 'test-results/', 'playwright-report/', '.playwright-mcp/', 'games/'] }
 );
