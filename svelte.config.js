@@ -1,18 +1,16 @@
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
 import adapter from '@sveltejs/adapter-static';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+import { headScript } from './src/lib/head-script.js';
 
 /** Set BASE_PATH=/repo-name when deploying to a GitHub Pages project site instead of arcade.joeyoosenbrug.nl. */
 const base = process.env.BASE_PATH ?? '';
 
 /**
- * SvelteKit hashes its own inline scripts for the CSP, but not the theme script in app.html.
- * Hash it here, after the %sveltekit.assets% placeholder is filled in, so the policy stays in sync when it changes.
+ * SvelteKit hashes its own inline scripts for the CSP, but not the script hooks.server.ts puts in <head>.
+ * Hash the same string here, so the policy stays in sync when the design kit's theme script changes.
  */
-const appHtml = readFileSync(new URL('./src/app.html', import.meta.url), 'utf8');
-const themeScript = /<script>([\s\S]*?)<\/script>/.exec(appHtml)?.[1] ?? '';
-const themeHash = `sha256-${createHash('sha256').update(themeScript.replaceAll('%sveltekit.assets%', base)).digest('base64')}`;
+const headHash = `sha256-${createHash('sha256').update(headScript(base)).digest('base64')}`;
 
 export default {
   preprocess: vitePreprocess(),
@@ -33,7 +31,7 @@ export default {
       mode: 'hash',
       directives: {
         'default-src': ['self'],
-        'script-src': ['self', themeHash],
+        'script-src': ['self', headHash],
         // Svelte sets inline style attributes (CSS variables, transitions)
         'style-src': ['self', 'unsafe-inline'],
         'img-src': ['self', 'data:'],
