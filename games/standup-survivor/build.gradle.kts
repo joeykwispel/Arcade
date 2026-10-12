@@ -4,7 +4,7 @@
 //   commonTest  tests, run on the JVM (fast, no browser needed): ./gradlew jvmTest
 // ./gradlew jsBrowserDistribution builds the page into build/dist/js/productionExecutable/.
 plugins {
-    kotlin("multiplatform") version "2.4.20"
+    kotlin("multiplatform") version "2.4.21"
 }
 
 kotlin {
