@@ -13,11 +13,11 @@
   },
   "dependencies": {
     "@fontsource-variable/jetbrains-mono": "^5.3.0",
-    "three": "^0.186.1"
+    "three": "^0.187.0"
   },
   "devDependencies": {
     "rescript": "^12.3.1",
-    "vite": "^8.3.1",
-    "vitest": "^5.0.2"
+    "vite": "^8.3.6",
+    "vitest": "^5.1.0"
   }
 }
